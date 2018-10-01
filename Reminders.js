@@ -1,29 +1,58 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ListItem,Avatar} from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient' 
+import {ScrollView,StyleSheet} from 'react-native';
+import {ListItem} from 'react-native-elements';
 
 
 const list = [
     {
-        title: 'Buy groceries',
-        date: '01-10-18',
-        time: '08:00',
-        img: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+        title: 'workout',
+        date: '02-10-18',
+        time: '10:15',
+        img: require('./assets/images/schwarzenegger.png')
     },
     {
         title: 'workout',
         date: '02-10-18',
         time: '10:15',
-        img: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+        img: require('./assets/images/schwarzenegger.png')
     },
     {
-        title: 'deliver handin',
-        date: '10-10-18',
-        time: '23:59',
-        img: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+        title: 'workout',
+        date: '02-10-18',
+        time: '10:15',
+        img: require('./assets/images/schwarzenegger.png')
+    },
+    {
+        title: 'workout',
+        date: '02-10-18',
+        time: '10:15',
+        img: require('./assets/images/schwarzenegger.png')
+    },
+    {
+        title: 'workout',
+        date: '02-10-18',
+        time: '10:15',
+        img: require('./assets/images/schwarzenegger.png')
+    },
+    {
+        title: 'workout',
+        date: '02-10-18',
+        time: '10:15',
+        img: require('./assets/images/schwarzenegger.png')
+    },
+    {
+        title: 'workout',
+        date: '02-10-18',
+        time: '10:15',
+        img: require('./assets/images/schwarzenegger.png')
+    },
+    {
+        title: 'workout',
+        date: '02-10-18',
+        time: '10:15',
+        img: require('./assets/images/schwarzenegger.png')
     }
-]   
+]
 export default class Reminders extends React.Component{
     static navigationOptions = {
         title: 'Reminders'
@@ -31,32 +60,50 @@ export default class Reminders extends React.Component{
 
     render(){
         return(
-            <View>
+            <ScrollView>
                 {
                     list.map((l, i) => (
-                        <ListItem
+                        <ListItem 
+                            style={styles.subtitleView}
                             scaleProps={{
-                                friction: 90,
+                                friction: 70,
                                 tension: 100,
                                 activeScale: 0.95,
                             }}
                             linearGradientProps={{
-                                colors: ['#FF9800', '#F44336'],
+                                colors: ['#471F1F', '#E61919'],
                                 start: [1, 0],
                                 end: [0.2, 0],
                             }}
-                            ViewComponent={LinearGradient}
                             key={i}
-                            avatar={{ size:'small', source: { uri: l.img } }}
+                            leftAvatar={{ size: 'small', source: require('./assets/images/schwarzenegger.png')  }}
                             title={l.title}
                             subtitle={l.date}
-                            titleStyle={{ color: 'red', fontWeight: 'bold' }}
-                            subtitleStyle={{ color: 'gray' }}
-                            chevronColor="red"
+                            titleStyle={{ color: 'black', fontWeight: 'bold' }}
+                            chevronColor="black"
+                            chevron 
                         />
                     )) 
                 }
-            </View>
+            </ScrollView>
         );
     }
 }
+
+styles = StyleSheet.create({
+    subtitleView: {
+        paddingLeft: 10,
+        paddingRight:10,
+        paddingTop: 10,
+        paddingBottom:10,
+        borderRadius: 50,
+        shadowColor: "#000000",
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        shadowOffset: {
+            height: 1,
+            width: 0
+        },
+        overflow: 'hidden'
+    },
+})
