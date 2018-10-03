@@ -1,187 +1,156 @@
 import React from 'react';
 import {
-    Image,
     Platform,
     ScrollView,
     StyleSheet,
     Text,
-    TouchableOpacity,
     View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import {WebBrowser} from 'expo';
+import {LinearGradient} from 'expo';
+import * as Progress from 'react-native-progress';
+import createStyles from '../styles/HomeScreenStyle.js'
+import AnimateNumber from 'react-native-countup'
+import { StackedAreaChart } from 'react-native-svg-charts'
+import * as shape from 'd3-shape'
 
-import { MonoText } from '../components/StyledText';
+const styles = createStyles();
+
 
 export default class HomeScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            points: 1200,
+            activeReminders:46,
+            data :[
+                {
+                    month: new Date(2015, 0, 1),
+                    apples: 3840,
+                    bananas: 1920,
+                    cherries: 960,
+                    dates: 400,
+                },
+                {
+                    month: new Date(2015, 1, 1),
+                    apples: 1600,
+                    bananas: 1440,
+                    cherries: 960,
+                    dates: 400,
+                },
+                {
+                    month: new Date(2015, 2, 1),
+                    apples: 640,
+                    bananas: 960,
+                    cherries: 3640,
+                    dates: 400,
+                },
+                {
+                    month: new Date(2015, 3, 1),
+                    apples: 3320,
+                    bananas: 480,
+                    cherries: 640,
+                    dates: 400,
+                },
+            ],
+            colors : [ '#8800cc', '#aa00ff', '#cc66ff', '#eeccff' ],
+            colorGradient:['#00F5A6','#06EA95','#0CDF84','#12D474','#19CA63','#1FBF53','#25B442','#2CAA31','#329F21','#389410','#3F8A00'],
+            colorGradientR:['#19CA63','#12D474','#0CDF84','#06EA95','#00F5A6'],
+            colorPallet:[['#17cf94', '#14bf69', '#17cf94'],
+                ['#1FBF53', '#00EA9E', '#1FBF53'],
+                ['#0CDF84', '#19CA63', '#0CDF84'],
+                ['#17cf94', '#14bf69', '#17cf94']],
+            keys: [ 'apples', 'bananas', 'cherries', 'dates' ],
+            svgs: [
+                { onPress: () => console.log('apples') },
+                { onPress: () => console.log('bananas') },
+                { onPress: () => console.log('cherries') },
+                { onPress: () => console.log('dates') },]
+        };
+    }
     static navigationOptions = {
         header: null,
     };
+
     render() {
         return (
-            <View style={styles.container}>
-                <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                    <View style={styles.welcomeContainer}>
-                        <Image
-                            source={
-                                __DEV__
-                                    ? require('../assets/images/robot-dev.png')
-                                    : require('../assets/images/robot-prod.png')
-                            }
-                            style={styles.welcomeImage}
-                        />
+            <ScrollView style={styles.container}>
+                <View style={styles.item}>
+
+                    {/*score info*/}
+                    <View style={styles.shadow}>
+                        <LinearGradient
+                            colors={this.state.colorPallet[1]}
+                            style={styles.gradient}>
+                            <Text style={styles.getStartedText}>Score
+                            </Text>
+                            <Text style={styles.scorePointText}>
+                                {this.state.points}
+
+                                {/*<AnimateNumber value={this.state.points}
+                                               countBy={14}
+                                               timing={(interval, progress) => {
+                                                   // slow start, slow end
+                                                   return interval * (1 - Math.sin(Math.PI*progress) )*10
+                                               }}/>*/}
+                            </Text>
+                            <Text style={styles.getStartedText}>
+                                Points
+                            </Text>
+                        </LinearGradient>
                     </View>
 
-                    <View style={styles.getStartedContainer}>
-                        {this._maybeRenderDevelopmentModeWarning()}
 
-                        <Text style={styles.getStartedText}>Get started by opening</Text>
-
-                        <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-                            <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-                        </View>
-
-                        <Text style={styles.getStartedText}>
-                            Change this text and your app will automatically reload.
-            </Text>
+                    <View style={styles.shadow}>
+                        <LinearGradient
+                            colors={this.state.colorPallet[1]}
+                            style={styles.gradient}>
+                            <Text style={styles.getStartedText}>
+                                Success Percentage
+                            </Text>
+                            <View styles={styles.diagram}>
+                                <Progress.Circle color={'#fff'} size={150} borderWidth={1} progress={0.4} showsText={true} thickness={5}/>
+                            </View>
+                            <Text style={styles.getStartedText}>
+                                Nice
+                            </Text>
+                        </LinearGradient>
                     </View>
 
-                    <View style={styles.helpContainer}>
-                        <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-                            <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-                        </TouchableOpacity>
+                    <View style={styles.shadow}>
+                        <LinearGradient
+                            colors={this.state.colorPallet[1]}
+                            style={styles.gradient}>
+                            <Text style={styles.getStartedText}>
+                                Active Reminders
+                            </Text>
+                            <Text style={styles.scorePointText}>
+                                {this.state.activeReminders}
+                                {/*<AnimateNumber value={this.state.points}
+                                               countBy={14}
+                                               timing={(interval, progress) => {
+                                                   // slow start, slow end
+                                                   return interval * (1 - Math.sin(Math.PI*progress) )*10
+                                               }}/>*/}
+                            </Text>
+                            <Text style={styles.getStartedText}>
+                                Points
+                            </Text>
+                        </LinearGradient>
                     </View>
-                </ScrollView>
 
-                <View style={styles.tabBarInfoContainer}>
-                    <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
 
-                    <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-                        <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-                    </View>
                 </View>
-            </View>
+                <StackedAreaChart
+                    style={ { height: 200, } }
+                    data={ this.state.data }
+                    keys={ this.state.keys }
+                    colors={ this.state.colorGradientR }
+                    curve={ shape.curveNatural }
+                    showGrid={ false }
+                    svgs={ this.state.svgs }
+                />
+            </ScrollView>
         );
     }
-
-    _maybeRenderDevelopmentModeWarning() {
-        if (__DEV__) {
-            const learnMoreButton = (
-                <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-                    Learn more
-        </Text>
-            );
-
-            return (
-                <Text style={styles.developmentModeText}>
-                    Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-                </Text>
-            );
-        } else {
-            return (
-                <Text style={styles.developmentModeText}>
-                    You are not in development mode, your app will run at full speed.
-        </Text>
-            );
-        }
-    }
-
-    _handleLearnMorePress = () => {
-        WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-    };
-
-    _handleHelpPress = () => {
-        WebBrowser.openBrowserAsync(
-            'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-        );
-    };
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    developmentModeText: {
-        marginBottom: 20,
-        color: 'rgba(0,0,0,0.4)',
-        fontSize: 14,
-        lineHeight: 19,
-        textAlign: 'center',
-    },
-    contentContainer: {
-        paddingTop: 30,
-    },
-    welcomeContainer: {
-        alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 20,
-    },
-    welcomeImage: {
-        width: 100,
-        height: 80,
-        resizeMode: 'contain',
-        marginTop: 3,
-        marginLeft: -10,
-    },
-    getStartedContainer: {
-        alignItems: 'center',
-        marginHorizontal: 50,
-    },
-    homeScreenFilename: {
-        marginVertical: 7,
-    },
-    codeHighlightText: {
-        color: 'rgba(96,100,109, 0.8)',
-    },
-    codeHighlightContainer: {
-        backgroundColor: 'rgba(0,0,0,0.05)',
-        borderRadius: 3,
-        paddingHorizontal: 4,
-    },
-    getStartedText: {
-        fontSize: 17,
-        color: 'rgba(96,100,109, 1)',
-        lineHeight: 24,
-        textAlign: 'center',
-    },
-    tabBarInfoContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        ...Platform.select({
-            ios: {
-                shadowColor: 'black',
-                shadowOffset: { height: -3 },
-                shadowOpacity: 0.1,
-                shadowRadius: 3,
-            },
-            android: {
-                elevation: 20,
-            },
-        }),
-        alignItems: 'center',
-        backgroundColor: '#fbfbfb',
-        paddingVertical: 20,
-    },
-    tabBarInfoText: {
-        fontSize: 17,
-        color: 'rgba(96,100,109, 1)',
-        textAlign: 'center',
-    },
-    navigationFilename: {
-        marginTop: 5,
-    },
-    helpContainer: {
-        marginTop: 15,
-        alignItems: 'center',
-    },
-    helpLink: {
-        paddingVertical: 15,
-    },
-    helpLinkText: {
-        fontSize: 14,
-        color: '#2e78b7',
-    },
-});
