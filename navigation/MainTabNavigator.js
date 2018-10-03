@@ -4,8 +4,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import RemindersScreen from '../Reminders';
+import CreateScreen from '../screens/CreateReminder';
+import RemindersScreen from '../screens/Reminders';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -25,12 +25,12 @@ HomeStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const CreateReminderStack = createStackNavigator({
+  Create: CreateScreen,
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+CreateReminderStack.navigationOptions = {
+  tabBarLabel: 'Create',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -55,6 +55,6 @@ RemindersStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
+  CreateReminderStack,
   RemindersStack,
 });

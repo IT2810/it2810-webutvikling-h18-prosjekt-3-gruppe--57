@@ -8,49 +8,49 @@ const list = [
         title: 'workout',
         date: '02-10-18',
         time: '10:15',
-        img: require('./assets/images/schwarzenegger.png')
+        img: require('../assets/images/schwarzenegger.png')
     },
     {
         title: 'workout',
         date: '02-10-18',
         time: '10:15',
-        img: require('./assets/images/schwarzenegger.png')
+        img: require('../assets/images/schwarzenegger.png')
     },
     {
         title: 'workout',
         date: '02-10-18',
         time: '10:15',
-        img: require('./assets/images/schwarzenegger.png')
+        img: require('../assets/images/schwarzenegger.png')
     },
     {
         title: 'workout',
         date: '02-10-18',
         time: '10:15',
-        img: require('./assets/images/schwarzenegger.png')
+        img: require('../assets/images/schwarzenegger.png')
     },
     {
         title: 'workout',
         date: '02-10-18',
         time: '10:15',
-        img: require('./assets/images/schwarzenegger.png')
+        img: require('../assets/images/schwarzenegger.png')
     },
     {
         title: 'workout',
         date: '02-10-18',
         time: '10:15',
-        img: require('./assets/images/schwarzenegger.png')
+        img: require('../assets/images/schwarzenegger.png')
     },
     {
         title: 'workout',
         date: '02-10-18',
         time: '10:15',
-        img: require('./assets/images/schwarzenegger.png')
+        img: require('../assets/images/schwarzenegger.png')
     },
     {
         title: 'workout',
         date: '02-10-18',
         time: '10:15',
-        img: require('./assets/images/schwarzenegger.png')
+        img: require('../assets/images/schwarzenegger.png')
     }
 ]
 export default class Reminders extends React.Component{
@@ -76,12 +76,10 @@ export default class Reminders extends React.Component{
                                 end: [0.2, 0],
                             }}
                             key={i}
-                            leftAvatar={{ size: 'small', source: require('./assets/images/schwarzenegger.png')  }}
+                            rightAvatar={{ size: 'small', source: l.img  }}
                             title={l.title}
                             subtitle={l.date}
                             titleStyle={{ color: 'black', fontWeight: 'bold' }}
-                            chevronColor="black"
-                            chevron 
                         />
                     )) 
                 }
