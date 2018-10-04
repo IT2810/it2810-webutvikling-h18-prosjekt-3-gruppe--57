@@ -14,6 +14,7 @@ import AnimateNumber from 'react-native-countup'
 import { StackedAreaChart } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
 
+
 const styles = createStyles();
 
 
@@ -68,6 +69,7 @@ export default class HomeScreen extends React.Component {
                 { onPress: () => console.log('dates') },]
         };
     }
+
     static navigationOptions = {
         header: null,
     };
