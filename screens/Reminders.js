@@ -5,6 +5,12 @@ import {
     Text,
     View,
     Image,
+    AppRegistry,
+    Animated,
+    TouchableWithoutFeedback,
+    Alert,
+    Modal,
+    TouchableHighlight,
 } from 'react-native';
 import {LinearGradient} from 'expo';
 import { Icon } from 'react-native-elements'
@@ -12,98 +18,191 @@ import { Icon } from 'react-native-elements'
 
 const list = [
     {
-        title: 'workout',
+        reminder: 'workout',
         date: '02-10-18',
         time: '10:15',
         lock: 'lock-open',
-        color: ['#17cf94','#14bf69','#17cf94'],
-        img: require('../assets/images/schwarzenegger.png')
+        color: ['#14bf69','#17cf94'],
+        img: require('../assets/images/something.jpg')
     },
     {
-        title: 'workout',
-        date: '02-10-18',
+        reminder: 'workout',
+        date: '03-10-18',
         time: '10:15',
         lock: 'lock-open',
-        color: ['#17cf94','#14bf69','#17cf94'],
-        img: require('../assets/images/schwarzenegger.png')
+        color: ['#14bf69','#17cf94'],
+        img: require('../assets/images/something.jpg')
     },
     {
-        title: 'workout',
-        date: '02-10-18',
+        reminder: 'workout',
+        date: '07-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#ff5a4b','#CF2A39','#ff5a4b'],
-        img: require('../assets/images/schwarzenegger.png')
+        color: ['#CF2A39','#ff5a4b'],
+        img: require('../assets/images/something.jpg')
     },
     {
-        title: 'workout',
-        date: '02-10-18',
+        reminder: 'workout',
+        date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#ff5a4b','#CF2A39','#ff5a4b'],
-        img: require('../assets/images/schwarzenegger.png')
+        color: ['#CF2A39','#ff5a4b'],
+        img: require('../assets/images/something.jpg')
     },
     {
-        title: 'workout',
-        date: '02-10-18',
+        reminder: 'workout',
+        date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#ff5a4b','#CF2A39','#ff5a4b'],
-        img: require('../assets/images/schwarzenegger.png')
+        color: ['#CF2A39','#ff5a4b'],
+        img: require('../assets/images/something.jpg')
     },
     {
-        title: 'workout',
-        date: '02-10-18',
+        reminder: 'workout',
+        date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#ff5a4b','#CF2A39','#ff5a4b'],
-        img: require('../assets/images/schwarzenegger.png')
+        color: ['#CF2A39','#ff5a4b'],
+        img: require('../assets/images/something.jpg')
     },
     {
-        title: 'workout',
-        date: '02-10-18',
+        reminder: 'workout',
+        date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#ff5a4b','#CF2A39','#ff5a4b'],
-        img: require('../assets/images/schwarzenegger.png')
+        color: ['#CF2A39','#ff5a4b'],
+        img: require('../assets/images/something.jpg')
     },
     {
-        title: 'workout',
-        date: '02-10-18',
+        reminder: 'workout',
+        date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#ff5a4b','#CF2A39','#ff5a4b'],
-        img: require('../assets/images/schwarzenegger.png')
-    }
+        color: ['#CF2A39','#ff5a4b'],
+        img: require('../assets/images/something.jpg')
+    },
+    {
+        reminder: 'workout',
+        date: '10-10-18',
+        time: '10:15',
+        lock: 'lock',
+        color: ['#CF2A39','#ff5a4b'],
+        img: require('../assets/images/something.jpg')
+    },
+    {
+        reminder: 'workout',
+        date: '10-10-18',
+        time: '10:15',
+        lock: 'lock',
+        color: ['#CF2A39','#ff5a4b'],
+        img: require('../assets/images/something.jpg')
+    },
+    {
+        reminder: 'workout',
+        date: '10-10-18',
+        time: '10:15',
+        lock: 'lock',
+        color: ['#CF2A39','#ff5a4b'],
+        img: require('../assets/images/something.jpg')
+    },
 ];
 
 
 
 export default class Reminders extends React.Component{
     static navigationOptions = {
-        title: 'Reminders'
+        title: 'Reminders',
     };
+
+    state = {
+        modalVisible: false,
+        cameraModalVisible: false,
+    };
+
+    setModalVisible(visible,color) {
+        if(color === ['#14bf69','#17cf94']){
+            /*Alert.alert('Are u shure MATE',""+color);*/
+        }else{
+            /*Alert.alert('U are shure MATE',"DON'T");*/
+            this.setState({modalVisible: visible});
+        }
+    }
+
+    setCameraModalVisible(visible){
+        this.setState({cameraModalVisible: visible});
+    }
 
     render(){
         return(
             <ScrollView style={styles.container}>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                        this.setModalVisible(!this.state.modalVisible);
+                    }}>
+                    <View style={{marginTop: 22}}>
+                        <View>
+                            <TouchableHighlight
+                                onPress={() => {
+                                    this.setCameraModalVisible(true);
+                                }}>
+                                <Text style={styles.modalText}>Camera</Text>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight
+                                onPress={() => {
+                                    this.setModalVisible(!this.state.modalVisible,["#000","#000"]);
+                                }}>
+                                <Text style={styles.modalText}>Hide Modal</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+
+                    <Modal
+                        animationType="fade"
+                        transparent={false}
+                        visible={this.state.cameraModalVisible}
+                        onRequestClose={() => {
+                            this.setCameraModalVisible(!this.state.cameraModalVisible);
+                        }}>
+                        <View style={{marginTop: 22}}>
+                            <View>
+                                <Text style={styles.modalText}>Hello Camera!</Text>
+
+                                <TouchableHighlight
+                                    onPress={() => {
+                                        this.setCameraModalVisible(!this.state.cameraModalVisible,["#000","#000"]);
+                                    }}>
+                                    <Text style={styles.modalText}>Hide second Modal</Text>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </Modal>
+                </Modal>
                 {
                     list.map((l, i) => (
                         <View style={styles.item} key={i}>
                             <View style={styles.shadow}>
-                                <LinearGradient
-                                    colors={l.color}
-                                    style={styles.gradient}>
-                                    <View style={styles.lock} >
-                                        <Icon name={l.lock} />
-                                    </View>
-                                    <View style={styles.info1}>
-                                        <Text style={styles.dateText}>
-                                            {l.date}
-                                        </Text>
-                                    </View>
-                                    <Image style={styles.img} source={l.img}/>
-                                </LinearGradient>
+                                <TouchableHighlight
+                                    onPress={() => {this.setModalVisible(true,l.color);}}>
+                                    <LinearGradient
+                                        start={{ x: 0, y: 1 }}
+                                        end={{ x: 1, y: 1 }}
+                                        colors={l.color}
+                                        style={styles.gradient}>
+                                        <View style={styles.lock} >
+                                            <Icon name={l.lock} />
+                                        </View>
+                                        <View style={styles.info1}>
+                                            <Text style={styles.dateText}>
+                                                {l.date}
+                                            </Text>
+                                        </View>
+                                        {/*<Image style={styles.img} source={l.img} blurRadius={50}/>*/}
+                                    </LinearGradient>
+                                </TouchableHighlight>
                             </View>
                         </View>
                     ))
@@ -120,8 +219,9 @@ styles = StyleSheet.create({
     img:{
         width: 70,
         height:70,
-        margin: 10,
-        marginHorizontal:20,
+        margin: 0,
+        marginHorizontal:0,
+        borderRadius:10,
     },
     info1:{
         flex: 1,
@@ -164,4 +264,10 @@ styles = StyleSheet.create({
         color: '#ffffff',
         textAlign: 'center',
     },
+    modalText:{
+        margin: 10,
+        fontSize: 27,
+        color: '#000',
+        textAlign: 'center',
+    }
 });
