@@ -3,7 +3,6 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import CreateScreen from '../screens/CreateReminder';
 import RemindersScreen from '../screens/Reminders';
 import CameraScreen from '../components/Cam';
 
@@ -25,21 +24,6 @@ HomeStack.navigationOptions = {
     ),
 };
 
-const CreateReminderStack = createStackNavigator({
-    Create: CreateScreen,
-});
-
-CreateReminderStack.navigationOptions = {
-    tabBarLabel: 'Create',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={Platform.OS === 'ios'
-                ? `ios-link${focused ? '' : '-outline'}`
-                : 'md-link'}
-        />
-    ),
-};
 
 const RemindersStack = createStackNavigator({
     Reminders: RemindersScreen,
@@ -64,6 +48,6 @@ const CameraStack = createStackNavigator({
 
 export default createBottomTabNavigator({
     HomeStack,
-    CreateReminderStack,
+    CameraStack,
     RemindersStack,
 });
