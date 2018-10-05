@@ -2,19 +2,19 @@ import React from 'react';
 import {Text,View,TouchableOpacity,StyleSheet} from 'react-native';
 import{Container,Content,Header,Item,Icon,Input,Button} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Camera, Permissions } from 'expo';
+import { Camera, Permissions, MediaLibrary } from 'expo';
 
 export default class Cam extends React.Component {
     state = {
-        hasCameraPermission: null,
+        hasPermission: null,
         type: Camera.Constants.Type.back,
         img: null
     }
     _mounted = false;
 
     async componentDidMount() {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA);
-        this.setState({ hasCameraPermission: status === 'granted' })
+        const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+        this.setState({ hasPermission: status === 'granted'});
         mounted = true;
     }
 
@@ -25,20 +25,32 @@ export default class Cam extends React.Component {
 
     snap = async () => {
         if (this.camera) {
-            let photo = await this.camera.takePictureAsync();
-            console.log(photo);
-            this.setState({img:photo});
+            const { uri } = await this.camera.takePictureAsync();
+            console.log(uri);
+            const asset = await MediaLibrary.createAssetAsync(uri);
+            MediaLibrary.createAlbumAsync('Remindr', asset)
+                .then(() => {
+                    console.log('Album created!');
+                })
+                .catch(error => {
+                    console.log('err', error);
+                });
+            //this.setState({img:photo});
         }
     };
 
     render() {
-        const { hasCameraPermission } = this.state
+        const hasCameraPermission = this.state.hasCameraPermission;
+        const hasCameraRollPermission = this.state.hasCameraRollPermission;
 
-        if (hasCameraPermission === null) {
-            return <View />
+        if (hasCameraPermission === null || hasCameraRollPermission === null) {
+            return <Text> Awaiting permissions...</Text>
         }
         else if (hasCameraPermission === false) {
             return <Text> No access to camera</Text>
+        }
+        else if (hasCameraRollPermission === false) {
+            return <Text> No access to storage</Text>
         }
         else {
             return (
