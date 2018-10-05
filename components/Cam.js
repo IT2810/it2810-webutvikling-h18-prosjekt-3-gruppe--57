@@ -5,23 +5,27 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Camera, Permissions, MediaLibrary } from 'expo';
 
 export default class Cam extends React.Component {
-    state = {
-        hasPermission: null,
-        type: Camera.Constants.Type.back,
-        img: null
+    //Waiting for permission will cause the camera to just display a black screen
+    //because of this we need to ask for permissions elsewhere and pass them as props
+    constructor(props){
+        super(props);
+        this.state = {
+            hasPermission: true,
+            type: Camera.Constants.Type.back,
+            img: null,
+        }
     }
-    _mounted = false;
+    
 
-    async componentDidMount() {
+/*     async componentWillMount() {
         const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
-        this.setState({ hasPermission: status === 'granted'});
-        mounted = true;
+        this.setState({ hasPermission: status === 'granted', mounted:true});
     }
 
 
     componentWillUnmount() {
-        this._mounted = false;
-    }
+        this.setState({mounted: false});
+    } */
 
     snap = async () => {
         if (this.camera) {
@@ -40,17 +44,13 @@ export default class Cam extends React.Component {
     };
 
     render() {
-        const hasCameraPermission = this.state.hasCameraPermission;
-        const hasCameraRollPermission = this.state.hasCameraRollPermission;
-
-        if (hasCameraPermission === null || hasCameraRollPermission === null) {
+        const hasPermission = this.state.hasPermission;
+        console.log(hasPermission);
+        if (hasPermission === null) {
             return <Text> Awaiting permissions...</Text>
         }
-        else if (hasCameraPermission === false) {
-            return <Text> No access to camera</Text>
-        }
-        else if (hasCameraRollPermission === false) {
-            return <Text> No access to storage</Text>
+        else if (hasPermission === false) {
+            return <Text> No access to camera or camera roll</Text>
         }
         else {
             return (
