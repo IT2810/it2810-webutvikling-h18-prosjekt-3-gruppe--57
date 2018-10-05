@@ -7,13 +7,29 @@ import { Camera, Permissions } from 'expo';
 export default class Cam extends React.Component {
     state = {
         hasCameraPermission: null,
-        type: Camera.Constants.Type.back
+        type: Camera.Constants.Type.back,
+        img: null
     }
+    _mounted = false;
 
     async componentDidMount() {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
         this.setState({ hasCameraPermission: status === 'granted' })
+        mounted = true;
     }
+
+
+    componentWillUnmount() {
+        this._mounted = false;
+    }
+
+    snap = async () => {
+        if (this.camera) {
+            let photo = await this.camera.takePictureAsync();
+            console.log(photo);
+            this.setState({img:photo});
+        }
+    };
 
     render() {
         const { hasCameraPermission } = this.state
@@ -27,7 +43,7 @@ export default class Cam extends React.Component {
         else {
             return (
                 <View style={{ flex: 1 }}>
-                    <Camera style={styles.container} type={this.state.type} >
+                    <Camera ref={ref => { this.camera = ref; }} style={styles.container} type={this.state.type}>
                         <View style={styles.content}>
                             <MaterialCommunityIcons
                                 onPress={() => {
@@ -37,7 +53,7 @@ export default class Cam extends React.Component {
                             </MaterialCommunityIcons>
                             <MaterialCommunityIcons
                                 onPress={() => {
-                                    alert("STOP HAMMERTIME!");
+                                    this.snap();
                                 }}
                                 name="circle-outline"
                                 style={{ color: 'white', fontSize: 100 }}
