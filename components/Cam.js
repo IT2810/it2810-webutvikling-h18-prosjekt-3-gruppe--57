@@ -2,7 +2,7 @@ import React from 'react';
 import {Text,View,TouchableOpacity,StyleSheet} from 'react-native';
 import{Container,Content,Header,Item,Icon,Input,Button} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Camera, Permissions } from 'expo';
+import { Camera, Permissions, ImageManipulator, MediaLibrary} from 'expo';
 
 const whiteList = ['auto','sunny','cloudy','shadow','fluorescent','incandescent'];
 let index = 0;
@@ -11,7 +11,6 @@ export default class Cam extends React.Component {
     //because of this we need to ask for permissions elsewhere and pass them as props
     constructor(props){
         super(props);
-        this.camera = null;
         this.state = {
             hasPermission: props.hasPermission,
             type: Camera.Constants.Type.back,
@@ -20,27 +19,29 @@ export default class Cam extends React.Component {
         }
     }
 
-    /*componentWillMount() {
-        this.props.navigation.addListener('willBlur', (route) =>
-        {
-            console.log("TAB-XTRA");
-            this.camera = null;
-        });
-    }*/
-
     snap = async () => {
         if (this.camera) {
             const { uri } = await this.camera.takePictureAsync();
-            console.log(uri);
-            const asset = await MediaLibrary.createAssetAsync(uri);
-            MediaLibrary.createAlbumAsync('Remindr', asset)
-                .then(() => {
-                    console.log('Album created!');
+            const icon = await ImageManipulator.manipulate(uri, [{ resize: { width: 50, height: 50 } }]);
+            const img = await ImageManipulator.manipulate(uri,[],{compress:0.2});
+            console.log("creating assets...");
+            const assetIcon = await MediaLibrary.createAssetAsync(icon.uri);
+            const assetImg = await MediaLibrary.createAssetAsync(img.uri);
+
+            MediaLibrary.createAlbumAsync('Remindr',assetIcon,false)
+                .then((album) => {
+                    console.log('Creating album...');
+                    MediaLibrary.addAssetsToAlbumAsync(assetImg,album.id,false)
+                        .then(() => {
+                            console.log('Album created, adding assets...');
+                        })
+                        .catch(error => {
+                            console.log('An error occured adding assets: ', error);
+                        });
                 })
                 .catch(error => {
-                    console.log('err', error);
+                    console.log('An error occured creating album: ', error);
                 });
-            //this.setState({img:photo});
         }
     };
 
@@ -56,14 +57,13 @@ export default class Cam extends React.Component {
         else {
             return (
                 <View style={{ flex: 1 }}>
-                    <Camera style={styles.container} type={this.state.type} >
+                    <Camera style={styles.container} type={this.state.type} ref={ref => this.camera = ref}>
                         <View style={styles.content}>
                             <MaterialCommunityIcons
                                 onPress={() => {
                                     this.setState({
                                         mode: whiteList[index++ % whiteList.length]
                                     });
-                                    this.camera = null;
                                 }}
                                 name="cannabis" style={{ color: 'white', fontWeight: 'bold', fontSize: 50 }}>
                             </MaterialCommunityIcons>
