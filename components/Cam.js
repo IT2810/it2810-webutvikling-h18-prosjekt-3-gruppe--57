@@ -1,32 +1,34 @@
 import React from 'react';
-import {Text,View,TouchableOpacity,StyleSheet} from 'react-native';
+import {Text,View,TouchableOpacity,StyleSheet,TouchableWithoutFeedback} from 'react-native';
 import{Container,Content,Header,Item,Icon,Input,Button} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Camera, Permissions, MediaLibrary } from 'expo';
+import { NavigationActions } from 'react-navigation'
 
+const whiteList = ['auto','sunny','cloudy','shadow','fluorescent','incandescent'];
+let index = 0;
 export default class Cam extends React.Component {
     //Waiting for permission will cause the camera to just display a black screen
     //because of this we need to ask for permissions elsewhere and pass them as props
     constructor(props){
         super(props);
+        this.camera = null;
         this.state = {
             hasPermission: true,
             type: Camera.Constants.Type.back,
+            mode: whiteList[0],
             img: null,
         }
     }
     
-
-/*     async componentWillMount() {
-        const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
-        this.setState({ hasPermission: status === 'granted', mounted:true});
+    componentWillMount() {
+        this.props.navigation.addListener('willBlur', (route) => 
+        {
+            console.log("TAB-XTRA");
+            this.camera = null;
+        });
     }
-
-
-    componentWillUnmount() {
-        this.setState({mounted: false});
-    } */
-
+    
     snap = async () => {
         if (this.camera) {
             const { uri } = await this.camera.takePictureAsync();
@@ -54,21 +56,25 @@ export default class Cam extends React.Component {
         }
         else {
             return (
+                //TODO: zoom on double tap
                 <View style={{ flex: 1 }}>
-                    <Camera ref={ref => { this.camera = ref; }} style={styles.container} type={this.state.type}>
-                        <View style={styles.content}>
+                    <Camera ref={ref => { this.camera = ref; }} style={styles.container} type={this.state.type} whiteBalance={this.state.mode}>
+                        <View style={styles.content}>  
                             <MaterialCommunityIcons
                                 onPress={() => {
-                                    alert("PARTY TIME");
+                                    this.setState({
+                                        mode: whiteList[index++ % whiteList.length]
+                                    });
+                                    this.camera = null;
                                 }}
-                                name="cannabis" style={{ color: 'white', fontWeight: 'bold', fontSize: 50 }}>
+                                name="cannabis" style={styles.sideButtons}>
                             </MaterialCommunityIcons>
                             <MaterialCommunityIcons
                                 onPress={() => {
                                     this.snap();
                                 }}
                                 name="circle-outline"
-                                style={{ color: 'white', fontSize: 100 }}
+                                style={styles.mainButton}
                             ></MaterialCommunityIcons>
                             <MaterialCommunityIcons
                                 onPress={() => {
@@ -78,7 +84,7 @@ export default class Cam extends React.Component {
                                             Camera.Constants.Type.back
                                     })
                                 }}
-                                name="camera-party-mode" style={{ color: 'white', fontWeight: 'bold', fontSize: 50 }}>
+                                name="camera-party-mode" style={styles.sideButtons}>
                             </MaterialCommunityIcons>
                         </View>
                     </Camera>
@@ -101,7 +107,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        marginBottom: 25,
         maxHeight: 120,
+    },
+    sideButtons:{
+        color:'white',
+        fontWeight:'bold',
+        fontSize:50,
+        marginBottom:5,
+    },
+    mainButton:{
+        fontSize:100,
+        color:'white',
+        marginBottom:30,
     }
 });
