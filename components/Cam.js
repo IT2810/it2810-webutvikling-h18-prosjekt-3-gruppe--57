@@ -1,9 +1,8 @@
 import React from 'react';
-import {Text,View,TouchableOpacity,StyleSheet,TouchableWithoutFeedback} from 'react-native';
+import {Text,View,TouchableOpacity,StyleSheet} from 'react-native';
 import{Container,Content,Header,Item,Icon,Input,Button} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Camera, Permissions, MediaLibrary } from 'expo';
-import { NavigationActions } from 'react-navigation'
+import { Camera, Permissions } from 'expo';
 
 const whiteList = ['auto','sunny','cloudy','shadow','fluorescent','incandescent'];
 let index = 0;
@@ -14,21 +13,21 @@ export default class Cam extends React.Component {
         super(props);
         this.camera = null;
         this.state = {
-            hasPermission: true,
+            hasPermission: props.hasPermission,
             type: Camera.Constants.Type.back,
             mode: whiteList[0],
             img: null,
         }
     }
-    
-    componentWillMount() {
-        this.props.navigation.addListener('willBlur', (route) => 
+
+    /*componentWillMount() {
+        this.props.navigation.addListener('willBlur', (route) =>
         {
             console.log("TAB-XTRA");
             this.camera = null;
         });
-    }
-    
+    }*/
+
     snap = async () => {
         if (this.camera) {
             const { uri } = await this.camera.takePictureAsync();
@@ -56,10 +55,9 @@ export default class Cam extends React.Component {
         }
         else {
             return (
-                //TODO: zoom on double tap
                 <View style={{ flex: 1 }}>
-                    <Camera ref={ref => { this.camera = ref; }} style={styles.container} type={this.state.type} whiteBalance={this.state.mode}>
-                        <View style={styles.content}>  
+                    <Camera style={styles.container} type={this.state.type} >
+                        <View style={styles.content}>
                             <MaterialCommunityIcons
                                 onPress={() => {
                                     this.setState({
@@ -67,15 +65,15 @@ export default class Cam extends React.Component {
                                     });
                                     this.camera = null;
                                 }}
-                                name="cannabis" style={styles.sideButtons}>
+                                name="cannabis" style={{ color: 'white', fontWeight: 'bold', fontSize: 50 }}>
                             </MaterialCommunityIcons>
                             <MaterialCommunityIcons
                                 onPress={() => {
                                     this.snap();
                                 }}
                                 name="circle-outline"
-                                style={styles.mainButton}
-                            ></MaterialCommunityIcons>
+                                style={styles.mainButton}>
+                            </MaterialCommunityIcons>
                             <MaterialCommunityIcons
                                 onPress={() => {
                                     this.setState({
