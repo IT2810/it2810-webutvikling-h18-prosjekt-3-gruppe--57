@@ -71,16 +71,17 @@ export default class HomeScreen extends React.Component {
             <ScrollView style={styles.container}>
                 {
                     list.map((l, i) => (
-                        <View style={styles.itemss} key={i}>
+                        <View style={styles.item} key={i}>
                             <View style={styles.shadow}>
                                 <LinearGradient
-                                    colors={['#17cf94', '#14bf69','#17cf94']}
+                                    colors={['#17cf94', '#14bf69', '#17cf94']}
                                     style={styles.gradient}>
-                                    <Text style={styles.getStartedText} >
+                                    <Text style={styles.getStartedText}>
                                         {l.title}
                                     </Text>
                                     <View styles={styles.diagram}>
-                                        <Progress.Circle color={'#fff'} size={150} borderWidth={1} progress={0.4} showsText={true} thickness={5}/>
+                                        <Progress.Circle color={'#fff'} size={150} borderWidth={1} progress={0.4}
+                                                         showsText={true} thickness={5}/>
                                     </View>
                                     <Text style={styles.getStartedText}>
                                         {l.date}
@@ -93,59 +94,27 @@ export default class HomeScreen extends React.Component {
             </ScrollView>
         );
     }
-
-    _maybeRenderDevelopmentModeWarning() {
-        if (__DEV__) {
-            const learnMoreButton = (
-                <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-                    Learn more
-                </Text>
-            );
-
-            return (
-                <Text style={styles.developmentModeText}>
-                    Development mode is enabled, your app will be slower but you can use useful development
-                    tools. {learnMoreButton}
-                </Text>
-            );
-        } else {
-            return (
-                <Text style={styles.developmentModeText}>
-                    You are not in development mode, your app will run at full speed.
-                </Text>
-            );
-        }
-    }
-
-    _handleLearnMorePress = () => {
-        WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-    };
-
-    _handleHelpPress = () => {
-        WebBrowser.openBrowserAsync(
-            'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-        );
-    };
 }
 
 const styles = StyleSheet.create({
-    itemss:{
+    item: {
         alignItems: 'center',
         marginBottom: 30,
+        paddingHorizontal: 10,
     },
-    diagram:{
+    diagram: {
         alignItems: 'center',
-        paddingBottom:20,
+        paddingBottom: 20,
         borderWidth: 2,
         borderColor: '#1ada00',
     },
-    shadow:{
+    shadow: {
         borderWidth: 1,
         borderRadius: 10,
         borderColor: '#ddd',
         borderBottomWidth: 0,
         shadowColor: '#000',
-        shadowOffset: { width: 10, height: 30 },
+        shadowOffset: {width: 10, height: 30},
         shadowOpacity: 0.8,
         shadowRadius: 10,
         elevation: 5,
@@ -153,7 +122,7 @@ const styles = StyleSheet.create({
         marginRight: 5,
         marginTop: 70,
         marginHorizontal: 50,
-        width:400,
+        alignSelf: 'stretch',
     },
     gradient: {
         borderRadius: 10,
