@@ -5,18 +5,19 @@ import {
     Text,
     View,
     Image,
-    AppRegistry,
-    Animated,
-    TouchableWithoutFeedback,
-    Alert,
     Modal,
     TouchableHighlight,
-    TouchableOpacity,
+    TextInput,
 } from 'react-native';
-import {Container, Content, Header, Item, Icon, Input, Button} from 'native-base';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {LinearGradient, Camera, Permissions} from 'expo';
+import {LinearGradient, Permissions, Font} from 'expo';
 import Cam from '../components/Cam.js'
+import {Icon} from 'react-native-elements'
+import ActionButton from 'react-native-action-button';
+import {Kaede} from 'react-native-textinput-effects';
+
+
+const colorUnlocked = ['#14bf69', '#17cf94'];
+const colorLocked = ['#CD3F31', '#F2686B'];
 
 
 const list = [
@@ -25,7 +26,7 @@ const list = [
         date: '02-10-18',
         time: '10:15',
         lock: 'lock-open',
-        color: ['#14bf69', '#17cf94'],
+        locked: false,
         img: require('../assets/images/something.jpg')
     },
     {
@@ -33,7 +34,7 @@ const list = [
         date: '03-10-18',
         time: '10:15',
         lock: 'lock-open',
-        color: ['#14bf69', '#17cf94'],
+        locked: false,
         img: require('../assets/images/something.jpg')
     },
     {
@@ -41,7 +42,7 @@ const list = [
         date: '07-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#CF2A39', '#ff5a4b'],
+        locked: true,
         img: require('../assets/images/something.jpg')
     },
     {
@@ -49,7 +50,7 @@ const list = [
         date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#CF2A39', '#ff5a4b'],
+        locked: true,
         img: require('../assets/images/something.jpg')
     },
     {
@@ -57,7 +58,7 @@ const list = [
         date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#CF2A39', '#ff5a4b'],
+        locked: true,
         img: require('../assets/images/something.jpg')
     },
     {
@@ -65,7 +66,7 @@ const list = [
         date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#CF2A39', '#ff5a4b'],
+        locked: true,
         img: require('../assets/images/something.jpg')
     },
     {
@@ -73,7 +74,7 @@ const list = [
         date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#CF2A39', '#ff5a4b'],
+        locked: true,
         img: require('../assets/images/something.jpg')
     },
     {
@@ -81,7 +82,7 @@ const list = [
         date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#CF2A39', '#ff5a4b'],
+        locked: true,
         img: require('../assets/images/something.jpg')
     },
     {
@@ -89,7 +90,7 @@ const list = [
         date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#CF2A39', '#ff5a4b'],
+        locked: true,
         img: require('../assets/images/something.jpg')
     },
     {
@@ -97,7 +98,7 @@ const list = [
         date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#CF2A39', '#ff5a4b'],
+        locked: true,
         img: require('../assets/images/something.jpg')
     },
     {
@@ -105,7 +106,7 @@ const list = [
         date: '10-10-18',
         time: '10:15',
         lock: 'lock',
-        color: ['#CF2A39', '#ff5a4b'],
+        locked: true,
         img: require('../assets/images/something.jpg')
     },
 ];
@@ -113,7 +114,7 @@ const list = [
 
 export default class Reminders extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             modalVisible: false,
             cameraModalVisible: false,
@@ -130,11 +131,8 @@ export default class Reminders extends React.Component {
         this.setState({hasPermission: status === 'granted'});
     }
 
-    setModalVisible(visible, color) {
-        if (color === ['#14bf69', '#17cf94']) {
-        } else {
-            this.setState({modalVisible: visible});
-        }
+    setNewModalVisible(visible) {
+        this.setState({modalVisible: visible});
     }
 
     setCameraModalVisible(visible) {
@@ -152,83 +150,93 @@ export default class Reminders extends React.Component {
         }
         else {
             return (
-                <ScrollView style={styles.container}>
-                    <Modal
-                        animationType="slide"
-                        transparent={false}
-                        visible={this.state.modalVisible}
-                        onRequestClose={() => {
-                            this.setModalVisible(!this.state.modalVisible);
-                        }}>
-                        <View style={{marginTop: 22}}>
-                            <View>
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        this.setCameraModalVisible(true);
-                                    }}>
-                                    <Text style={styles.modalText}>Camera</Text>
-                                </TouchableHighlight>
-
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        this.setModalVisible(!this.state.modalVisible, ["#000", "#000"]);
-                                    }}>
-                                    <Text style={styles.modalText}>Hide Modal</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-
+                <View style={{flex: 1, backgroundColor: '#f3f3f3'}}>
+                    <ScrollView style={styles.container}>
+                        {/*new Modal*/}
                         <Modal
-                            animationType="fade"
+                            animationType="slide"
                             transparent={false}
-                            visible={this.state.cameraModalVisible}
+                            visible={this.state.modalVisible}
                             onRequestClose={() => {
-                                this.setCameraModalVisible(!this.state.cameraModalVisible);
+                                this.setNewModalVisible(!this.state.modalVisible);
                             }}>
-                            <TouchableHighlight
-                                onPress={() => {
-                                    this.setCameraModalVisible(true);
-                                }}>
-                                <Text style={styles.modalText}>Camera</Text>
-                            </TouchableHighlight>
-                            <View style={styles.camera}>
-                                <Cam hasPermission={this.state.hasPermission}></Cam>
-                            </View>
-                        </Modal>
-                    </Modal>
-                    {
-                        list.map((l, i) => (
-                            <View style={styles.item} key={i}>
-                                <View style={styles.shadow}>
+                            <View style={{marginTop: 22}}>
+                                <View>
+                                    <Kaede
+                                        label={'Reminder'}
+                                    />
                                     <TouchableHighlight
                                         onPress={() => {
-                                            this.setModalVisible(true, l.color);
+                                            this.setCameraModalVisible(true);
                                         }}>
-                                        <LinearGradient
-                                            start={{x: 0, y: 1}}
-                                            end={{x: 1, y: 1}}
-                                            colors={l.color}
-                                            style={styles.gradient}>
-                                            <View style={styles.info1}>
-                                                <Text style={styles.dateText}>
-                                                    {l.date}
-                                                </Text>
-                                            </View>
-                                        </LinearGradient>
+                                        <Text style={styles.modalText}>Add a image hint</Text>
+                                    </TouchableHighlight>
+
+                                    <TouchableHighlight
+                                        onPress={() => {
+                                            this.setNewModalVisible(!this.state.modalVisible, ["#000", "#000"]);
+                                        }}>
+                                        <Text style={styles.modalText}>Hide Modal</Text>
                                     </TouchableHighlight>
                                 </View>
                             </View>
-                        ))
-                    }
-                </ScrollView>
+
+                            <Modal
+                                animationType="fade"
+                                transparent={false}
+                                visible={this.state.cameraModalVisible}
+                                onRequestClose={() => { this.setCameraModalVisible(!this.state.cameraModalVisible);}}>
+                                <View style={styles.camera}>
+                                    <Cam hasPermission={this.state.hasPermission}></Cam>
+                                </View>
+                            </Modal>
+                        </Modal>
+                        {
+                            list.map((l, i) => (
+                                <View style={styles.item} key={i}>
+                                    <View style={styles.shadow}>
+                                        <TouchableHighlight
+                                            onPress={() => {
+                                                console.log("You pressed an item.");
+                                            }}>
+                                            <LinearGradient
+                                                start={{x: 0, y: 1}}
+                                                end={{x: 1, y: 1}}
+                                                colors={l.locked ? colorLocked : colorUnlocked}
+                                                style={styles.gradient}>
+                                                <View style={styles.lock}>
+                                                    <Icon name={l.locked ? "lock" : "lock-open"}/>
+                                                </View>
+                                                <View style={styles.info1}>
+                                                    <Text style={styles.dateText}>
+                                                        {l.date}
+                                                    </Text>
+                                                </View>
+                                                {/*<Image style={styles.img} source={l.img} blurRadius={50}/>*/}
+                                            </LinearGradient>
+                                        </TouchableHighlight>
+                                    </View>
+                                </View>
+                            ))
+                        }
+                    </ScrollView>
+                    <ActionButton buttonColor="#000" onPress={() => {
+                        this.setNewModalVisible(!this.state.modalVisible);
+                    }}></ActionButton>
+                </View>
             );
         }
     }
 }
 
 styles = StyleSheet.create({
-    camera:{
-        flex:1
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white',
+    },
+    camera: {
+        flex: 1
     },
     lock: {
         paddingHorizontal: 20,
@@ -249,6 +257,9 @@ styles = StyleSheet.create({
         marginBottom: 5,
         marginTop: 15,
         paddingHorizontal: 10,
+    },
+    input: {
+        height: 30
     },
     shadow: {
         borderWidth: 1,
