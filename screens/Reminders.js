@@ -191,7 +191,7 @@ export default class Reminders extends React.Component {
                                 }}>
                                 <Text style={styles.modalText}>Camera</Text>
                             </TouchableHighlight>
-                            <View>
+                            <View style={styles.camera}>
                                 <Cam hasPermission={this.state.hasPermission}></Cam>
                             </View>
                         </Modal>
@@ -227,6 +227,9 @@ export default class Reminders extends React.Component {
 }
 
 styles = StyleSheet.create({
+    camera:{
+        flex:1
+    },
     lock: {
         paddingHorizontal: 20,
     },
