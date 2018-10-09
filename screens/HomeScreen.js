@@ -13,9 +13,21 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
+  constructor(props){
+    super(props);
+    this.testLocalStorage();
+  }
   static navigationOptions = {
     header: null,
   };
+
+  testLocalStorage() {
+    Storage.setItem(list[0].id, list[0]);
+    Storage.setItem(list[1].id, list[1]);
+    Storage.setItem(list[2].id, list[2]);
+
+    
+  }
 
   render() {
     return (
