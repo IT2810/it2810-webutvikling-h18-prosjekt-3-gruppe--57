@@ -9,11 +9,12 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
+import Storage from '../components/Storage';
 
 const list = [
   {
+    id: '12345',
     reminder: 'workout',
     date: '02-10-18',
     time: '10:15',
@@ -22,6 +23,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
+    id: '123456',
     reminder: 'workout',
     date: '03-10-18',
     time: '10:15',
@@ -30,6 +32,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
+    id:'1234567',
     reminder: 'workout',
     date: '07-10-18',
     time: '10:15',
@@ -38,6 +41,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
+    id:'12345678',
     reminder: 'workout',
     date: '10-10-18',
     time: '10:15',
@@ -46,6 +50,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
+    id:'123456789',
     reminder: 'workout',
     date: '10-10-18',
     time: '10:15',
@@ -102,6 +107,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
 ];
+
 export default class HomeScreen extends React.Component {
   constructor(props){
     super(props);
@@ -116,6 +122,7 @@ export default class HomeScreen extends React.Component {
     Storage.setItem(list[1].id, list[1]);
     Storage.setItem(list[2].id, list[2]);
 
+    Storage.getAll();
     
   }
 
