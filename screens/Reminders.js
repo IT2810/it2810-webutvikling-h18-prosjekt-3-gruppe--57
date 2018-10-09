@@ -123,8 +123,8 @@ export default class Reminders extends React.Component {
     }
 
     static navigationOptions = {
-        title: 'Reminders',
-    };
+        header: null
+    }; 
 
     async componentWillMount() {
         const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
