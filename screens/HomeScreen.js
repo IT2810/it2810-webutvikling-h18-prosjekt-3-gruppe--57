@@ -12,6 +12,96 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
+const list = [
+  {
+    reminder: 'workout',
+    date: '02-10-18',
+    time: '10:15',
+    lock: 'lock-open',
+    locked: false,
+    img: require('../assets/images/something.jpg')
+  },
+  {
+    reminder: 'workout',
+    date: '03-10-18',
+    time: '10:15',
+    lock: 'lock-open',
+    locked: false,
+    img: require('../assets/images/something.jpg')
+  },
+  {
+    reminder: 'workout',
+    date: '07-10-18',
+    time: '10:15',
+    lock: 'lock',
+    locked: true,
+    img: require('../assets/images/something.jpg')
+  },
+  {
+    reminder: 'workout',
+    date: '10-10-18',
+    time: '10:15',
+    lock: 'lock',
+    locked: true,
+    img: require('../assets/images/something.jpg')
+  },
+  {
+    reminder: 'workout',
+    date: '10-10-18',
+    time: '10:15',
+    lock: 'lock',
+    locked: true,
+    img: require('../assets/images/something.jpg')
+  },
+  {
+    reminder: 'workout',
+    date: '10-10-18',
+    time: '10:15',
+    lock: 'lock',
+    locked: true,
+    img: require('../assets/images/something.jpg')
+  },
+  {
+    reminder: 'workout',
+    date: '10-10-18',
+    time: '10:15',
+    lock: 'lock',
+    locked: true,
+    img: require('../assets/images/something.jpg')
+  },
+  {
+    reminder: 'workout',
+    date: '10-10-18',
+    time: '10:15',
+    lock: 'lock',
+    locked: true,
+    img: require('../assets/images/something.jpg')
+  },
+  {
+    reminder: 'workout',
+    date: '10-10-18',
+    time: '10:15',
+    lock: 'lock',
+    locked: true,
+    img: require('../assets/images/something.jpg')
+  },
+  {
+    reminder: 'workout',
+    date: '10-10-18',
+    time: '10:15',
+    lock: 'lock',
+    locked: true,
+    img: require('../assets/images/something.jpg')
+  },
+  {
+    reminder: 'workout',
+    date: '10-10-18',
+    time: '10:15',
+    lock: 'lock',
+    locked: true,
+    img: require('../assets/images/something.jpg')
+  },
+];
 export default class HomeScreen extends React.Component {
   constructor(props){
     super(props);
