@@ -18,6 +18,14 @@ class Storage {
     }
   }
 
+  async setItems(reminders){
+    try {
+      return await AsyncStorage.multiSet(reminders);
+    } catch (error) {
+      console.log("Storage/setItems returned error: " + error);
+    }
+  }
+
   async getAll() {
     try {
       const keys = await AsyncStorage.getAllKeys();
@@ -39,7 +47,14 @@ class Storage {
     }
   }
 
-  async deleteAll() {}
+  async deleteAll() {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      return await AsyncStorage.multiRemove(keys);
+    } catch (error) {
+      console.log("Storage/deleteAll returned errro:" + error);
+    }
+  }
 
   async checkIfKeyExists(reminderID) {
     try {

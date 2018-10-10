@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Button
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
@@ -14,7 +15,7 @@ import Storage from '../components/Storage';
 
 const list = [
   {
-    id: '12345',
+    id: '1',
     reminder: 'workout',
     date: '02-10-18',
     time: '10:15',
@@ -23,7 +24,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
-    id: '123456',
+    id: '2',
     reminder: 'workout',
     date: '03-10-18',
     time: '10:15',
@@ -32,7 +33,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
-    id:'1234567',
+    id:'3',
     reminder: 'workout',
     date: '07-10-18',
     time: '10:15',
@@ -41,7 +42,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
-    id:'12345678',
+    id:'4',
     reminder: 'workout',
     date: '10-10-18',
     time: '10:15',
@@ -50,7 +51,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
-    id:'123456789',
+    id:'5',
     reminder: 'workout',
     date: '10-10-18',
     time: '10:15',
@@ -59,6 +60,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
+    id: '6',
     reminder: 'workout',
     date: '10-10-18',
     time: '10:15',
@@ -67,6 +69,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
+    id:'7',
     reminder: 'workout',
     date: '10-10-18',
     time: '10:15',
@@ -75,6 +78,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
+    id:'8',
     reminder: 'workout',
     date: '10-10-18',
     time: '10:15',
@@ -83,6 +87,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
+    id:'9',
     reminder: 'workout',
     date: '10-10-18',
     time: '10:15',
@@ -91,6 +96,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
+    id:'10',
     reminder: 'workout',
     date: '10-10-18',
     time: '10:15',
@@ -99,6 +105,7 @@ const list = [
     img: require('../assets/images/something.jpg')
   },
   {
+    id:'11',
     reminder: 'workout',
     date: '10-10-18',
     time: '10:15',
@@ -108,74 +115,51 @@ const list = [
   },
 ];
 
+var reminders = [];
+
 export default class HomeScreen extends React.Component {
   constructor(props){
     super(props);
-    this.testLocalStorage();
+    this.state = {reminders: []}
+    this.testLocalStorage = this.testLocalStorage.bind(this);
+    this.deleteStorage= this.deleteStorage.bind(this);
   }
   static navigationOptions = {
     header: null,
   };
 
   testLocalStorage() {
-    Storage.setItem(list[0].id, list[0]);
-    Storage.setItem(list[1].id, list[1]);
-    Storage.setItem(list[2].id, list[2]);
+    var tmp = [];
+    list.forEach(element => {
+      tmp.push([element.id,JSON.stringify(element)]);
+    });
+    Storage.setItems(tmp).then(() =>{
+      Storage.getAll().then((res) => {
+        this.setState({reminders: res});
+      })
+    });
+  }
 
-    Storage.getItem(list[1].id).then((item)=>{
-      if(item != null) console.log("heiheiheieh:"+item);
-      else console.log("FEIL");
+  deleteStorage(){
+    Storage.deleteAll().then(() =>{
+      Storage.getAll().then((res) => {
+        this.setState({reminders:res});
+      })
     })
-
-    Storage.checkIfKeyExists(list[1].id).then((res) => {
-      console.log("KEY:"+res);
-    })
-    
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
+      <View>
+        {
+          this.state.reminders.map((l, i) => (
+            <View key={i}>
+              <Text> {l[1]} </Text>
             </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
+          ))
+        }
+        <Button onPress={this.testLocalStorage} title="Touch Me"></Button>
+        <Button onPress={this.deleteStorage} title="I want to feel your body" color="red"></Button>
       </View>
     );
   }
