@@ -109,6 +109,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 30,
         paddingHorizontal: 10,
+        borderColor:'red',
+        backgroundColor:'#ffffff'
     },
     diagram: {
         alignItems: 'center',
@@ -128,7 +130,8 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginLeft: 5,
         marginRight: 5,
-        marginTop: 70,
+        marginTop: 10,
+        marginBottom: 10,
         marginHorizontal: 50,
         alignSelf: 'stretch',
     },
