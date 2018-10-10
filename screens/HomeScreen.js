@@ -122,7 +122,14 @@ export default class HomeScreen extends React.Component {
     Storage.setItem(list[1].id, list[1]);
     Storage.setItem(list[2].id, list[2]);
 
-    Storage.getAll();
+    Storage.getItem(list[1].id).then((item)=>{
+      if(item != null) console.log("heiheiheieh:"+item);
+      else console.log("FEIL");
+    })
+
+    Storage.checkIfKeyExists(list[1].id).then((res) => {
+      console.log("KEY:"+res);
+    })
     
   }
 
