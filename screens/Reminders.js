@@ -119,7 +119,10 @@ export default class Reminders extends React.Component {
             modalVisible: false,
             cameraModalVisible: false,
             hasPermission: null,
+            img: null,
+            icon: null
         };
+        this.setPicture = this.setPicture.bind(this);
     }
 
     static navigationOptions = {
@@ -137,6 +140,10 @@ export default class Reminders extends React.Component {
 
     setCameraModalVisible(visible) {
         this.setState({cameraModalVisible: visible});
+    }
+
+    setPicture(image, ic){
+        this.setState({img:image,icon:ic});
     }
 
     render() {
@@ -165,6 +172,10 @@ export default class Reminders extends React.Component {
                                     <Kaede
                                         label={'Reminder'}
                                     />
+                                    <Image
+                                        style={{ width: 200, height: 200 }}
+                                        source={{isStatic:true, uri: this.state.img }}
+                                    />
                                     <TouchableHighlight
                                         onPress={() => {
                                             this.setCameraModalVisible(true);
@@ -187,7 +198,7 @@ export default class Reminders extends React.Component {
                                 visible={this.state.cameraModalVisible}
                                 onRequestClose={() => { this.setCameraModalVisible(!this.state.cameraModalVisible);}}>
                                 <View style={styles.camera}>
-                                    <Cam hasPermission={this.state.hasPermission}></Cam>
+                                    <Cam hasPermission={this.state.hasPermission} setPicture={this.setPicture} hide={()=>{this.setCameraModalVisible(!this.state.cameraModalVisible);}}></Cam>
                                 </View>
                             </Modal>
                         </Modal>
