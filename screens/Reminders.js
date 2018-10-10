@@ -116,25 +116,25 @@ export default class Reminders extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            img: null,
+            icon: null,
             modalVisible: false,
             cameraModalVisible: false,
             hasPermission: null,
-            img: null,
-            icon: null
         };
         this.setPicture = this.setPicture.bind(this);
     }
 
     static navigationOptions = {
         header: null
-    }; 
+    };
 
     async componentWillMount() {
         const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
         this.setState({hasPermission: status === 'granted'});
     }
 
-    setNewModalVisible(visible) {
+    setNewReminderModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
 
@@ -165,31 +165,45 @@ export default class Reminders extends React.Component {
                             transparent={false}
                             visible={this.state.modalVisible}
                             onRequestClose={() => {
-                                this.setNewModalVisible(!this.state.modalVisible);
+                                this.setNewReminderModalVisible(!this.state.modalVisible);
                             }}>
                             <View style={{marginTop: 22}}>
-                                <View>
-                                    <Kaede
-                                        label={'Reminder'}
-                                    />
+                                <ScrollView>
+                                    <View style={styles.inputChooses}>
+                                        <Kaede label={'Reminder'}/>
+                                    </View>
                                     <Image
                                         style={{ width: 200, height: 200 }}
                                         source={{isStatic:true, uri: this.state.img }}
                                     />
-                                    <TouchableHighlight
-                                        onPress={() => {
-                                            this.setCameraModalVisible(true);
-                                        }}>
-                                        <Text style={styles.modalText}>Add a image hint</Text>
-                                    </TouchableHighlight>
-
-                                    <TouchableHighlight
-                                        onPress={() => {
-                                            this.setNewModalVisible(!this.state.modalVisible, ["#000", "#000"]);
-                                        }}>
-                                        <Text style={styles.modalText}>Hide Modal</Text>
-                                    </TouchableHighlight>
-                                </View>
+                                    <View style={styles.inputChooses}>
+                                        <TouchableHighlight
+                                            style={styles.button}
+                                            onPress={() => {
+                                                this.setCameraModalVisible(true);
+                                            }}>
+                                            <Text style={styles.modalText2}>Add image hint</Text>
+                                        </TouchableHighlight>
+                                    </View>
+                                    <View style={styles.inputChooses}>
+                                        <TouchableHighlight
+                                            style={styles.buttonSave}
+                                            onPress={() => {
+                                                this.setNewReminderModalVisible(!this.state.modalVisible, ["#000", "#000"]);
+                                            }}>
+                                            <Text style={styles.modalText2}>Save</Text>
+                                        </TouchableHighlight>
+                                    </View>
+                                    <View style={styles.inputChooses}>
+                                        <TouchableHighlight
+                                            style={styles.buttonQuit}
+                                            onPress={() => {
+                                                this.setNewReminderModalVisible(!this.state.modalVisible, ["#000", "#000"]);
+                                            }}>
+                                            <Text style={styles.modalText2}>Quit</Text>
+                                        </TouchableHighlight>
+                                    </View>
+                                </ScrollView>
                             </View>
 
                             <Modal
@@ -197,8 +211,10 @@ export default class Reminders extends React.Component {
                                 transparent={false}
                                 visible={this.state.cameraModalVisible}
                                 onRequestClose={() => { this.setCameraModalVisible(!this.state.cameraModalVisible);}}>
-                                <View style={styles.camera}>
-                                    <Cam hasPermission={this.state.hasPermission} setPicture={this.setPicture} hide={()=>{this.setCameraModalVisible(!this.state.cameraModalVisible);}}></Cam>
+                                <View style={{flex:1,alignItems:"center"}}>
+                                    <View style={styles.camera}>
+                                        <Cam hasPermission={this.state.hasPermission} setPicture={this.setPicture} hide={()=>{this.setCameraModalVisible(!this.state.cameraModalVisible);}}></Cam>
+                                    </View>
                                 </View>
                             </Modal>
                         </Modal>
@@ -206,7 +222,7 @@ export default class Reminders extends React.Component {
                             list.map((l, i) => (
                                 <View style={styles.item} key={i}>
                                     <View style={styles.shadow}>
-                                        <TouchableHighlight
+                                        <TouchableHighlight underlayColor={"#f1f1f1"} style={{borderRadius: 10}}
                                             onPress={() => {
                                                 console.log("You pressed an item.");
                                             }}>
@@ -231,9 +247,7 @@ export default class Reminders extends React.Component {
                             ))
                         }
                     </ScrollView>
-                    <ActionButton buttonColor="#000" onPress={() => {
-                        this.setNewModalVisible(!this.state.modalVisible);
-                    }}></ActionButton>
+                    <ActionButton buttonColor="#000" onPress={() => {this.setNewReminderModalVisible(!this.state.modalVisible);}}></ActionButton>
                 </View>
             );
         }
@@ -241,13 +255,31 @@ export default class Reminders extends React.Component {
 }
 
 styles = StyleSheet.create({
+    inputChooses: {
+        paddingVertical:10,
+    },
+    button: {
+        alignItems: 'center',
+        backgroundColor: '#DDDDDD',
+        padding: 10
+    },
+    buttonSave:{
+        alignItems: 'center',
+        backgroundColor: '#17cf94',
+        padding: 10
+    },
+    buttonQuit: {
+        alignItems: 'center',
+        backgroundColor: '#F2686B',
+        padding: 10
+    },
     actionButtonIcon: {
         fontSize: 20,
         height: 22,
         color: 'white',
     },
     camera: {
-        flex: 1
+        aspectRatio: 4/5,
     },
     lock: {
         paddingHorizontal: 20,
@@ -306,6 +338,12 @@ styles = StyleSheet.create({
     modalText: {
         margin: 10,
         fontSize: 27,
+        color: '#000',
+        textAlign: 'center',
+    },
+    modalText2: {
+        margin: 10,
+        fontSize: 17,
         color: '#000',
         textAlign: 'center',
     }

@@ -103,14 +103,12 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: 'column',
         justifyContent:'flex-end',
-        borderColor:'blue',
-        borderWidth: 10,
+        alignItems:'center',
     },
     content:{
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
         maxHeight: 120,
     },
     sideButtons:{
@@ -123,5 +121,6 @@ const styles = StyleSheet.create({
         fontSize:100,
         color:'white',
         marginBottom:30,
+        marginHorizontal:30,
     }
 });
