@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     ScrollView,
-    StyleSheet,
     Text,
     View,
     Image,
@@ -9,13 +8,10 @@ import {
     TouchableHighlight,
 } from 'react-native';
 import Cam from '../components/Cam.js'
-import ActionButton from 'react-native-action-button';
 import {Kaede} from 'react-native-textinput-effects';
-import createStyles from '../styles/ReminderStyle.js'
+import createStyles from '../styles/ModalNewReminderStyle.js'
 
 const styles = createStyles();
-let openModal = false;
-let cameraOpen = false;
 
 export default class ModalNewReminder extends React.Component {
     constructor(props) {
@@ -23,6 +19,7 @@ export default class ModalNewReminder extends React.Component {
         this.state = {
             img: null,
             icon: null,
+            modalVisible: false,
             cameraModalVisible: false,
             hasPermission: props.hasPermission,
         };
@@ -30,16 +27,17 @@ export default class ModalNewReminder extends React.Component {
         console.log("ModalVisible inside the constructor: "+this.state.modalVisible)
     }
 
+    componentWillReceiveProps(props){
+        this.setState({modalVisible: props.modalVisible})
+    }
+
 
     setNewReminderModalVisible(visible) {
         this.setState({modalVisible: visible});
-        openModal = false;
     }
 
     setCameraModalVisible(visible) {
         this.setState({cameraModalVisible: visible});
-        cameraOpen = visible;
-        openModal = true;
     }
 
     setPicture(image, ic){
@@ -47,21 +45,13 @@ export default class ModalNewReminder extends React.Component {
     }
 
     render() {
-        if ((!openModal && !cameraOpen)){
-            openModal = true;
-        }else{
-            openModal = false;
-        }
-        console.log("The open Modal variable: "+openModal);
-        console.log("Render of Modal");
-        console.log("ModalVisible inside the render: "+this.props.modalVisible);
         return (
             <Modal
                 animationType="slide"
                 transparent={false}
-                visible={!openModal}
+                visible={this.state.modalVisible}
                 onRequestClose={() => {
-                    this.setNewReminderModalVisible(false);
+                    this.props.setClose(false);
                 }}>
                 <View style={{marginTop: 22}}>
                     <ScrollView>
@@ -85,7 +75,7 @@ export default class ModalNewReminder extends React.Component {
                             <TouchableHighlight
                                 style={styles.buttonSave}
                                 onPress={() => {
-                                    this.setNewReminderModalVisible(false);
+                                    this.props.setClose(false);
                                 }}>
                                 <Text style={styles.modalText2}>Save</Text>
                             </TouchableHighlight>
@@ -94,7 +84,7 @@ export default class ModalNewReminder extends React.Component {
                             <TouchableHighlight
                                 style={styles.buttonQuit}
                                 onPress={() => {
-                                    this.setNewReminderModalVisible(false);
+                                    this.props.setClose(false);
                                 }}>
                                 <Text style={styles.modalText2}>Quit</Text>
                             </TouchableHighlight>

@@ -1,17 +1,14 @@
 import React from 'react';
 import {
     ScrollView,
-    StyleSheet,
     Text,
     View,
     Image,
     Modal,
     TouchableHighlight,
 } from 'react-native';
-import Cam from '../components/Cam.js'
-import ActionButton from 'react-native-action-button';
 import {Kaede} from 'react-native-textinput-effects';
-import createStyles from '../styles/ReminderStyle.js'
+import createStyles from '../styles/ModalNewReminderStyle.js'
 
 const styles = createStyles();
 let openModal = false;
@@ -21,36 +18,59 @@ export default class ModalExample extends React.Component {
         modalVisible: false,
     };
 
+    componentWillReceiveProps(props){
+        this.setState({modalVisible: props.modalVisible})
+    }
+
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
 
     render() {
-        if ((!openModal)){
-            openModal = true;
-        }else{
-            openModal = false;
-        }
         return (
             <Modal
                 animationType="slide"
                 transparent={false}
-                visible={openModal}
+                visible={this.state.modalVisible}
                 onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
+                    this.props.setClose(false);
                 }}>
-                <View style={{marginTop: 22}}>
-                    <View>
-                        <Text>Hello World!</Text>
-
+                <ScrollView style={{marginTop: 22}}>
+                    <View style={styles.inputChooses}>
+                        <Kaede label={'Remember your reminder?'}/>
+                    </View>
+                    <Image
+                        style={{width: 200, height: 200 }}
+                        source={{isStatic:true, uri: this.state.img }}
+                    />
+                    <View style={styles.inputChooses}>
                         <TouchableHighlight
+                            style={styles.button}
                             onPress={() => {
-                                this.setModalVisible(!this.state.modalVisible);
+                                alert("Find image!");
                             }}>
-                            <Text>Hide Modal</Text>
+                            <Text style={styles.modalText2}>View Image Hint</Text>
                         </TouchableHighlight>
                     </View>
-                </View>
+                    <View style={styles.inputChooses}>
+                        <TouchableHighlight
+                            style={styles.buttonSave}
+                            onPress={() => {
+                                this.props.setClose(false);
+                            }}>
+                            <Text style={styles.modalText2}>Check</Text>
+                        </TouchableHighlight>
+                    </View>
+                    <View style={styles.inputChooses}>
+                        <TouchableHighlight
+                            style={styles.buttonQuit}
+                            onPress={() => {
+                                this.props.setClose(false);
+                            }}>
+                            <Text style={styles.modalText2}>Quit</Text>
+                        </TouchableHighlight>
+                    </View>
+                </ScrollView>
             </Modal>
         );
     }
