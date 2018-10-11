@@ -86,6 +86,7 @@ export default class HomeScreen extends React.Component {
                             </Text>
                             <Text style={styles.scorePointText}>
                                 {this.state.points}
+
                                 {/*<AnimateNumber value={this.state.points}
                                                countBy={14}
                                                timing={(interval, progress) => {
