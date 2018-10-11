@@ -14,11 +14,10 @@ import {Icon} from 'react-native-elements'
 import ActionButton from 'react-native-action-button';
 import createStyles from '../styles/ReminderStyle.js'
 
+const styles = createStyles();
 
 const colorUnlocked = ['#14bf69', '#17cf94'];
 const colorLocked = ['#CD3F31', '#F2686B'];
-
-const styles = createStyles();
 
 const list = [
     {
@@ -118,6 +117,13 @@ export default class Reminders extends React.Component {
         this.state = {
             hasPermission: null,
             modalVisible: false,
+            modalInspectVisible: false,
+            setClose: function(visible) {
+                this.setState({modalVisible:visible});
+            },
+            setInspectClose: function(visible){
+                this.setState({modalInspectVisible:visible});
+            }
         };
     }
 
@@ -128,6 +134,14 @@ export default class Reminders extends React.Component {
     async componentWillMount() {
         const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
         this.setState({hasPermission: status === 'granted'});
+    }
+
+    safetySwitch(lock){
+        if(!lock){
+            this.setState({modalInspectVisible:true})
+        }else{
+            alert("This reminder is locked.") //This reminder is locked, by proceeding you will loose points. Continue?
+        }
     }
 
     render() {
@@ -144,15 +158,16 @@ export default class Reminders extends React.Component {
             return (
                 <View style={{flex: 1, backgroundColor: '#f3f3f3',borderRadius:0}}>
                     <ScrollView style={styles.container}>
-                        {/*new Modal*/}
-                        <ModalNewReminder hasPermission={this.state.hasPermission}/>
+                        <ModalNewReminder hasPermission={this.state.hasPermission} modalVisible={this.state.modalVisible} setClose={this.state.setClose.bind(this)}/>
+                        <ModalInspectReminder modalVisible={this.state.modalInspectVisible} setClose={this.state.setInspectClose.bind(this)}/>
                         {
                             list.map((l, i) => (
                                 <View style={styles.item} key={i}>
                                     <View style={styles.shadow}>
                                         <TouchableHighlight underlayColor={"#f1f1f1"} style={{borderRadius: 10}}
                                             onPress={() => {
-                                                console.log("You pressed an item.");
+                                                console.log("hallo: "+l.locked);
+                                                this.safetySwitch(l.locked);
                                             }}>
                                             <LinearGradient
                                                 start={{x: 0, y: 1}}

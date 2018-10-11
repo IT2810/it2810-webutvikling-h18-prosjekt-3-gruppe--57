@@ -14,7 +14,6 @@ import AnimateNumber from 'react-native-countup'
 import { StackedAreaChart } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
 
-
 const styles = createStyles();
 
 
@@ -69,7 +68,6 @@ export default class HomeScreen extends React.Component {
                 { onPress: () => console.log('dates') },]
         };
     }
-
     static navigationOptions = {
         header: null,
     };
@@ -77,81 +75,82 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                {
-                    list.map((l, i) => (
-                        <View style={styles.item} key={i}>
-                            <View style={styles.shadow}>
-                                <LinearGradient
-                                    colors={['#17cf94', '#14bf69', '#17cf94']}
-                                    style={styles.gradient}>
-                                    <Text style={styles.getStartedText}>
-                                        {l.title}
-                                    </Text>
-                                    <View styles={styles.diagram}>
-                                        <Progress.Circle color={'#fff'} size={150} borderWidth={1} progress={0.4}
-                                                         showsText={true} thickness={5}/>
-                                    </View>
-                                    <Text style={styles.getStartedText}>
-                                        {l.date}
-                                    </Text>
-                                </LinearGradient>
+                <View style={styles.item}>
+
+                    {/*score info*/}
+                    <View style={styles.shadow}>
+                        <LinearGradient
+                            colors={this.state.colorPallet[1]}
+                            style={styles.gradient}>
+                            <Text style={styles.getStartedText}>Score
+                            </Text>
+                            <Text style={styles.scorePointText}>
+                                {this.state.points}
+
+                                {/*<AnimateNumber value={this.state.points}
+                                               countBy={14}
+                                               timing={(interval, progress) => {
+                                                   // slow start, slow end
+                                                   return interval * (1 - Math.sin(Math.PI*progress) )*10
+                                               }}/>*/}
+                            </Text>
+                            <Text style={styles.getStartedText}>
+                                Points
+                            </Text>
+                        </LinearGradient>
+                    </View>
+
+
+                    <View style={styles.shadow}>
+                        <LinearGradient
+                            colors={this.state.colorPallet[1]}
+                            style={styles.gradient}>
+                            <Text style={styles.getStartedText}>
+                                Success Percentage
+                            </Text>
+                            <View styles={styles.diagram}>
+                                <Progress.Circle color={'#fff'} size={150} borderWidth={1} progress={0.4} showsText={true} thickness={5}/>
                             </View>
-                        </View>
-                    ))
-                }
+                            <Text style={styles.getStartedText}>
+                                Nice
+                            </Text>
+                        </LinearGradient>
+                    </View>
+
+                    <View style={styles.shadow}>
+                        <LinearGradient
+                            colors={this.state.colorPallet[1]}
+                            style={styles.gradient}>
+                            <Text style={styles.getStartedText}>
+                                Active Reminders
+                            </Text>
+                            <Text style={styles.scorePointText}>
+                                {this.state.activeReminders}
+                                {/*<AnimateNumber value={this.state.points}
+                                               countBy={14}
+                                               timing={(interval, progress) => {
+                                                   // slow start, slow end
+                                                   return interval * (1 - Math.sin(Math.PI*progress) )*10
+                                               }}/>*/}
+                            </Text>
+                            <Text style={styles.getStartedText}>
+                                Points
+                            </Text>
+                        </LinearGradient>
+                    </View>
+
+
+                </View>
+                <StackedAreaChart
+                    style={ { height: 200, } }
+                    data={ this.state.data }
+                    keys={ this.state.keys }
+                    colors={ this.state.colorGradientR }
+                    curve={ shape.curveNatural }
+                    showGrid={ false }
+                    svgs={ this.state.svgs }
+                />
             </ScrollView>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    item: {
-        alignItems: 'center',
-        marginBottom: 30,
-        paddingHorizontal: 10,
-        borderColor:'red',
-        backgroundColor:'#ffffff'
-    },
-    diagram: {
-        alignItems: 'center',
-        paddingBottom: 20,
-        borderWidth: 2,
-        borderColor: '#1ada00',
-    },
-    shadow: {
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: '#ddd',
-        borderBottomWidth: 0,
-        shadowColor: '#000',
-        shadowOffset: {width: 10, height: 30},
-        shadowOpacity: 0.8,
-        shadowRadius: 10,
-        elevation: 5,
-        marginLeft: 5,
-        marginRight: 5,
-        marginTop: 10,
-        marginBottom: 10,
-        marginHorizontal: 50,
-        alignSelf: 'stretch',
-    },
-    gradient: {
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-    },
-    getStartedText: {
-        margin: 10,
-        fontSize: 27,
-        color: '#ffffff',
-        textAlign: 'center',
-        /*borderRadius: 10,
-        borderWidth: 2,
-        borderColor: '#1ada00',*/
-    },
-});
->>>>>>> 71d3f564... Merge fix and addition to the double modal. #3
