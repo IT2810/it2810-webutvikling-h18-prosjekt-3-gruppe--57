@@ -13,6 +13,7 @@ import ModalInspectReminder from '../components/ModalInspectReminder.js'
 import {Icon} from 'react-native-elements'
 import ActionButton from 'react-native-action-button';
 import createStyles from '../styles/ReminderStyle.js'
+import Storage from '../components/Storage.js';
 
 const styles = createStyles();
 
@@ -109,7 +110,40 @@ const list = [
         img: require('../assets/images/something.jpg')
     },
 ];
-
+const arr = [
+    {
+        reminder: 'NOPAINNOGAIN',
+        date: '02-10-18',
+        time: '10:15',
+        lock: 'lock-open',
+        locked: false,
+        img: require('../assets/images/something.jpg')
+    },
+    {
+        reminder: 'NOPAINNOGAIN',
+        date: '02-10-18',
+        time: '10:15',
+        lock: 'lock-open',
+        locked: false,
+        img: require('../assets/images/something.jpg')
+    },
+    {
+        reminder: 'NOPAINNOGAIN',
+        date: '02-10-18',
+        time: '10:15',
+        lock: 'lock-open',
+        locked: false,
+        img: require('../assets/images/something.jpg')
+    },
+    {
+        reminder: 'NOPAINNOGAIN',
+        date: '02-10-18',
+        time: '10:15',
+        lock: 'lock-open',
+        locked: false,
+        img: require('../assets/images/something.jpg')
+    },
+];
 
 export default class Reminders extends React.Component {
     constructor(props) {
@@ -117,6 +151,7 @@ export default class Reminders extends React.Component {
         this.state = {
             hasPermission: null,
             modalVisible: false,
+            reminders: [],
             modalInspectVisible: false,
             setClose: function(visible) {
                 this.setState({modalVisible:visible});
@@ -125,6 +160,7 @@ export default class Reminders extends React.Component {
                 this.setState({modalInspectVisible:visible});
             }
         };
+        this.getItems = this.getItems.bind(this);
     }
 
     static navigationOptions = {
@@ -132,6 +168,7 @@ export default class Reminders extends React.Component {
     };
 
     async componentWillMount() {
+        this.props.navigation.addListener("willFocus", this.getItems);
         const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
         this.setState({hasPermission: status === 'granted'});
     }
@@ -144,7 +181,26 @@ export default class Reminders extends React.Component {
         }
     }
 
+    //simple function for testing purposes 
+    //fills asyncStorage with items
+    addItems(items){
+        items.forEach((element,i) => {
+            Storage.setItem(i.toString(),element);
+        });
+        Storage.getAll().then((res)=>{
+            console.log("RESULT:"+res);
+        });
+    }
+
+    getItems(){
+        Storage.getAll().then((res)=>{
+            this.setState({ reminders: res });
+        }); 
+        //Storage.deleteAll(); //use this to reset asyncstorage 
+    }
+
     render() {
+        console.log(this.state.reminders);
         const hasPermission = this.state.hasPermission;
         console.log(hasPermission);
         console.log("The value of modalVisible in Reminders: "+this.state.modalVisible);
@@ -158,10 +214,10 @@ export default class Reminders extends React.Component {
             return (
                 <View style={{flex: 1, backgroundColor: '#f3f3f3',borderRadius:0}}>
                     <ScrollView style={styles.container}>
-                        <ModalNewReminder hasPermission={this.state.hasPermission} modalVisible={this.state.modalVisible} setClose={this.state.setClose.bind(this)}/>
+                        <ModalNewReminder hasPermission={this.state.hasPermission} modalVisible={this.state.modalVisible} setClose={this.state.setClose.bind(this)} refresh={this.getItems}/>
                         <ModalInspectReminder modalVisible={this.state.modalInspectVisible} setClose={this.state.setInspectClose.bind(this)}/>
                         {
-                            list.map((l, i) => (
+                            this.state.reminders.map((l, i) => (
                                 <View style={styles.item} key={i}>
                                     <View style={styles.shadow}>
                                         <TouchableHighlight underlayColor={"#f1f1f1"} style={{borderRadius: 10}}

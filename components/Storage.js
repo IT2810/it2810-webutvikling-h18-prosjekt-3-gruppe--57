@@ -28,9 +28,13 @@ class Storage {
 
   async getAll() {
     try {
+      let res = [];
       const keys = await AsyncStorage.getAllKeys();
       const obj = await AsyncStorage.multiGet(keys); 
-      return obj;
+      obj.forEach(element => {
+        res.push(JSON.parse(element[1]));
+      });
+      return res;
     } catch (error) {
       console.log("Storage/getAll returned error: " + error);
     }

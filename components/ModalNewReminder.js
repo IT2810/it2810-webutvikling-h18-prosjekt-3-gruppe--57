@@ -10,6 +10,7 @@ import {
 import Cam from '../components/Cam.js'
 import {Kaede} from 'react-native-textinput-effects';
 import createStyles from '../styles/ModalNewReminderStyle.js'
+import Storage from './Storage.js';
 
 const styles = createStyles();
 
@@ -19,6 +20,9 @@ export default class ModalNewReminder extends React.Component {
         this.state = {
             img: null,
             icon: null,
+            textValue:null,
+            dateValue:null,
+            timeValue:null,
             modalVisible: false,
             cameraModalVisible: false,
             hasPermission: props.hasPermission,
@@ -44,6 +48,20 @@ export default class ModalNewReminder extends React.Component {
         this.setState({img: image, icon: ic});
     }
 
+    async createReminder(reminder,date,time,img){
+        let bourne_identity = await Storage.generateID();
+        let obj = {
+            id: bourne_identity,
+            reminder: reminder,
+            date: date,
+            time: time,
+            lock: 'lock-open',
+            locked: false,
+            img: img
+        }
+        Storage.setItem(obj.id,obj);
+    }
+
     render() {
         return (
             <Modal
@@ -56,7 +74,13 @@ export default class ModalNewReminder extends React.Component {
                 <View style={{marginTop: 22}}>
                     <ScrollView>
                         <View style={styles.inputChooses}>
-                            <Kaede label={'Reminder'}/>
+                            <Kaede onChangeText={(text) => { this.setState({textValue:text})} } label={'Reminder'}/>
+                        </View>
+                        <View style={styles.inputChooses}>
+                            <Kaede onChangeText={(text) => { this.setState({dateValue:text})} } label={'Date'}/>
+                        </View>
+                        <View style={styles.inputChooses}>
+                            <Kaede onChangeText={(text) => { this.setState({timeValue:text})} } label={'Time'}/>
                         </View>
                         <ScrollView style={{height:200}}>
                             <Image
@@ -77,7 +101,11 @@ export default class ModalNewReminder extends React.Component {
                             <TouchableHighlight
                                 style={styles.buttonSave}
                                 onPress={() => {
-                                    this.props.setClose(false);
+                                    this.createReminder(this.state.textValue, this.state.dateValue, this.state.timeValue, this.state.img)
+                                        .then(()=>{
+                                            this.props.refresh();
+                                            this.props.setClose(false);
+                                        });
                                 }}>
                                 <Text style={styles.modalText2}>Save</Text>
                             </TouchableHighlight>
