@@ -8,25 +8,31 @@ import {
     TouchableHighlight,
 } from 'react-native';
 import {Kaede} from 'react-native-textinput-effects';
-import createStyles from '../styles/ModalNewReminderStyle.js'
+import createStyles from '../styles/ModalInspectStyle.js'
 
 const styles = createStyles();
 let openModal = false;
 
-export default class ModalExample extends React.Component {
-    state = {
-        modalVisible: false,
-    };
-
-    componentWillReceiveProps(props){
-        this.setState({modalVisible: props.modalVisible})
+export default class ModalInspectReminder extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            modalVisible: false,
+            id:false,
+        };
     }
 
-    setModalVisible(visible) {
-        this.setState({modalVisible: visible});
+    componentWillReceiveProps(props){
+        this.setState({modalVisible: props.modalVisible,
+                        id:props.id})
+    }
+
+    setImage(){
+        alert("Find image! This element id: "+this.state.id);
     }
 
     render() {
+        console.log("on render inside ModalInspect id: "+this.state.id);
         return (
             <Modal
                 animationType="slide"
@@ -47,7 +53,7 @@ export default class ModalExample extends React.Component {
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => {
-                                alert("Find image!");
+                                this.setImage()
                             }}>
                             <Text style={styles.modalText2}>View Image Hint</Text>
                         </TouchableHighlight>
