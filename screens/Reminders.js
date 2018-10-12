@@ -12,138 +12,12 @@ import {Icon, Overlay} from 'react-native-elements'
 import ActionButton from 'react-native-action-button';
 import createStyles from '../styles/ReminderStyle.js'
 import Storage from '../components/Storage.js';
+import Icons from "react-native-vector-icons/Ionicons";
 
 const styles = createStyles();
 
 const colorUnlocked = ['#14bf69', '#17cf94'];
 const colorLocked = ['#CD3F31', '#F2686B'];
-
-const list = [
-    {
-        reminder: 'workout',
-        date: '02-10-18',
-        time: '10:15',
-        lock: 'lock-open',
-        locked: false,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'workout',
-        date: '03-10-18',
-        time: '10:15',
-        lock: 'lock-open',
-        locked: false,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'workout',
-        date: '07-10-18',
-        time: '10:15',
-        lock: 'lock',
-        locked: true,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'workout',
-        date: '10-10-18',
-        time: '10:15',
-        lock: 'lock',
-        locked: true,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'workout',
-        date: '10-10-18',
-        time: '10:15',
-        lock: 'lock',
-        locked: true,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'workout',
-        date: '10-10-18',
-        time: '10:15',
-        lock: 'lock',
-        locked: true,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'workout',
-        date: '10-10-18',
-        time: '10:15',
-        lock: 'lock',
-        locked: true,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'workout',
-        date: '10-10-18',
-        time: '10:15',
-        lock: 'lock',
-        locked: true,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'workout',
-        date: '10-10-18',
-        time: '10:15',
-        lock: 'lock',
-        locked: true,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'workout',
-        date: '10-10-18',
-        time: '10:15',
-        lock: 'lock',
-        locked: true,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'workout',
-        date: '10-10-18',
-        time: '10:15',
-        lock: 'lock',
-        locked: true,
-        img: require('../assets/images/something.jpg')
-    },
-];
-const arr = [
-    {
-        reminder: 'NOPAINNOGAIN',
-        date: '02-10-18',
-        time: '10:15',
-        lock: 'lock-open',
-        locked: false,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'NOPAINNOGAIN',
-        date: '02-10-18',
-        time: '10:15',
-        lock: 'lock-open',
-        locked: false,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'NOPAINNOGAIN',
-        date: '02-10-18',
-        time: '10:15',
-        lock: 'lock-open',
-        locked: false,
-        img: require('../assets/images/something.jpg')
-    },
-    {
-        reminder: 'NOPAINNOGAIN',
-        date: '02-10-18',
-        time: '10:15',
-        lock: 'lock-open',
-        locked: false,
-        img: require('../assets/images/something.jpg')
-    },
-];
-
-
 export default class Reminders extends React.Component {
     constructor(props) {
         super(props);
@@ -154,107 +28,6 @@ export default class Reminders extends React.Component {
             reminders: [],
             overlayVisible: false,
             modalInspectVisible: false,
-            list: [
-                {
-                    reminder: 'workout',
-                    date: '02-10-18',
-                    time: '10:15',
-                    lock: 'lock-open',
-                    locked: false,
-                    img: require('../assets/images/something.jpg'),
-                    id: 1,
-                },
-                {
-                    reminder: 'workout',
-                    date: '03-10-18',
-                    time: '10:15',
-                    lock: 'lock-open',
-                    locked: false,
-                    img: require('../assets/images/something.jpg'),
-                    id: 2,
-                },
-                {
-                    reminder: 'workout',
-                    date: '07-10-18',
-                    time: '10:15',
-                    lock: 'lock',
-                    locked: true,
-                    img: require('../assets/images/something.jpg'),
-                    id: 3,
-                },
-                {
-                    reminder: 'workout',
-                    date: '10-10-18',
-                    time: '10:15',
-                    lock: 'lock',
-                    locked: true,
-                    img: require('../assets/images/something.jpg'),
-                    id: 4,
-                },
-                {
-                    reminder: 'workout',
-                    date: '10-10-18',
-                    time: '10:15',
-                    lock: 'lock',
-                    locked: true,
-                    img: require('../assets/images/something.jpg'),
-                    id: 5,
-                },
-                {
-                    reminder: 'workout',
-                    date: '10-10-18',
-                    time: '10:15',
-                    lock: 'lock',
-                    locked: true,
-                    img: require('../assets/images/something.jpg'),
-                    id: 6,
-                },
-                {
-                    reminder: 'workout',
-                    date: '10-10-18',
-                    time: '10:15',
-                    lock: 'lock',
-                    locked: true,
-                    img: require('../assets/images/something.jpg'),
-                    id: 7,
-                },
-                {
-                    reminder: 'workout',
-                    date: '10-10-18',
-                    time: '10:15',
-                    lock: 'lock',
-                    locked: true,
-                    img: require('../assets/images/something.jpg'),
-                    id: 8,
-                },
-                {
-                    reminder: 'workout',
-                    date: '10-10-18',
-                    time: '10:15',
-                    lock: 'lock',
-                    locked: true,
-                    img: require('../assets/images/something.jpg'),
-                    id: 9,
-                },
-                {
-                    reminder: 'workout',
-                    date: '10-10-18',
-                    time: '10:15',
-                    lock: 'lock',
-                    locked: true,
-                    img: require('../assets/images/something.jpg'),
-                    id: 10,
-                },
-                {
-                    reminder: 'workout',
-                    date: '10-10-18',
-                    time: '10:15',
-                    lock: 'lock',
-                    locked: true,
-                    img: require('../assets/images/something.jpg'),
-                    id: 11,
-                },
-            ],
             setClose: function(visible) {
                 this.setState({modalVisible:visible});
             },
@@ -285,22 +58,15 @@ export default class Reminders extends React.Component {
         }
     }
 
-    //simple function for testing purposes 
-    //fills asyncStorage with items
-    addItems(items){
-        items.forEach((element,i) => {
-            Storage.setItem(i.toString(),element);
-        });
-        Storage.getAll().then((res)=>{
-            console.log("RESULT:"+res);
-        });
-    }
-
     getItems(){
         Storage.getAll().then((res)=>{
             this.setState({ reminders: res });
         }); 
-        //Storage.deleteAll(); //use this to reset asyncstorage 
+        
+    }
+
+    deleteItems(){
+        Storage.deleteAll().then(() => this.getItems()); //use this to reset asyncstorage
     }
 
     render() {
@@ -354,7 +120,18 @@ export default class Reminders extends React.Component {
                             ))
                         }
                     </ScrollView>
-                    <ActionButton buttonColor="#000" onPress={() => {this.setState({modalVisible:true})}}/>
+                    <ActionButton buttonColor="#17cf94">
+                        <ActionButton.Item buttonColor='#9b59b6' title="New Reminder" onPress={() => this.setState({ modalVisible: true })}>
+                            <Icons name="md-create" style={styles.actionButtonIcon} />
+                        </ActionButton.Item>
+                        <ActionButton.Item buttonColor='#F2686B' title="Remove Reminders" onPress={() => {this.deleteItems()}}>
+                            <Icons name="md-trash" style={styles.actionButtonIcon} />
+                        </ActionButton.Item>
+                    </ActionButton>
+                    {/* <ActionButton>
+                        <ActionButton.Item buttonColor="red" onPress={() => { this.deleteItems }} />
+                        <ActionButton.Item buttonColor="#000" onPress={() => { this.setState({ modalVisible: true }) }} />
+                    </ActionButton> */}
                     <Overlay 
                         isVisible={this.state.overlayVisible} 
                         windowBackgroundColor="rgba(255, 255, 255, .8)" 

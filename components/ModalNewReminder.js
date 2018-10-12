@@ -121,7 +121,7 @@ export default class ModalNewReminder extends React.Component {
                                 onConfirm={this._handleDatePicked}
                                 onCancel={this._hideDateTimePicker}
                                 mode='datetime'
-                            />
+                        />
                         </View>
                         <ScrollView style={{height:200}}>
                             <Image
