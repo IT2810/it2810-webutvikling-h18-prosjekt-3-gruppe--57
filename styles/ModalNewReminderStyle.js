@@ -30,12 +30,9 @@ const styles = {
     lock: {
         paddingHorizontal: 20,
     },
-    img: {
-        width: 70,
-        height: 70,
-        margin: 0,
-        marginHorizontal: 0,
-        borderRadius: 10,
+    image:{
+        flex:1,
+        aspectRatio: 4/5,
     },
     info1: {
         flex: 1,
