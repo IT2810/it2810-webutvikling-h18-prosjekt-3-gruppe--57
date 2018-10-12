@@ -2,7 +2,7 @@ import React from 'react';
 import {Text,View,TouchableOpacity,StyleSheet} from 'react-native';
 import{Container,Content,Header,Item,Icon,Input,Button} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Camera, Permissions, ImageManipulator, MediaLibrary} from 'expo';
+import { Camera, Permissions } from 'expo';
 
 const whiteList = ['auto','sunny','cloudy','shadow','fluorescent','incandescent'];
 let index = 0;
@@ -21,30 +21,8 @@ export default class Cam extends React.Component {
 
     snap = async () => {
         if (this.camera) {
-            const { uri } = await this.camera.takePictureAsync();
-            const icon = await ImageManipulator.manipulate(uri, [{ resize: { width: 50, height: 50 } }]);
-            const img = await ImageManipulator.manipulate(uri,[],{compress:0.2});
-            console.log("creating assets");
-            const assetIcon = await MediaLibrary.createAssetAsync(icon.uri);
-            const assetImg = await MediaLibrary.createAssetAsync(img.uri);
-
-            console.log('Creating album...');
-            MediaLibrary.createAlbumAsync('Remindr',assetIcon)
-                .then((album) => {
-                    console.log('Adding assets...');
-                    MediaLibrary.addAssetsToAlbumAsync(assetImg,album.id)
-                        .then(() => {
-                            console.log('Done');
-                        })
-                        .catch(error => {
-                            console.log('An error occured adding assets: ', error);
-                        });
-                })
-                .catch(error => {
-                    console.log('An error occured creating album: ', error);
-                });
-
-            return [assetImg,assetIcon];
+            const { uri } = await this.camera.takePictureAsync({skipProcessing:true});
+            return uri;
         }
     };
 
@@ -72,8 +50,7 @@ export default class Cam extends React.Component {
                             <MaterialCommunityIcons
                                 onPress={() => {
                                     this.snap().then((res) => {
-                                        console.log(res[0]);
-                                        this.props.setPicture(res[0].uri,res[1].uri);
+                                        this.props.setPicture(res);
                                         this.props.hide(); //return after taking picture
                                     })
                                 }}

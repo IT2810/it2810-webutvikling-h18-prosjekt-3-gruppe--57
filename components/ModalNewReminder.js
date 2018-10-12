@@ -11,6 +11,8 @@ import Cam from '../components/Cam.js'
 import {Kaede} from 'react-native-textinput-effects';
 import createStyles from '../styles/ModalNewReminderStyle.js'
 import Storage from './Storage.js';
+import { ImageManipulator, MediaLibrary } from 'expo';
+
 
 const styles = createStyles();
 
@@ -44,8 +46,30 @@ export default class ModalNewReminder extends React.Component {
         this.setState({cameraModalVisible: visible});
     }
 
-    setPicture(image, ic) {
-        this.setState({img: image, icon: ic});
+    async setPicture(uri) {
+        const icon = await ImageManipulator.manipulate(uri, [{ resize: { width: 50, height: 50 } }]);
+        const img = await ImageManipulator.manipulate(uri, [], { compress: 0.2 });
+        console.log("creating assets");
+        const assetIcon = await MediaLibrary.createAssetAsync(icon.uri);
+        const assetImg = await MediaLibrary.createAssetAsync(img.uri);
+
+        console.log('Creating album...');
+        MediaLibrary.createAlbumAsync('Remindr', assetIcon)
+            .then((album) => {
+                console.log('Adding assets...');
+                MediaLibrary.addAssetsToAlbumAsync(assetImg, album.id)
+                    .then(() => {
+                        console.log('Done');
+                    })
+                    .catch(error => {
+                        console.log('An error occured adding assets: ', error);
+                    });
+            })
+            .catch(error => {
+                console.log('An error occured creating album: ', error);
+            });
+
+        this.setState({img: assetImg.uri, icon: assetIcon.uri});
     }
 
     async createReminder(reminder,date,time,img){
