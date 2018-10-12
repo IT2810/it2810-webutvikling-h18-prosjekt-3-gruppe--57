@@ -24,10 +24,10 @@ export default class ModalNewReminder extends React.Component {
             hasPermission: props.hasPermission,
         };
         this.setPicture = this.setPicture.bind(this);
-        console.log("ModalVisible inside the constructor: "+this.state.modalVisible)
+        console.log("ModalVisible inside the constructor: " + this.state.modalVisible)
     }
 
-    componentWillReceiveProps(props){
+    componentWillReceiveProps(props) {
         this.setState({modalVisible: props.modalVisible})
     }
 
@@ -40,8 +40,8 @@ export default class ModalNewReminder extends React.Component {
         this.setState({cameraModalVisible: visible});
     }
 
-    setPicture(image, ic){
-        this.setState({img:image,icon:ic});
+    setPicture(image, ic) {
+        this.setState({img: image, icon: ic});
     }
 
     render() {
@@ -58,10 +58,12 @@ export default class ModalNewReminder extends React.Component {
                         <View style={styles.inputChooses}>
                             <Kaede label={'Reminder'}/>
                         </View>
-                        <Image
-                            style={{width: 200, height: 200 }}
-                            source={{isStatic:true, uri: this.state.img }}
-                        />
+                        <ScrollView style={{height:200}}>
+                            <Image
+                                style={styles.image}
+                                source={{isStatic: true, uri: this.state.img}}
+                            />
+                        </ScrollView>
                         <View style={styles.inputChooses}>
                             <TouchableHighlight
                                 style={styles.button}
@@ -95,12 +97,16 @@ export default class ModalNewReminder extends React.Component {
                     animationType="fade"
                     transparent={false}
                     visible={this.state.cameraModalVisible}
-                    onRequestClose={() => { this.setCameraModalVisible(!this.state.cameraModalVisible);}}>
-                    <View style={{flex:1,alignItems:"center"}}>
+                    onRequestClose={() => {
+                        this.setCameraModalVisible(!this.state.cameraModalVisible);
+                    }}>
+                    <View style={{flex: 1, alignItems: "center"}}>
                         <View style={styles.camera}>
                             <Cam hasPermission={this.state.hasPermission}
                                  setPicture={this.setPicture}
-                                 hide={() => {this.setCameraModalVisible(!this.state.cameraModalVisible);}}/>
+                                 hide={() => {
+                                     this.setCameraModalVisible(!this.state.cameraModalVisible);
+                                 }}/>
                         </View>
                     </View>
                 </Modal>
