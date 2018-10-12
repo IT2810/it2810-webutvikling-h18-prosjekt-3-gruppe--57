@@ -8,7 +8,7 @@ import {
 import {LinearGradient, Permissions, Font} from 'expo';
 import ModalNewReminder from '../components/ModalNewReminder.js'
 import ModalInspectReminder from '../components/ModalInspectReminder.js'
-import {Icon} from 'react-native-elements'
+import {Icon, Overlay} from 'react-native-elements'
 import ActionButton from 'react-native-action-button';
 import createStyles from '../styles/ReminderStyle.js'
 import Storage from '../components/Storage.js';
@@ -152,6 +152,7 @@ export default class Reminders extends React.Component {
             chosenItemId: null,
             modalVisible: false,
             reminders: [],
+            overlayVisible: false,
             modalInspectVisible: false,
             list: [
                 {
@@ -276,9 +277,11 @@ export default class Reminders extends React.Component {
 
     safetySwitch(item){
         if(!item.locked){
-            this.setState({modalInspectVisible:true, chosenItemId:item.id});
+            //this.setState({modalInspectVisible:true, chosenItemId:item.id});
+            this.setState({ overlayVisible: true, chosenItemId: item.id });
         }else{
-            alert("This reminder is locked.") //This reminder is locked, by proceeding you will loose points. Continue?
+            this.setState({overlayVisible:true});
+            //alert("This reminder is locked.") //This reminder is locked, by proceeding you will loose points. Continue?
         }
     }
 
@@ -352,6 +355,33 @@ export default class Reminders extends React.Component {
                         }
                     </ScrollView>
                     <ActionButton buttonColor="#000" onPress={() => {this.setState({modalVisible:true})}}/>
+                    <Overlay 
+                        isVisible={this.state.overlayVisible} 
+                        windowBackgroundColor="rgba(255, 255, 255, .8)" 
+                        height="auto"
+                       >
+                        <View>
+                            <Text style={styles.modalText}>This Reminder is locked, by proceeding you will lose 100 points</Text>
+                            <View style={styles.inputChooses}>
+                                <TouchableHighlight
+                                    style={styles.buttonSave}
+                                    onPress={() => {
+                                        this.setState({})
+                                    }}>
+                                    <Text style={styles.modalText2}>Continue</Text>
+                                </TouchableHighlight>
+                            </View>
+                            <View style={styles.inputChooses}>
+                                <TouchableHighlight
+                                    style={styles.buttonQuit}
+                                    onPress={() => {
+                                        this.setState({ overlayVisible: false });
+                                    }}>
+                                    <Text style={styles.modalText2}>Take me back</Text>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </Overlay>
                 </View>
             );
         }

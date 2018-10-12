@@ -12,6 +12,7 @@ import {Kaede} from 'react-native-textinput-effects';
 import createStyles from '../styles/ModalNewReminderStyle.js'
 import Storage from './Storage.js';
 import { ImageManipulator, MediaLibrary } from 'expo';
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 
 const styles = createStyles();
@@ -37,14 +38,19 @@ export default class ModalNewReminder extends React.Component {
         this.setState({modalVisible: props.modalVisible})
     }
 
+    _setNewReminderModalVisible = (visible) => this.setState({modalVisible: visible});
 
-    setNewReminderModalVisible(visible) {
-        this.setState({modalVisible: visible});
-    }
+    _setCameraModalVisible = (visible) => this.setState({cameraModalVisible: visible});
 
-    setCameraModalVisible(visible) {
-        this.setState({cameraModalVisible: visible});
-    }
+    _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+    _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+    _handleDatePicked = (date) => {
+        console.log('A date has been picked: ', date);
+        this.setState({dateValue: date});
+        this._hideDateTimePicker();
+    };
 
     async setPicture(uri) {
         const icon = await ImageManipulator.manipulate(uri, [{ resize: { width: 50, height: 50 } }]);
@@ -74,12 +80,14 @@ export default class ModalNewReminder extends React.Component {
 
     async createReminder(reminder,date,time,img){
         let bourne_identity = await Storage.generateID();
+        console.log(date);
+        console.log(time);
         let obj = {
             id: bourne_identity,
             reminder: reminder,
             date: date,
             time: time,
-            lock: 'lock-open',
+            lock: 'lock',
             locked: false,
             img: img
         }
@@ -101,10 +109,19 @@ export default class ModalNewReminder extends React.Component {
                             <Kaede onChangeText={(text) => { this.setState({textValue:text})} } label={'Reminder'}/>
                         </View>
                         <View style={styles.inputChooses}>
-                            <Kaede onChangeText={(text) => { this.setState({dateValue:text})} } label={'Date'}/>
-                        </View>
-                        <View style={styles.inputChooses}>
-                            <Kaede onChangeText={(text) => { this.setState({timeValue:text})} } label={'Time'}/>
+                            <TouchableHighlight
+                                style={styles.button}
+                                onPress={() => {
+                                    this._showDateTimePicker();
+                                }}>
+                                <Text style={styles.modalText2}>Pick date</Text>
+                            </TouchableHighlight>
+                            <DateTimePicker
+                                isVisible={this.state.isDateTimePickerVisible}
+                                onConfirm={this._handleDatePicked}
+                                onCancel={this._hideDateTimePicker}
+                                mode='datetime'
+                            />
                         </View>
                         <ScrollView style={{height:200}}>
                             <Image
@@ -116,7 +133,7 @@ export default class ModalNewReminder extends React.Component {
                             <TouchableHighlight
                                 style={styles.button}
                                 onPress={() => {
-                                    this.setCameraModalVisible(true);
+                                    this._setCameraModalVisible(true);
                                 }}>
                                 <Text style={styles.modalText2}>Add image hint</Text>
                             </TouchableHighlight>
@@ -150,14 +167,14 @@ export default class ModalNewReminder extends React.Component {
                     transparent={false}
                     visible={this.state.cameraModalVisible}
                     onRequestClose={() => {
-                        this.setCameraModalVisible(!this.state.cameraModalVisible);
+                        this._setCameraModalVisible(!this.state.cameraModalVisible);
                     }}>
                     <View style={{flex: 1, alignItems: "center"}}>
                         <View style={styles.camera}>
                             <Cam hasPermission={this.state.hasPermission}
                                  setPicture={this.setPicture}
                                  hide={() => {
-                                     this.setCameraModalVisible(!this.state.cameraModalVisible);
+                                     this._setCameraModalVisible(!this.state.cameraModalVisible);
                                  }}/>
                         </View>
                     </View>
