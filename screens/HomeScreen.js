@@ -4,6 +4,7 @@ import {
     Text,
     View,
     Dimensions,
+    TouchableHighlight,
 } from 'react-native';
 import {LinearGradient} from 'expo';
 import createStyles from '../styles/HomeScreenStyle.js'
@@ -11,6 +12,7 @@ import AnimateNumber from 'react-native-countup'
 import { StackedAreaChart } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
 import color from '../constants/Colors'
+import ModalWelcome from '../components/ModalWelcome'
 
 import {
     LineChart,
@@ -99,7 +101,11 @@ export default class HomeScreen extends React.Component {
                 { onPress: () => console.log('apples') },
                 { onPress: () => console.log('bananas') },
                 { onPress: () => console.log('cherries') },
-                { onPress: () => console.log('dates') },]
+                { onPress: () => console.log('dates') },],
+            modalVisible:false,
+            setClose: function(visible) {
+                this.setState({modalVisible:visible});
+            },
         };
     }
     static navigationOptions = {
@@ -109,13 +115,18 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
+                <ModalWelcome modalVisible={this.state.modalVisible} setClose={this.state.setClose.bind(this)}/>
                 <View style={styles.item}>
                     <View style={styles.shadow}>
                         <LinearGradient
                             colors={color.colorPallet[1]}
                             style={styles.gradient}>
-                            <Text style={styles.getStartedText}>Score Points
-                            </Text>
+                            <TouchableHighlight
+                                onPress={() => {
+                                    this.setState({ modalVisible: true});
+                                }}>
+                                <Text style={styles.getStartedText}>Score Points</Text>
+                            </TouchableHighlight>
                             <Text style={styles.scorePointText}>
                                 {this.state.points}
 
