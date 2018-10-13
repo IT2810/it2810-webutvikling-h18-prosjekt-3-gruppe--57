@@ -59,6 +59,9 @@ export default class Reminders extends React.Component {
     //Retrieve all reminders from storage
     getItems(){
         Storage.getAll().then((res)=>{
+            res.sort(function(a, b) {
+              return a.dateMilliseconds - b.dateMilliseconds;
+            });
             this.setState({ reminders: res });
         }); 
         

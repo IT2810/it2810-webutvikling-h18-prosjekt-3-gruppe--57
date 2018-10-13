@@ -80,6 +80,7 @@ const styles = {
         fontSize: 27,
         color: '#ffffff',
         textAlign: 'center',
+        paddingVertical: 15,
     },
     modalText: {
         margin: 10,

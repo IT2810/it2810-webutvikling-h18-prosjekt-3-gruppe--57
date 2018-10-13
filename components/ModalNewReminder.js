@@ -48,7 +48,7 @@ export default class ModalNewReminder extends React.Component {
     _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
     _handleDatePicked = (date) => {
-        this.setState({dateValue: date.toString(), dateValueMilliseconds:date.getTime()});
+        this.setState({dateValue: date.toString().split('GMT')[0].replace(/2018/g, ''), dateValueMilliseconds:date.getTime()});
         this._hideDateTimePicker();
     };
 
@@ -80,8 +80,6 @@ export default class ModalNewReminder extends React.Component {
 
     async createReminder(reminder,date,time,img){
         let bourne_identity = await Storage.generateID();
-        console.log(date);
-        console.log(time);
         let obj = {
             id: bourne_identity,
             reminder: reminder,
@@ -120,6 +118,7 @@ export default class ModalNewReminder extends React.Component {
                                 onConfirm={this._handleDatePicked}
                                 onCancel={this._hideDateTimePicker}
                                 mode='datetime'
+                                minimumDate={new Date()}
                         />
                         </View>
                         <View style={styles.inputChooses}>
