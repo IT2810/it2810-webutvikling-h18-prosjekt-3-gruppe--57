@@ -1,27 +1,55 @@
 import React from 'react';
 import {
-    Platform,
     ScrollView,
-    StyleSheet,
     Text,
     View,
+    Dimensions,
 } from 'react-native';
-import {WebBrowser} from 'expo';
 import {LinearGradient} from 'expo';
-import * as Progress from 'react-native-progress';
 import createStyles from '../styles/HomeScreenStyle.js'
 import AnimateNumber from 'react-native-countup'
 import { StackedAreaChart } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
+import color from '../constants/Colors'
+
+import {
+    LineChart,
+    ProgressChart,
+    ContributionGraph
+} from 'react-native-chart-kit'
 
 const styles = createStyles();
+const screenWidth = Dimensions.get('window').width;
+const chartConfig = {
+    backgroundGradientFrom: color.backgroundGradientFrom,
+    backgroundGradientTo: color.backgroundGradientTo,
+    color: (opacity = 1) => `rgba(30,41,35, ${opacity})`
+};
 
+const lineChartConfig ={
+    backgroundColor: '#fff',
+    backgroundGradientFrom: color.backgroundGradientFrom,
+    backgroundGradientTo: color.backgroundGradientTo,
+    decimalPlaces: 0, // optional, defaults to 2dp
+    color: (opacity = 0) => `rgba(30,41,35, ${opacity})`,
+    style: {
+        borderRadius: 10,
+    }
+};
+const contributionChartConfig =  {
+    backgroundGradientFrom: color.backgroundGradientFrom,
+    backgroundGradientTo: color.backgroundGradientTo,
+    color: (opacity = 1) => `rgba(30,41,35, ${opacity})`
+};
+
+
+const chartWidth = screenWidth-(screenWidth/13.5);
 
 export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            points: 1200,
+            points: 120,
             activeReminders:46,
             data :[
                 {
@@ -53,13 +81,19 @@ export default class HomeScreen extends React.Component {
                     dates: 400,
                 },
             ],
-            colors : [ '#8800cc', '#aa00ff', '#cc66ff', '#eeccff' ],
-            colorGradient:['#00F5A6','#06EA95','#0CDF84','#12D474','#19CA63','#1FBF53','#25B442','#2CAA31','#329F21','#389410','#3F8A00'],
-            colorGradientR:['#19CA63','#12D474','#0CDF84','#06EA95','#00F5A6'],
-            colorPallet:[['#17cf94', '#14bf69', '#17cf94'],
-                ['#1FBF53', '#00EA9E', '#1FBF53'],
-                ['#0CDF84', '#19CA63', '#0CDF84'],
-                ['#17cf94', '#14bf69', '#17cf94']],
+            commitsData: [
+                { date: '2017-01-02', count: 1 },
+                { date: '2017-01-03', count: 2 },
+                { date: '2017-01-04', count: 3 },
+                { date: '2017-01-05', count: 4 },
+                { date: '2017-01-06', count: 5 },
+                { date: '2017-01-30', count: 2 },
+                { date: '2017-01-31', count: 3 },
+                { date: '2017-03-01', count: 2 },
+                { date: '2017-04-02', count: 4 },
+                { date: '2017-03-05', count: 2 },
+                { date: '2017-02-30', count: 4 }
+            ],
             keys: [ 'apples', 'bananas', 'cherries', 'dates' ],
             svgs: [
                 { onPress: () => console.log('apples') },
@@ -76,13 +110,11 @@ export default class HomeScreen extends React.Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.item}>
-
-                    {/*score info*/}
                     <View style={styles.shadow}>
                         <LinearGradient
-                            colors={this.state.colorPallet[1]}
+                            colors={color.colorPallet[1]}
                             style={styles.gradient}>
-                            <Text style={styles.getStartedText}>Score
+                            <Text style={styles.getStartedText}>Score Points
                             </Text>
                             <Text style={styles.scorePointText}>
                                 {this.state.points}
@@ -94,32 +126,20 @@ export default class HomeScreen extends React.Component {
                                                    return interval * (1 - Math.sin(Math.PI*progress) )*10
                                                }}/>*/}
                             </Text>
-                            <Text style={styles.getStartedText}>
-                                Points
-                            </Text>
                         </LinearGradient>
                     </View>
-
-
                     <View style={styles.shadow}>
-                        <LinearGradient
-                            colors={this.state.colorPallet[1]}
-                            style={styles.gradient}>
-                            <Text style={styles.getStartedText}>
-                                Success Percentage
-                            </Text>
-                            <View styles={styles.diagram}>
-                                <Progress.Circle color={'#fff'} size={150} borderWidth={1} progress={0.4} showsText={true} thickness={5}/>
-                            </View>
-                            <Text style={styles.getStartedText}>
-                                Nice
-                            </Text>
-                        </LinearGradient>
+                        <ProgressChart
+                            data={[0.4, 0.6, 0.8]}
+                            width={chartWidth}
+                            height={220}
+                            chartConfig={chartConfig}
+                            style={{borderRadius:10}}
+                        />
                     </View>
-
                     <View style={styles.shadow}>
                         <LinearGradient
-                            colors={this.state.colorPallet[1]}
+                            colors={color.colorPallet[1]}
                             style={styles.gradient}>
                             <Text style={styles.getStartedText}>
                                 Active Reminders
@@ -133,21 +153,50 @@ export default class HomeScreen extends React.Component {
                                                    return interval * (1 - Math.sin(Math.PI*progress) )*10
                                                }}/>*/}
                             </Text>
-                            <Text style={styles.getStartedText}>
-                                Points
-                            </Text>
                         </LinearGradient>
                     </View>
 
-
+                    <View style= {styles.shadowChart}>
+                        <LineChart
+                            data={{
+                                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                                datasets: [{
+                                    data: [
+                                        Math.random() * 100,
+                                        Math.random() * 100,
+                                        Math.random() * 100,
+                                        Math.random() * 100,
+                                        Math.random() * 100,
+                                        Math.random() * 100
+                                    ]
+                                }]
+                            }}
+                            width={chartWidth} // from react-native
+                            height={220}
+                            chartConfig={lineChartConfig}
+                            bezier
+                            style={{borderRadius: 10,}}
+                        />
+                    </View>
+                    <View style={styles.shadow}>
+                        <ContributionGraph
+                            values={this.state.commitsData}
+                            endDate={new Date('2017-04-01')}
+                            numDays={105}
+                            width={chartWidth}
+                            height={220}
+                            chartConfig={contributionChartConfig}
+                            style={{borderRadius: 10,}}
+                        />
+                    </View>
                 </View>
                 <StackedAreaChart
                     style={ { height: 200, } }
                     data={ this.state.data }
                     keys={ this.state.keys }
-                    colors={ this.state.colorGradientR }
+                    colors={ color.colorGradientR }
                     curve={ shape.curveNatural }
-                    showGrid={ false }
+                    showGrid={ true }
                     svgs={ this.state.svgs }
                 />
             </ScrollView>

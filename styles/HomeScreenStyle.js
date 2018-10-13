@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
+import color from '../constants/Colors'
 
 const styles = {
     scorePointText:{
         margin: 10,
         fontSize: 57,
-        color:'#ffffff',
+        color:color.dataColor,
         textAlign: 'center',
     },
     item: {
@@ -12,13 +13,14 @@ const styles = {
         marginBottom: 30,
         paddingHorizontal: 10,
         borderColor:'red',
-        backgroundColor:'#ffffff'
+        backgroundColor:color.background
     },
     diagram: {
         alignItems: 'center',
         paddingBottom: 20,
     },
     shadow: {
+        backgroundColor:"#1FBF53",
         borderWidth: 1,
         borderRadius: 10,
         borderColor: '#ddd',
@@ -32,7 +34,22 @@ const styles = {
         marginRight: 5,
         marginTop: 10,
         marginBottom: 10,
-        marginHorizontal: 50,
+        alignSelf: 'stretch',
+    },
+    shadowChart: {
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: '#ddd',
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: {width: 10, height: 30},
+        shadowOpacity: 0.8,
+        shadowRadius: 10,
+        elevation: 5,
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: 10,
+        marginBottom: 10,
         alignSelf: 'stretch',
     },
     gradient: {
@@ -41,12 +58,12 @@ const styles = {
     },
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: color.background,
     },
     getStartedText: {
         margin: 10,
         fontSize: 27,
-        color: '#ffffff',
+        color: color.text,
         textAlign: 'center',
     },
 };

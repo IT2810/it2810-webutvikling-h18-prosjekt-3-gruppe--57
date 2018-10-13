@@ -27,7 +27,6 @@ export default class ModalInspectReminder extends React.Component {
         this.setState({modalVisible: props.modalVisible,
                         id:props.id})
     }
-
     setImage(){
         alert("Find image! This element id: "+this.state.id);
     }
