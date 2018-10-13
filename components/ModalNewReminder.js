@@ -25,6 +25,7 @@ export default class ModalNewReminder extends React.Component {
             icon: null,
             textValue:null,
             dateValue:null,
+            dateValueMilliseconds: null,
             timeValue:null,
             modalVisible: false,
             cameraModalVisible: false,
@@ -47,8 +48,7 @@ export default class ModalNewReminder extends React.Component {
     _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
     _handleDatePicked = (date) => {
-        console.log('A date has been picked: ', date);
-        this.setState({dateValue: date});
+        this.setState({dateValue: date.toString(), dateValueMilliseconds:date.getTime()});
         this._hideDateTimePicker();
     };
 
@@ -86,6 +86,7 @@ export default class ModalNewReminder extends React.Component {
             id: bourne_identity,
             reminder: reminder,
             date: date,
+            dateMilliseconds: time,
             locked: true,
             img: img
         }
@@ -121,12 +122,6 @@ export default class ModalNewReminder extends React.Component {
                                 mode='datetime'
                         />
                         </View>
-                        <ScrollView style={{height:200}}>
-                            <Image
-                                style={styles.image}
-                                source={{isStatic: true, uri: this.state.img}}
-                            />
-                        </ScrollView>
                         <View style={styles.inputChooses}>
                             <TouchableHighlight
                                 style={styles.button}
@@ -136,11 +131,17 @@ export default class ModalNewReminder extends React.Component {
                                 <Text style={styles.modalText2}>Add image hint</Text>
                             </TouchableHighlight>
                         </View>
+                        <ScrollView style={{height:200}}>
+                            <Image
+                                style={styles.image}
+                                source={{isStatic: true, uri: this.state.img}}
+                            />
+                        </ScrollView>
                         <View style={styles.inputChooses}>
                             <TouchableHighlight
                                 style={styles.buttonSave}
                                 onPress={() => {
-                                    this.createReminder(this.state.textValue, this.state.dateValue, this.state.timeValue, this.state.img)
+                                    this.createReminder(this.state.textValue, this.state.dateValue, this.state.dateValueMilliseconds, this.state.img)
                                         .then(()=>{
                                             this.props.refresh();
                                             this.props.setClose(false);

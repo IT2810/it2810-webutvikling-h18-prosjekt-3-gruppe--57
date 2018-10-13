@@ -43,7 +43,7 @@ export default class Reminders extends React.Component {
     };
 
     async componentWillMount() {
-        this.props.navigation.addListener("willFocus", this.getItems);
+        this.props.navigation.addListener("willFocus", this.getItems); //refresh list when component is focused, necessary when exiting modal
         const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
         this.setState({hasPermission: status === 'granted'});
     }
@@ -53,10 +53,10 @@ export default class Reminders extends React.Component {
             this.setState({ overlayVisible: true});
         }else{
             this.setState({overlayVisible:true});
-            //alert("This reminder is locked.") //This reminder is locked, by proceeding you will loose points. Continue?
         }
     }
 
+    //Retrieve all reminders from storage
     getItems(){
         Storage.getAll().then((res)=>{
             this.setState({ reminders: res });
@@ -64,8 +64,15 @@ export default class Reminders extends React.Component {
         
     }
 
+    //Remove all reminders
     deleteItems(){
-        Storage.deleteAll().then(() => this.getItems()); //use this to reset asyncstorage
+        Storage.deleteAll().then(() => this.getItems());
+    }
+
+    //Compare dates, used for locking/unlocking reminders
+    checkDate(date){
+        const limit = 7200000; //two hours
+        return (date - new Date().getTime()) > limit ? true : false;
     }
 
     render() {
@@ -101,10 +108,10 @@ export default class Reminders extends React.Component {
                                             <LinearGradient
                                                 start={{x: 0, y: 1}}
                                                 end={{x: 1, y: 1}}
-                                                colors={l.locked ? colorLocked : colorUnlocked}
+                                                colors={this.checkDate(l.dateMilliseconds) ? colorLocked : colorUnlocked}
                                                 style={styles.gradient}>
                                                 <View style={styles.lock}>
-                                                    <Icon name={l.locked ? "lock" : "lock-open"}/>
+                                                    <Icon name={this.checkDate(l.dateMilliseconds) ? "lock" : "lock-open"}/>
                                                 </View>
                                                 <View style={styles.info1}>
                                                     <Text style={styles.dateText}>

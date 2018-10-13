@@ -8,7 +8,8 @@ import {
     TouchableHighlight,
 } from 'react-native';
 import {Kaede} from 'react-native-textinput-effects';
-import createStyles from '../styles/ModalInspectStyle.js'
+import createStyles from '../styles/ModalInspectStyle.js';
+import Storage from "../components/Storage.js";
 
 const styles = createStyles();
 let openModal = false;
@@ -29,6 +30,10 @@ export default class ModalInspectReminder extends React.Component {
 
     setImage(){
         alert("Find image! This element id: "+this.state.id);
+    }
+
+    deleteReminder(){
+        Storage.deleteItem(this.state.id).then(() => this.props.setClose(false));
     }
 
     render() {
