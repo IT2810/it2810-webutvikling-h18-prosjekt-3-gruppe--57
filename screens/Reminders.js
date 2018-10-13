@@ -50,8 +50,7 @@ export default class Reminders extends React.Component {
 
     safetySwitch(item){
         if(!item.locked){
-            //this.setState({modalInspectVisible:true, chosenItemId:item.id});
-            this.setState({ overlayVisible: true, chosenItemId: item.id });
+            this.setState({ overlayVisible: true});
         }else{
             this.setState({overlayVisible:true});
             //alert("This reminder is locked.") //This reminder is locked, by proceeding you will loose points. Continue?
@@ -143,7 +142,7 @@ export default class Reminders extends React.Component {
                                 <TouchableHighlight
                                     style={styles.buttonSave}
                                     onPress={() => {
-                                        this.setState({})
+                                        this.setState({ modalInspectVisible: true, overlayVisible: false});
                                     }}>
                                     <Text style={styles.modalText2}>Continue</Text>
                                 </TouchableHighlight>

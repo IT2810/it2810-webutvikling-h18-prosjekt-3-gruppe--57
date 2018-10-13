@@ -86,9 +86,7 @@ export default class ModalNewReminder extends React.Component {
             id: bourne_identity,
             reminder: reminder,
             date: date,
-            time: time,
-            lock: 'lock',
-            locked: false,
+            locked: true,
             img: img
         }
         Storage.setItem(obj.id,obj);
