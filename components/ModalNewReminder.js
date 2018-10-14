@@ -88,7 +88,7 @@ export default class ModalNewReminder extends React.Component {
             locked: true,
             img: img
         }
-        Storage.setItem(obj.id,obj);
+        Storage.setReminder(obj);
     }
 
     render() {

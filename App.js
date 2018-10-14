@@ -2,99 +2,11 @@ import React from 'react';
 import {Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {AppLoading, Asset, Font, Icon} from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import Storage from './components/Storage';
 
 export default class App extends React.Component {
     state = {
         isLoadingComplete: false,
-        list: [
-            {
-                reminder: 'workout',
-                date: '02-10-18',
-                time: '10:15',
-                lock: 'lock-open',
-                color: ['#14bf69','#17cf94'],
-                img: require('./assets/images/something.jpg')
-            },
-            {
-                reminder: 'workout',
-                date: '03-10-18',
-                time: '10:15',
-                lock: 'lock-open',
-                color: ['#14bf69','#17cf94'],
-                img: require('./assets/images/something.jpg')
-            },
-            {
-                reminder: 'workout',
-                date: '07-10-18',
-                time: '10:15',
-                lock: 'lock',
-                color: ['#CF2A39','#ff5a4b'],
-                img: require('./assets/images/something.jpg')
-            },
-            {
-                reminder: 'workout',
-                date: '10-10-18',
-                time: '10:15',
-                lock: 'lock',
-                color: ['#CF2A39','#ff5a4b'],
-                img: require('./assets/images/something.jpg')
-            },
-            {
-                reminder: 'workout',
-                date: '10-10-18',
-                time: '10:15',
-                lock: 'lock',
-                color: ['#CF2A39','#ff5a4b'],
-                img: require('./assets/images/something.jpg')
-            },
-            {
-                reminder: 'workout',
-                date: '10-10-18',
-                time: '10:15',
-                lock: 'lock',
-                color: ['#CF2A39','#ff5a4b'],
-                img: require('./assets/images/something.jpg')
-            },
-            {
-                reminder: 'workout',
-                date: '10-10-18',
-                time: '10:15',
-                lock: 'lock',
-                color: ['#CF2A39','#ff5a4b'],
-                img: require('./assets/images/something.jpg')
-            },
-            {
-                reminder: 'workout',
-                date: '10-10-18',
-                time: '10:15',
-                lock: 'lock',
-                color: ['#CF2A39','#ff5a4b'],
-                img: require('./assets/images/something.jpg')
-            },
-            {
-                reminder: 'workout',
-                date: '10-10-18',
-                time: '10:15',
-                lock: 'lock',
-                color: ['#CF2A39','#ff5a4b'],
-                img: require('./assets/images/something.jpg')
-            },
-            {
-                reminder: 'workout',
-                date: '10-10-18',
-                time: '10:15',
-                lock: 'lock',
-                color: ['#CF2A39','#ff5a4b'],
-                img: require('./assets/images/something.jpg')
-            },
-            {
-                reminder: 'workout',
-                date: '10-10-18',
-                time: '10:15',
-                lock: 'lock',
-                color: ['#CF2A39','#ff5a4b'],
-                img: require('./assets/images/something.jpg')
-            },],
     };
 
     render() {
@@ -107,6 +19,18 @@ export default class App extends React.Component {
                 />
             );
         } else {
+            Storage.getItem(Expo.Constants.installationId).then((res)=>{
+                if(res != null) return
+                Storage.setItem(Expo.Constants.installationId,{
+                    id: Expo.Constants.installationId,
+                    score: 0, 
+                    reminders: [],
+                    counter:{
+                        successful: 0,
+                        failed: 0,
+                    },
+                });
+            });
             return (
                 <View style={styles.container}>
                     {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}

@@ -58,13 +58,14 @@ export default class Reminders extends React.Component {
 
     //Retrieve all reminders from storage
     getItems(){
-        Storage.getAll().then((res)=>{
-            res.sort(function(a, b) {
-              return a.dateMilliseconds - b.dateMilliseconds;
+        Storage.getItem(Expo.Constants.installationId).then((res) => { 
+            const tmp = JSON.parse(res);
+            tmp.reminders.sort(function(a,b){
+                return a.dateMilliseconds - b.dateMilliseconds;
             });
-            this.setState({ reminders: res });
-        }); 
-        
+            console.log(tmp.reminders);
+            this.setState({reminders: tmp.reminders});
+        });
     }
 
     //Remove all reminders
@@ -79,10 +80,7 @@ export default class Reminders extends React.Component {
     }
 
     render() {
-        console.log(this.state.reminders);
         const hasPermission = this.state.hasPermission;
-        console.log("Render of reminders!");
-        console.log("id: "+this.state.chosenItemId);
         if (hasPermission === null) {
             return <View style={{flex: 1, backgroundColor: '#f3f3f3',borderRadius:0}}/>
         }
@@ -129,8 +127,8 @@ export default class Reminders extends React.Component {
                             ))
                         }
                     </ScrollView>
-                    <ActionButton buttonColor="#17cf94">
-                        <ActionButton.Item buttonColor='#9b59b6' title="New Reminder" onPress={() => this.setState({ modalVisible: true })}>
+                    <ActionButton buttonColor="#9b59b6">
+                        <ActionButton.Item buttonColor='#17cf94' title="New Reminder" onPress={() => this.setState({ modalVisible: true })}>
                             <Icons name="md-create" style={styles.actionButtonIcon} />
                         </ActionButton.Item>
                         <ActionButton.Item buttonColor='#F2686B' title="Remove Reminders" onPress={() => {this.deleteItems()}}>
