@@ -26,8 +26,8 @@ export default class App extends React.Component {
                     score: 0, 
                     reminders: [],
                     counter:{
-                        successful: 0,
-                        failed: 0,
+                        successful: [],
+                        failed: [],
                     },
                 });
             });

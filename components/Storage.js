@@ -69,10 +69,14 @@ class Storage {
     }
   }
 
+  //Clears the reminders array in user object
+  //Bear in mind this does not affect successful- and failed arrays 
   async deleteAll() {
     try {
-      const keys = await AsyncStorage.getAllKeys();
-      return await AsyncStorage.multiRemove(keys);
+      let obj = await this.getItem(Expo.Constants.installationId);
+      let user = JSON.parse(obj);
+      user.reminders.length = 0;
+      return await AsyncStorage.setItem(Expo.Constants.installationId, JSON.stringify(user));
     } catch (error) {
       console.log("Storage/deleteAll returned errro:" + error);
     }

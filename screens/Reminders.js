@@ -69,7 +69,9 @@ export default class Reminders extends React.Component {
 
     //Remove all reminders
     deleteItems(){
-        Storage.deleteAll().then(() => this.getItems());
+        Storage.deleteAll().then(()=>{
+            this.getItems();
+        });
     }
 
     //Compare dates, used for locking/unlocking reminders
