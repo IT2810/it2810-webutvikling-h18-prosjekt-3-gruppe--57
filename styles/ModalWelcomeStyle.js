@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet,Dimensions } from 'react-native';
+
 
 const styles = {
     inputChooses: {
@@ -31,11 +32,15 @@ const styles = {
         paddingHorizontal: 20,
     },
     img: {
-        width: 70,
-        height: 70,
-        margin: 0,
-        marginHorizontal: 0,
-        borderRadius: 10,
+        flex: 1,
+        alignSelf: 'stretch',
+        width: undefined,
+        height: undefined
+    },
+    imgView:{
+        alignItems:'center',
+        aspectRatio: 5/2,
+        marginHorizontal:23,
     },
     info1: {
         flex: 1,
@@ -89,7 +94,7 @@ const styles = {
     },
     titleB: {
         margin: 10,
-        fontSize: 37,
+        fontSize: 47,
         color: '#000',
         textAlign: 'center',
         shadowColor: '#000',
@@ -102,7 +107,7 @@ const styles = {
         margin: 10,
         fontSize: 17,
         color: '#000',
-        textAlign: 'center',
+        textAlign: 'left',
     }
 };
 

@@ -18,6 +18,7 @@ const styles = createStyles();
 
 const colorUnlocked = ['#14bf69', '#17cf94'];
 const colorLocked = ['#CD3F31', '#F2686B'];
+
 export default class Reminders extends React.Component {
     constructor(props) {
         super(props);
@@ -58,7 +59,7 @@ export default class Reminders extends React.Component {
 
     //Retrieve all reminders from storage
     getItems(){
-        Storage.getItem(Expo.Constants.installationId).then((res) => { 
+        Storage.getItem(Expo.Constants.installationId).then((res) => {
             const tmp = JSON.parse(res);
             tmp.reminders.sort(function(a,b){
                 return a.dateMilliseconds - b.dateMilliseconds;

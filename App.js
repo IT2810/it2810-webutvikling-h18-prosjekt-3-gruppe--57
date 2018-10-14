@@ -1,12 +1,17 @@
 import React from 'react';
-import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {Platform, StatusBar, StyleSheet, View, Modal} from 'react-native';
 import {AppLoading, Asset, Font, Icon} from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import Storage from './components/Storage';
+import ModalWelcome from './components/ModalWelcome'
 
 export default class App extends React.Component {
     state = {
         isLoadingComplete: false,
+        modalVisible: false,
+        setClose: function(visible) {
+            this.setState({modalVisible:visible});
+        },
     };
 
     render() {
@@ -21,6 +26,7 @@ export default class App extends React.Component {
         } else {
             Storage.getItem(Expo.Constants.installationId).then((res)=>{
                 if(res != null) return
+                this.setState({ modalVisible: true});
                 Storage.setItem(Expo.Constants.installationId,{
                     id: Expo.Constants.installationId,
                     score: 0, 
@@ -33,6 +39,7 @@ export default class App extends React.Component {
             });
             return (
                 <View style={styles.container}>
+                    <ModalWelcome modalVisible={this.state.modalVisible} setClose={this.state.setClose.bind(this)}/>
                     {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
                     <AppNavigator/>
                 </View>

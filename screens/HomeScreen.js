@@ -12,7 +12,6 @@ import AnimateNumber from 'react-native-countup'
 import { StackedAreaChart } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
 import color from '../constants/Colors'
-import ModalWelcome from '../components/ModalWelcome'
 
 import {
     LineChart,
@@ -115,21 +114,14 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <ModalWelcome modalVisible={this.state.modalVisible} setClose={this.state.setClose.bind(this)}/>
                 <View style={styles.item}>
                     <View style={styles.shadow}>
                         <LinearGradient
                             colors={color.colorPallet[1]}
                             style={styles.gradient}>
-                            <TouchableHighlight
-                                onPress={() => {
-                                    this.setState({ modalVisible: true});
-                                }}>
-                                <Text style={styles.getStartedText}>Score Points</Text>
-                            </TouchableHighlight>
+                            <Text style={styles.getStartedText}>Score Points</Text>
                             <Text style={styles.scorePointText}>
                                 {this.state.points}
-
                                 {/*<AnimateNumber value={this.state.points}
                                                countBy={14}
                                                timing={(interval, progress) => {
