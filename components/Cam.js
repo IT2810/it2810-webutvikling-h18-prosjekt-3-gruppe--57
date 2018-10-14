@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Camera, Permissions } from 'expo';
 
 const whiteList = ['auto','sunny','cloudy','shadow','fluorescent','incandescent'];
-let index = 0;
+let index = 1;
 export default class Cam extends React.Component {
     //Waiting for permission will cause the camera to just display a black screen
     //because of this we need to ask for permissions elsewhere and pass them as props
@@ -45,7 +45,7 @@ export default class Cam extends React.Component {
                                         mode: whiteList[index++ % whiteList.length]
                                     });
                                 }}
-                                name="cannabis" style={{ color: 'white', fontWeight: 'bold', fontSize: 50 }}>
+                                name="palette" style={{ color: 'white', fontWeight: 'bold', fontSize: 50 }}>
                             </MaterialCommunityIcons>
                             <MaterialCommunityIcons
                                 onPress={() => {

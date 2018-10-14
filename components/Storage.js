@@ -26,25 +26,49 @@ class Storage {
       });
       return rtr; 
     } catch (error) {
-      console.log("Storage/setReminder returned error: " + error);
+      console.log("Storage/getReminder returned error: " + error);
     }
   }
+
+  //Pushes an item to reminders[] in user object
+  //CAUTION: this function will not check existing reminders, if you want to update a reminder use updateReminder()
+  //This function should only be used when creating a new reminder
   async setReminder(item) {
     try {
       let user = await this.getItem(Expo.Constants.installationId);
       user.reminders.push(item);
-      let rtr = await AsyncStorage.setItem(Expo.Constants.installationId, JSON.stringify(user));
+      let rtr = await this.setItem(Expo.Constants.installationId, user);
       return rtr;
     } catch (error) {
-      console.log("Storage/setItem returned error: " + error);
+        console.log("Storage/setReminder returned error: " + error);
+    }
+  }
+
+  //Merge an existing reminder with another, new fields will be added, existing replaced
+  async updateReminder(item){
+    try {
+      const user = await this.getItem(Expo.Constants.installationId);
+      let reminder = await this.getReminder(item.id);
+      console.log(reminder);
+      console.log(item);
+      var result = {
+        ...reminder,
+        ...item
+      };
+      console.log(result);
+      const index = user.reminders.findIndex(x => x.id === item.id);
+      user.reminders.splice(index,1,result);
+      return await this.setItem(Expo.Constants.installationId, user);
+    } catch (error) {
+        console.log("Storage/updateReminder returned error: " + error);
     }
   }
 
   async deleteReminder(ID) {
     try {
       let user = await this.getItem(Expo.Constants.installationId);
-      user.reminders = user.reminders.filter(function (el) { return el.ID != ID; }); 
-      return await AsyncStorage.setItem(Expo.Constants.installationId, JSON.stringify(user));
+      user.reminders = user.reminders.filter(function (el) { return el.id != ID; }); 
+      return await this.setItem(Expo.Constants.installationId, user);
     } catch (error) {
       console.log("Storage/deleteItem returned error: " + error);
     }
@@ -56,9 +80,22 @@ class Storage {
     try {
       let user = await this.getItem(Expo.Constants.installationId);
       user.reminders.length = 0;
-      return await AsyncStorage.setItem(Expo.Constants.installationId, JSON.stringify(user));
+      return await this.setItem(Expo.Constants.installationId, user);
     } catch (error) {
-      console.log("Storage/deleteAll returned errro:" + error);
+      console.log("Storage/deleteAll returned error:" + error);
+    }
+  }
+
+  async onComplete(ID,failed){
+    try {
+      const user = await this.getItem(Expo.Constants.installationId);
+      const reminder = await this.getReminder(ID); 
+      if(!failed) user.successful.push(reminder);
+      else user.failed.push(reminder);
+      user.reminders = user.reminders.filter(function(el) { return el.id != ID;}); 
+      return await this.setItem(Expo.Constants.installationId, user);
+    } catch (error) {
+      console.log("Storage/onComplete returned error:" + error);
     }
   }
 

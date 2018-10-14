@@ -37,6 +37,10 @@ const styles = {
         marginHorizontal: 0,
         borderRadius: 10,
     },
+    image: {
+        flex: 1,
+        aspectRatio: 4 / 5,
+    },
     info1: {
         flex: 1,
         flexDirection: 'column',

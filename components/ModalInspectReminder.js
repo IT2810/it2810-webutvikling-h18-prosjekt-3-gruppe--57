@@ -21,6 +21,7 @@ export default class ModalInspectReminder extends React.Component {
         this.state = {
             modalVisible: false,
             id:false,
+            img: null,
         };
     }
 
@@ -28,8 +29,12 @@ export default class ModalInspectReminder extends React.Component {
         this.setState({modalVisible: props.modalVisible,
                         id:props.id})
     }
+
     setImage(){
-        alert("Find image! This element id: "+this.state.id);
+        Storage.getReminder(this.state.id).then((reminder)=>{
+            Score.updatePenalties(this.state.id,'imgHint');
+            this.setState({img:reminder.img});
+        });
     }
     
     deleteItem(){
@@ -40,7 +45,10 @@ export default class ModalInspectReminder extends React.Component {
     }
 
     updateScore(failed=false){
-        Score.updateScore(this.state.id,failed); 
+        Score.updateScore(this.state.id,failed).then(()=>{
+            this.props.refresh();
+            this.props.setClose(false);
+        });
     }
 
     render() {
@@ -56,10 +64,6 @@ export default class ModalInspectReminder extends React.Component {
                     <View style={styles.inputChooses}>
                         <Kaede label={'Remember your reminder?'}/>
                     </View>
-                    <Image
-                        style={{width: 200, height: 200 }}
-                        source={{isStatic:true, uri: this.state.img }}
-                    />
                     <View style={styles.inputChooses}>
                         <TouchableHighlight
                             style={styles.button}
@@ -69,12 +73,17 @@ export default class ModalInspectReminder extends React.Component {
                             <Text style={styles.modalText2}>View Image Hint</Text>
                         </TouchableHighlight>
                     </View>
+                    <ScrollView style={{ height: 200 }}>
+                        <Image
+                            style={styles.image}
+                            source={{ isStatic: true, uri: this.state.img }}
+                        />
+                    </ScrollView>
                     <View style={styles.inputChooses}>
                         <TouchableHighlight
                             style={styles.buttonSave}
                             onPress={() => {
                                 this.updateScore();
-                                this.props.setClose(false);
                             }}>
                             <Text style={styles.modalText2}>Check</Text>
                         </TouchableHighlight>

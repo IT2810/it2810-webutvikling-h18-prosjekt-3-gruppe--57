@@ -51,7 +51,7 @@ export default class Reminders extends React.Component {
 
     safetySwitch(item){
         if(!item.locked){
-            this.setState({ overlayVisible: true, chosenItemId:item.id});
+            this.setState({ modalInspectVisible: true, chosenItemId:item.id});
         }else{
             this.setState({overlayVisible:true, chosenItemId:item.id});
         }
@@ -63,6 +63,11 @@ export default class Reminders extends React.Component {
             res.reminders.sort(function(a,b){
                 return a.dateMilliseconds - b.dateMilliseconds;
             });
+            res.reminders.forEach(element => {
+                if(this.checkDate(element.dateMilliseconds)) element.locked = true;
+                else element.locked = false;
+            });
+            Storage.setItem(Expo.Constants.installationId,res);
             this.setState({reminders: res.reminders});
         });
     }
@@ -111,10 +116,10 @@ export default class Reminders extends React.Component {
                                             <LinearGradient
                                                 start={{x: 0, y: 1}}
                                                 end={{x: 1, y: 1}}
-                                                colors={this.checkDate(l.dateMilliseconds) ? colorLocked : colorUnlocked}
+                                                colors={l.locked ? colorLocked : colorUnlocked}
                                                 style={styles.gradient}>
                                                 <View style={styles.lock}>
-                                                    <Icon name={this.checkDate(l.dateMilliseconds) ? "lock" : "lock-open"}/>
+                                                    <Icon name={l.locked ? "lock" : "lock-open"}/>
                                                 </View>
                                                 <View style={styles.info1}>
                                                     <Text style={styles.dateText}>
