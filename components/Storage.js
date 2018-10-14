@@ -3,7 +3,7 @@ class Storage {
   async getItem(ID) {
     try {
       const item = await AsyncStorage.getItem(ID);
-      return item;
+      return JSON.parse(item);
     } catch (error) {
       console.log("Storage/getItem returned error: " + error);
     }
@@ -17,10 +17,21 @@ class Storage {
     }
   }
   
+  async getReminder(ID) {
+    try {
+      let user = await this.getItem(Expo.Constants.installationId);
+      let rtr = false;
+      user.reminders.forEach(element => {
+        if(element.id === ID) rtr = element;
+      });
+      return rtr; 
+    } catch (error) {
+      console.log("Storage/setReminder returned error: " + error);
+    }
+  }
   async setReminder(item) {
     try {
-      let obj = await this.getItem(Expo.Constants.installationId);
-      let user = JSON.parse(obj);
+      let user = await this.getItem(Expo.Constants.installationId);
       user.reminders.push(item);
       let rtr = await AsyncStorage.setItem(Expo.Constants.installationId, JSON.stringify(user));
       return rtr;
@@ -29,66 +40,25 @@ class Storage {
     }
   }
 
-  async setItems(items) {
+  async deleteReminder(ID) {
     try {
-      return await AsyncStorage.multiSet(items);
-    } catch (error) {
-      console.log("Storage/setItems returned error: " + error);
-    }
-  }
-
-  async mergeItem(ID, item) {
-    try {
-      return await AsyncStorage.mergeItem(ID, JSON.stringify(item));
-    } catch (error) {
-      console.log("Storage/setItem returned error: " + error);
-    }
-  }
-
-  async getAll() {
-    try {
-      let res = [];
-      const keys = await AsyncStorage.getAllKeys();
-      const obj = await AsyncStorage.multiGet(keys);
-      obj.forEach(element => {
-        res.push(JSON.parse(element[1]));
-      });
-      return res;
-    } catch (error) {
-      console.log("Storage/getAll returned error: " + error);
-    }
-
-    return obj;
-  }
-
-  async deleteItem(ID) {
-    try {
-      return AsyncStorage.removeItem(ID);
+      let user = await this.getItem(Expo.Constants.installationId);
+      user.reminders = user.reminders.filter(function (el) { return el.ID != ID; }); 
+      return await AsyncStorage.setItem(Expo.Constants.installationId, JSON.stringify(user));
     } catch (error) {
       console.log("Storage/deleteItem returned error: " + error);
     }
   }
 
   //Clears the reminders array in user object
-  //Bear in mind this does not affect successful- and failed arrays 
-  async deleteAll() {
+  //Bear in mind this does not affect arrays with failed and successful reminders 
+  async deleteAllReminders() {
     try {
-      let obj = await this.getItem(Expo.Constants.installationId);
-      let user = JSON.parse(obj);
+      let user = await this.getItem(Expo.Constants.installationId);
       user.reminders.length = 0;
       return await AsyncStorage.setItem(Expo.Constants.installationId, JSON.stringify(user));
     } catch (error) {
       console.log("Storage/deleteAll returned errro:" + error);
-    }
-  }
-
-  async checkIfKeyExists(ID) {
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-      if (keys.includes(ID)) return true;
-      else return false;
-    } catch (error) {
-      console.log("Storage/checkIfKeyExists returned error: " + error);
     }
   }
 

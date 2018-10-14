@@ -51,26 +51,25 @@ export default class Reminders extends React.Component {
 
     safetySwitch(item){
         if(!item.locked){
-            this.setState({ overlayVisible: true});
+            this.setState({ overlayVisible: true, chosenItemId:item.id});
         }else{
-            this.setState({overlayVisible:true});
+            this.setState({overlayVisible:true, chosenItemId:item.id});
         }
     }
 
     //Retrieve all reminders from storage
     getItems(){
         Storage.getItem(Expo.Constants.installationId).then((res) => {
-            const tmp = JSON.parse(res);
-            tmp.reminders.sort(function(a,b){
+            res.reminders.sort(function(a,b){
                 return a.dateMilliseconds - b.dateMilliseconds;
             });
-            this.setState({reminders: tmp.reminders});
+            this.setState({reminders: res.reminders});
         });
     }
 
     //Remove all reminders
     deleteItems(){
-        Storage.deleteAll().then(()=>{
+        Storage.deleteAllReminders().then(()=>{
             this.getItems();
         });
     }
@@ -99,6 +98,7 @@ export default class Reminders extends React.Component {
                                           refresh={this.getItems}/>
                         <ModalInspectReminder modalVisible={this.state.modalInspectVisible}
                                               setClose={this.state.setInspectClose.bind(this)}
+                                              refresh={this.getItems}
                                               id={this.state.chosenItemId}/>
                         {
                             this.state.reminders.map((l, i) => (

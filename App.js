@@ -31,10 +31,8 @@ export default class App extends React.Component {
                     id: Expo.Constants.installationId,
                     score: 0, 
                     reminders: [],
-                    counter:{
-                        successful: [],
-                        failed: [],
-                    },
+                    successful: [],
+                    failed: [],
                 });
             });
             return (

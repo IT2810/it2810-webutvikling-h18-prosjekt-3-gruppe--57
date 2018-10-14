@@ -86,7 +86,10 @@ export default class ModalNewReminder extends React.Component {
             date: date,
             dateMilliseconds: time,
             locked: true,
-            img: img
+            img: img,
+            imgHint: false,
+            textHint: false,
+            attempts: 0
         }
         let rtr = await Storage.setReminder(obj);
     }

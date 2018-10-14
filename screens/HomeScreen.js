@@ -12,6 +12,7 @@ import AnimateNumber from 'react-native-countup'
 import { StackedAreaChart } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
 import color from '../constants/Colors'
+import Storage from '../components/Storage';
 
 import {
     LineChart,
@@ -106,10 +107,22 @@ export default class HomeScreen extends React.Component {
                 this.setState({modalVisible:visible});
             },
         };
+        this.getItems = this.getItems.bind(this);
     }
     static navigationOptions = {
         header: null,
     };
+
+    async componentWillMount() {
+        this.props.navigation.addListener("willFocus", this.getItems);
+    }
+
+    getItems() {
+        Storage.getItem(Expo.Constants.installationId).then((user) => {
+            console.log(user);
+            this.setState({ points: user.score, activeReminders:user.reminders.length});
+        });
+    }
 
     render() {
         return (
