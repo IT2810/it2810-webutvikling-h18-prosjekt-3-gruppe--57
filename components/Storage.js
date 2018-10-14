@@ -22,7 +22,8 @@ class Storage {
       let obj = await this.getItem(Expo.Constants.installationId);
       let user = JSON.parse(obj);
       user.reminders.push(item);
-      return this.setItem(Expo.Constants.installationId,user);
+      let rtr = await AsyncStorage.setItem(Expo.Constants.installationId, JSON.stringify(user));
+      return rtr;
     } catch (error) {
       console.log("Storage/setItem returned error: " + error);
     }

@@ -63,7 +63,6 @@ export default class Reminders extends React.Component {
             tmp.reminders.sort(function(a,b){
                 return a.dateMilliseconds - b.dateMilliseconds;
             });
-            console.log(tmp.reminders);
             this.setState({reminders: tmp.reminders});
         });
     }
