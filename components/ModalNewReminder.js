@@ -26,7 +26,6 @@ export default class ModalNewReminder extends React.Component {
             textValue:null,
             dateValue:null,
             dateValueMilliseconds: null,
-            timeValue:null,
             modalVisible: false,
             cameraModalVisible: false,
             hasPermission: props.hasPermission,
@@ -47,7 +46,7 @@ export default class ModalNewReminder extends React.Component {
     _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
     _handleDatePicked = (date) => {
-        this.setState({dateValue: date.toString().split('GMT')[0].replace(/2018/g, ''), dateValueMilliseconds:date.getTime()});
+        this.setState({dateValue: date.toString().split('GMT')[0].replace(/([0-9]{4})/g, ''), dateValueMilliseconds:date.getTime()});
         this._hideDateTimePicker();
     };
 
@@ -142,11 +141,15 @@ export default class ModalNewReminder extends React.Component {
                             <TouchableHighlight
                                 style={styles.buttonSave}
                                 onPress={() => {
-                                    this.createReminder(this.state.textValue, this.state.dateValue, this.state.dateValueMilliseconds, this.state.img)
-                                        .then(()=>{
-                                            this.props.refresh();
-                                            this.props.setClose(false);
-                                        });
+                                    if(!this.state.textValue) alert("Reminder field cannot be empty!");
+                                    else if(!this.state.dateValue) alert("Please choose a date");
+                                    else{
+                                        this.createReminder(this.state.textValue, this.state.dateValue, this.state.dateValueMilliseconds, this.state.img)
+                                            .then(() => {
+                                                this.props.refresh();
+                                                this.props.setClose(false);
+                                            });
+                                    }
                                 }}>
                                 <Text style={styles.modalText2}>Save</Text>
                             </TouchableHighlight>

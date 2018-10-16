@@ -33,10 +33,15 @@ export default class ModalInspectReminder extends React.Component {
     }
 
     setImage(){
-        Storage.getReminder(this.state.id).then((reminder)=>{
-            Score.updatePenalties(this.state.id,'imgHint');
-            this.setState({img:reminder.img});
-        });
+        if(this.state.img){
+            Storage.getReminder(this.state.id).then((reminder) => {
+                Score.updatePenalties(this.state.id, 'imgHint');
+                this.setState({ img: reminder.img });
+            });
+        }else{
+            alert("Sorry, no image was provided for this reminder");
+        }
+        
     }
     
     deleteItem(){
@@ -59,7 +64,9 @@ export default class ModalInspectReminder extends React.Component {
 
     async compareInput(input){
         const reminder = await Storage.getReminder(this.state.id);
-        if(reminder.reminder === input) return true;
+        //Apparently localeCompare does not work properly in react native, reverted to simple uppercase comparison
+        //reminder.reminder.localeCompare(input, 'en', { sensitivity: 'base', caseFirst: false});
+        if(reminder.reminder.toUpperCase() === input.toUpperCase()) return true;
         return false;
     }
 
@@ -114,7 +121,7 @@ export default class ModalInspectReminder extends React.Component {
                             onPress={() => {
                                 this.deleteItem();
                             }}>
-                            <Text style={styles.modalText2}>Delete</Text>
+                            <Text style={styles.modalText2}>Give up</Text>
                         </TouchableHighlight>
                     </View>
                     <View style={styles.inputChooses}>
@@ -123,7 +130,7 @@ export default class ModalInspectReminder extends React.Component {
                             onPress={() => {
                                 this.props.setClose(false);
                             }}>
-                            <Text style={styles.modalText2}>Quit</Text>
+                            <Text style={styles.modalText2}>Go back</Text>
                         </TouchableHighlight>
                     </View>
                 </ScrollView>

@@ -20,8 +20,8 @@ class Score {
             if(reminder.locked) result += lockPenalty;
             if (failed) result += fail;
             else result += success;
-            reminder.attempts += 1;
             result += (reminder.attempts*attemptPenalty); 
+            reminder.attempts += 1;
             const user = await Storage.getItem(Expo.Constants.installationId);
             user.score += result; 
             await Storage.setItem(Expo.Constants.installationId,user);
