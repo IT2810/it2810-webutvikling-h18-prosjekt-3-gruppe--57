@@ -112,7 +112,7 @@ export default class Reminders extends React.Component {
                                                 this.safetySwitch(l);
                                             }}>
                                             <LinearGradient
-                                                colors={l.locked ? color.colorPallet[4] : color.colorPallet[1]}
+                                                colors={l.locked ? color.colorPalletError : color.colorPalletGreen}
                                                 style={styles.gradient}>
                                                 <View style={styles.lock}>
                                                     <Icon name={l.locked ? "lock" : "lock-open"} />

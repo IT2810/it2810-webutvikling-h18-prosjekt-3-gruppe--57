@@ -25,7 +25,7 @@ export default class Completed extends React.Component{
     }
 
     static navigationOptions = {
-        header: null
+        header: null,
     };
 
     async componentWillMount() {
@@ -54,7 +54,7 @@ export default class Completed extends React.Component{
                                 <TouchableHighlight underlayColor={"#f1f1f1"} style={{ borderRadius: 10 }}
                                     >
                                     <LinearGradient
-                                        colors={l.locked ? color.colorPallet[4] : color.colorPallet[1]}
+                                        colors={l.locked ? color.colorPalletError : color.colorPalletGreen}
                                         style={styles.gradient}>
                                         <View style={styles.info1}>
                                             <Text style={l.locked ? styles.reminderText_locked : styles.reminderText}>

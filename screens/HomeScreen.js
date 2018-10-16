@@ -9,7 +9,7 @@ import {
 import {LinearGradient} from 'expo';
 import createStyles from '../styles/HomeScreenStyle.js'
 import AnimateNumber from 'react-native-countup'
-import { StackedAreaChart } from 'react-native-svg-charts'
+import {StackedAreaChart} from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
 import color from '../constants/Colors'
 import Storage from '../components/Storage';
@@ -22,38 +22,33 @@ import {
 
 const styles = createStyles();
 const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+const chartWidth = 0.9 * screenWidth;
+const chartHeight = 0.2 * screenHeight;
+const rightBoxWidth = chartWidth*0.55;
+
+
 const chartConfig = {
     backgroundGradientFrom: color.backgroundGradientFrom,
     backgroundGradientTo: color.backgroundGradientTo,
     color: (opacity = 1) => `rgba(30,41,35, ${opacity})`
 };
 
-const lineChartConfig ={
-    backgroundColor: '#fff',
-    backgroundGradientFrom: color.backgroundGradientFrom,
-    backgroundGradientTo: color.backgroundGradientTo,
-    decimalPlaces: 0, // optional, defaults to 2dp
-    color: (opacity = 0) => `rgba(30,41,35, ${opacity})`,
-    style: {
-        borderRadius: 10,
-    }
-};
-const contributionChartConfig =  {
+const contributionChartConfig = {
     backgroundGradientFrom: color.backgroundGradientFrom,
     backgroundGradientTo: color.backgroundGradientTo,
     color: (opacity = 1) => `rgba(30,41,35, ${opacity})`
 };
 
-
-const chartWidth = screenWidth-(screenWidth/13.5);
-
 export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            points: 120,
-            activeReminders:46,
-            data :[
+            modalVisible: false,
+            activeReminders: 0,
+            percentage: 0,
+            points: 0,
+            data: [
                 {
                     month: new Date(2015, 0, 1),
                     apples: 3840,
@@ -84,31 +79,31 @@ export default class HomeScreen extends React.Component {
                 },
             ],
             commitsData: [
-                { date: '2017-01-02', count: 1 },
-                { date: '2017-01-03', count: 2 },
-                { date: '2017-01-04', count: 3 },
-                { date: '2017-01-05', count: 4 },
-                { date: '2017-01-06', count: 5 },
-                { date: '2017-01-30', count: 2 },
-                { date: '2017-01-31', count: 3 },
-                { date: '2017-03-01', count: 2 },
-                { date: '2017-04-02', count: 4 },
-                { date: '2017-03-05', count: 2 },
-                { date: '2017-02-30', count: 4 }
+                {date: '2017-01-02', count: 1},
+                {date: '2017-01-03', count: 2},
+                {date: '2017-01-04', count: 3},
+                {date: '2017-01-05', count: 4},
+                {date: '2017-01-06', count: 5},
+                {date: '2017-01-30', count: 2},
+                {date: '2017-01-31', count: 3},
+                {date: '2017-03-01', count: 2},
+                {date: '2017-04-02', count: 4},
+                {date: '2017-03-05', count: 2},
+                {date: '2017-02-30', count: 4}
             ],
-            keys: [ 'apples', 'bananas', 'cherries', 'dates' ],
+            keys: ['apples', 'bananas', 'cherries', 'dates'],
             svgs: [
-                { onPress: () => console.log('apples') },
-                { onPress: () => console.log('bananas') },
-                { onPress: () => console.log('cherries') },
-                { onPress: () => console.log('dates') },],
-            modalVisible:false,
-            setClose: function(visible) {
-                this.setState({modalVisible:visible});
+                {onPress: () => console.log('apples')},
+                {onPress: () => console.log('bananas')},
+                {onPress: () => console.log('cherries')},
+                {onPress: () => console.log('dates')},],
+            setClose: function (visible) {
+                this.setState({modalVisible: visible});
             },
         };
         this.getItems = this.getItems.bind(this);
     }
+
     static navigationOptions = {
         header: null,
     };
@@ -119,100 +114,139 @@ export default class HomeScreen extends React.Component {
 
     getItems() {
         Storage.getItem(Expo.Constants.installationId).then((user) => {
-            this.setState({ points: user.score, activeReminders:user.reminders.length});
+            var percentage = 0;
+            /*var allReminderDates = this.formatDatesForChart(user);*/
+            if (!isNaN(user.successful.length / (user.successful.length + user.failed.length))) {
+                percentage = user.successful.length / (user.successful.length + user.failed.length)
+            }
+            this.setState({
+                points: user.score,
+                activeReminders: user.reminders.length,
+                percentage: percentage - 0.00001,
+            });
         });
     }
 
+    /*formatDatesForChart(user){
+        var allReminderDates = {};
+        user.reminders.forEach(element => {
+            allReminderDates.push(element.date);
+        });
+        user.failed.forEach(element => {
+            allReminderDates.push(element.date);
+        });
+        user.successful.forEach(element => {
+            allReminderDates.push(element.date);
+        });
+        console.log(JSON.stringify(allReminderDates));
+        return allReminderDates;
+    }*/
+
     render() {
         return (
-            <ScrollView style={styles.container}>
+            <ScrollView style={styles.container} alignItems={'center'}>
                 <View style={styles.item}>
                     <View style={styles.shadow}>
                         <LinearGradient
-                            colors={color.colorPallet[1]}
+                            colors={color.colorPalletGray}
                             style={styles.gradient}>
-                            <Text style={styles.getStartedText}>Score Points</Text>
-                            <Text style={styles.scorePointText}>
-                                {/*this.state.points*/}
-                                {<AnimateNumber value={this.state.points}
+                            <View style={styles.rightBoxContainer}>
+                                <View style={{flex: 1, alignSelf: 'stretch', alignItems: 'center'}}>
+                                    <Text style={styles.getStartedText}>Score Points</Text>
+                                </View>
+                                <View style={{width:rightBoxWidth}}>
+                                    <LinearGradient
+                                        colors={color.colorPalletGreen}
+                                        style={styles.gradient}>
+                                        <Text style={styles.scorePointText}>
+                                            {this.state.points}
+                                            {/*{<AnimateNumber value={this.state.points}
                                                countBy={50}
                                                timing={(interval, progress) => {
                                                    // slow start, slow end
                                                    return interval * (1 - Math.sin(Math.PI*progress) )*10
-                                               }}/>}
-                            </Text>
+                                               }}/>}*/}
+                                        </Text>
+                                    </LinearGradient>
+                                </View>
+                            </View>
                         </LinearGradient>
                     </View>
                     <View style={styles.shadow}>
-                        <ProgressChart
-                            data={[0.4, 0.6, 0.8]}
-                            width={chartWidth}
-                            height={220}
-                            chartConfig={chartConfig}
-                            style={{borderRadius:10}}
-                        />
+                        <LinearGradient
+                            colors={color.colorPalletGray}
+                            style={styles.gradient}>
+                            <View style={styles.rightBoxContainer}>
+                                <View style={{flex: 1, alignSelf: 'stretch', alignItems: 'center'}}>
+                                    <Text style={styles.getStartedText}>Success Percentage</Text>
+                                </View>
+                                <ProgressChart
+                                    data={[this.state.percentage]}
+                                    width={rightBoxWidth}
+                                    height={chartHeight}
+                                    chartConfig={chartConfig}
+                                    style={{borderRadius: 10}}
+                                />
+                            </View>
+                        </LinearGradient>
                     </View>
                     <View style={styles.shadow}>
                         <LinearGradient
-                            colors={color.colorPallet[1]}
+                            colors={color.colorPalletGray}
                             style={styles.gradient}>
-                            <Text style={styles.getStartedText}>
-                                Active Reminders
-                            </Text>
-                            <Text style={styles.scorePointText}>
-                                {this.state.activeReminders}
-                                {/*<AnimateNumber value={this.state.points}
+                            <View style={styles.rightBoxContainer}>
+                                <View style={{flex: 1, alignSelf: 'stretch', alignItems: 'center'}}>
+                                    <Text style={styles.getStartedText}>
+                                        Active Reminders
+                                    </Text>
+                                </View>
+                                <View style={{width:rightBoxWidth}}>
+                                    <LinearGradient
+                                        colors={color.colorPalletGreen}
+                                        style={styles.gradient}>
+                                        <Text style={styles.scorePointText}>
+                                            {this.state.activeReminders}
+                                            {/*<AnimateNumber value={this.state.points}
                                                countBy={14}
                                                timing={(interval, progress) => {
                                                    // slow start, slow end
                                                    return interval * (1 - Math.sin(Math.PI*progress) )*10
                                                }}/>*/}
-                            </Text>
+                                        </Text>
+                                    </LinearGradient>
+                                </View>
+                            </View>
                         </LinearGradient>
                     </View>
-
-                    <View style= {styles.shadowChart}>
-                        <LineChart
-                            data={{
-                                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-                                datasets: [{
-                                    data: [
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100
-                                    ]
-                                }]
-                            }}
-                            width={chartWidth} // from react-native
-                            height={220}
-                            chartConfig={lineChartConfig}
-                            bezier
-                            style={{borderRadius: 10,}}
-                        />
-                    </View>
                     <View style={styles.shadow}>
-                        <ContributionGraph
-                            values={this.state.commitsData}
-                            endDate={new Date('2017-04-01')}
-                            numDays={105}
-                            width={chartWidth}
-                            height={220}
-                            chartConfig={contributionChartConfig}
-                            style={{borderRadius: 10,}}
-                        />
+                        <LinearGradient
+                            colors={color.colorPalletGray}
+                            style={styles.gradient}>
+                            <View style={styles.rightBoxContainer}>
+                                <View style={{flex: 1, alignSelf: 'stretch', alignItems: 'center'}}>
+                                    <Text style={styles.getStartedText}>Activity last 30 days</Text>
+                                </View>
+                                <ContributionGraph
+                                    values={this.state.commitsData}
+                                    endDate={new Date('2018-10-18')}
+                                    numDays={30}
+                                    width={rightBoxWidth}
+                                    height={220}
+                                    chartConfig={contributionChartConfig}
+                                    style={{borderRadius: 10,}}
+                                />
+                            </View>
+                        </LinearGradient>
                     </View>
                 </View>
                 <StackedAreaChart
-                    style={ { height: 200, } }
-                    data={ this.state.data }
-                    keys={ this.state.keys }
-                    colors={ color.colorGradientR }
-                    curve={ shape.curveNatural }
-                    showGrid={ true }
-                    svgs={ this.state.svgs }
+                    style={{height: 200,}}
+                    data={this.state.data}
+                    keys={this.state.keys}
+                    colors={color.colorGradientR}
+                    curve={shape.curveNatural}
+                    showGrid={true}
+                    svgs={this.state.svgs}
                 />
             </ScrollView>
         );

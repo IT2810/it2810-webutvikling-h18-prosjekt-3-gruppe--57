@@ -24,7 +24,7 @@ export default class App extends React.Component {
             );
         } else {
             Storage.getItem(Expo.Constants.installationId).then((res)=>{
-                if(res != null) return
+                if(res != null) return;
                 this.setState({ modalVisible: true});
                 Storage.setItem(Expo.Constants.installationId,{
                     id: Expo.Constants.installationId,
