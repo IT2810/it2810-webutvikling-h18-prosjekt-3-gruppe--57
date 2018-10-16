@@ -35,15 +35,14 @@ export default class ModalInspectReminder extends React.Component {
     }
 
     setImage(){
-        if(this.state.img){
-            Storage.getReminder(this.state.id).then((reminder) => {
+        Storage.getReminder(this.state.id).then((reminder) => {
+            if(reminder.img != null){
                 Score.updatePenalties(this.state.id, 'imgHint');
                 this.setState({ img: reminder.img });
-            });
-        }else{
-            alert("Sorry, no image was provided for this reminder");
-        }
-        
+            }else{
+                alert("Sorry, no image was provided to this reminder");
+            }
+        });
     }
     
     deleteItem(){
@@ -55,6 +54,7 @@ export default class ModalInspectReminder extends React.Component {
 
     updateScore(failed=false){
         Score.updateScore(this.state.id,failed).then(()=>{
+            this.setState({id:false, img:null, textValue:null, result:null});
             this.props.refresh();
             this.props.setClose(false);
         });

@@ -52,9 +52,7 @@ export default class Completed extends React.Component{
                         <View style={styles.item} key={i}>
                             <View style={styles.shadow}>
                                 <TouchableHighlight underlayColor={"#f1f1f1"} style={{ borderRadius: 10 }}
-                                    onPress={() => {
-                                        alert("hei");
-                                    }}>
+                                    >
                                     <LinearGradient
                                         colors={l.locked ? color.colorPallet[4] : color.colorPallet[1]}
                                         style={styles.gradient}>

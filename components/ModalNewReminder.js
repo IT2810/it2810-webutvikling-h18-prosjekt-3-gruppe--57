@@ -146,6 +146,7 @@ export default class ModalNewReminder extends React.Component {
                                     else{
                                         this.createReminder(this.state.textValue, this.state.dateValue, this.state.dateValueMilliseconds, this.state.img)
                                             .then(() => {
+                                                this.setState({ img: null, icon: null, textValue: null, dateValue: null, dateValueMilliseconds: null });
                                                 this.props.refresh();
                                                 this.props.setClose(false);
                                             });
@@ -158,9 +159,10 @@ export default class ModalNewReminder extends React.Component {
                             <TouchableHighlight
                                 style={styles.buttonQuit}
                                 onPress={() => {
+                                    this.setState({img:null, icon:null, textValue: null, dateValue: null, dateValueMilliseconds: null});
                                     this.props.setClose(false);
                                 }}>
-                                <Text style={styles.modalText2}>Quit</Text>
+                                <Text style={styles.modalText2}>Go back</Text>
                             </TouchableHighlight>
                         </View>
                     </ScrollView>
