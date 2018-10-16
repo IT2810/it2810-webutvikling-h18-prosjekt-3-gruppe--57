@@ -4,7 +4,6 @@ import {AppLoading, Asset, Font, Icon} from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import Storage from './components/Storage';
 import ModalWelcome from './components/ModalWelcome'
-
 export default class App extends React.Component {
     state = {
         isLoadingComplete: false,

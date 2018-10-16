@@ -4,7 +4,6 @@ class Score {
 
     //Updates score based on reminder-object
     async updateScore(ID, failed=false){
-        console.log("UPDATING SCORE FOR: "+ID);
         const attemptPenalty = -100;
         const imgHintPenalty = -100;
         const imgTextPenalty = -100;
@@ -21,6 +20,7 @@ class Score {
             if(reminder.locked) result += lockPenalty;
             if (failed) result += fail;
             else result += success;
+            reminder.attempts += 1;
             result += (reminder.attempts*attemptPenalty); 
             const user = await Storage.getItem(Expo.Constants.installationId);
             user.score += result; 
@@ -42,6 +42,16 @@ class Score {
             else return false; 
         } catch (error) {
             console.log("Score/updateScore returned error:" + error);
+        }
+    }
+
+    async incrementAttempts(ID){
+        try {
+            let reminder = await Storage.getReminder(ID);
+            reminder.attempts += 1; 
+            return await Storage.updateReminder(reminder);
+        } catch (error) {
+            console.log("Score/incrementAttempts returned error: "+ error);
         }
     }
 

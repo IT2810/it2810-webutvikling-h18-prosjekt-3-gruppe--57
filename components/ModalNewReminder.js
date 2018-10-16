@@ -32,7 +32,6 @@ export default class ModalNewReminder extends React.Component {
             hasPermission: props.hasPermission,
         };
         this.setPicture = this.setPicture.bind(this);
-        console.log("ModalVisible inside the constructor: " + this.state.modalVisible)
     }
 
     componentWillReceiveProps(props) {

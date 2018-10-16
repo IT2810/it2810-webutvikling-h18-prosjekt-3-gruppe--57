@@ -49,8 +49,6 @@ class Storage {
     try {
       const user = await this.getItem(Expo.Constants.installationId);
       let reminder = await this.getReminder(item.id);
-      console.log(reminder);
-      console.log(item);
       var result = {
         ...reminder,
         ...item

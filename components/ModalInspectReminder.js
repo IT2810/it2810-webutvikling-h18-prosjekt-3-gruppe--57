@@ -22,6 +22,8 @@ export default class ModalInspectReminder extends React.Component {
             modalVisible: false,
             id:false,
             img: null,
+            textValue: null,
+            result: null,
         };
     }
 
@@ -51,6 +53,16 @@ export default class ModalInspectReminder extends React.Component {
         });
     }
 
+    updateAttempts(){
+        Score.incrementAttempts(this.state.id); 
+    }
+
+    async compareInput(input){
+        const reminder = await Storage.getReminder(this.state.id);
+        if(reminder.reminder === input) return true;
+        return false;
+    }
+
     render() {
         return (
             <Modal
@@ -62,7 +74,7 @@ export default class ModalInspectReminder extends React.Component {
                 }}>
                 <ScrollView style={{marginTop: 22}}>
                     <View style={styles.inputChooses}>
-                        <Kaede label={'Remember your reminder?'}/>
+                        <Kaede onChangeText={(text) => { this.setState({ textValue: text }) }} label={'Remember your reminder?'}/>
                     </View>
                     <View style={styles.inputChooses}>
                         <TouchableHighlight
@@ -83,7 +95,15 @@ export default class ModalInspectReminder extends React.Component {
                         <TouchableHighlight
                             style={styles.buttonSave}
                             onPress={() => {
-                                this.updateScore();
+                                this.compareInput(this.state.textValue).then((res)=>{
+                                    if(res){
+                                        alert("Correct!");
+                                        this.updateScore();
+                                    }else{
+                                        alert("Incorrect!");
+                                        this.updateAttempts();
+                                    }
+                                });
                             }}>
                             <Text style={styles.modalText2}>Check</Text>
                         </TouchableHighlight>

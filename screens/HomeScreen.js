@@ -119,7 +119,6 @@ export default class HomeScreen extends React.Component {
 
     getItems() {
         Storage.getItem(Expo.Constants.installationId).then((user) => {
-            console.log(user);
             this.setState({ points: user.score, activeReminders:user.reminders.length});
         });
     }
@@ -134,13 +133,13 @@ export default class HomeScreen extends React.Component {
                             style={styles.gradient}>
                             <Text style={styles.getStartedText}>Score Points</Text>
                             <Text style={styles.scorePointText}>
-                                {this.state.points}
-                                {/*<AnimateNumber value={this.state.points}
-                                               countBy={14}
+                                {/*this.state.points*/}
+                                {<AnimateNumber value={this.state.points}
+                                               countBy={50}
                                                timing={(interval, progress) => {
                                                    // slow start, slow end
                                                    return interval * (1 - Math.sin(Math.PI*progress) )*10
-                                               }}/>*/}
+                                               }}/>}
                             </Text>
                         </LinearGradient>
                     </View>
