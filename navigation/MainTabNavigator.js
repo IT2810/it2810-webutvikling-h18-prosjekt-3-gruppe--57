@@ -4,7 +4,7 @@ import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import RemindersScreen from '../screens/Reminders';
-import CameraScreen from '../components/Cam';
+import CompletedScreen from '../screens/Completed';
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
@@ -30,7 +30,7 @@ const RemindersStack = createStackNavigator({
 });
 
 RemindersStack.navigationOptions = {
-    tabBarLabel: 'Reminders',
+    tabBarLabel: 'Active',
     tabBarIcon: ({focused}) => (
         <TabBarIcon
             focused={focused}
@@ -41,12 +41,25 @@ RemindersStack.navigationOptions = {
     ),
 };
 
-const CameraStack = createStackNavigator({
-    Camera: CameraScreen,
+const CompletedStack = createStackNavigator({
+    Completed: CompletedScreen,
 });
+
+CompletedStack.navigationOptions = {
+    tabBarLabel: 'Completed',
+    tabBarIcon: ({ focused }) => (
+        <TabBarIcon
+            focused={focused}
+            name={Platform.OS === 'ios'
+                ? `ios-options${focused ? '' : '-outline'}`
+                : 'md-options'}
+        />
+    ),
+};
 
 
 export default createBottomTabNavigator({
     HomeStack,
     RemindersStack,
+    CompletedStack
 });

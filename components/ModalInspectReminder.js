@@ -8,6 +8,7 @@ import {
     TouchableHighlight,
 } from 'react-native';
 import {Kaede} from 'react-native-textinput-effects';
+import { Icon, Overlay } from 'react-native-elements';
 import createStyles from '../styles/ModalInspectStyle.js';
 import Storage from '../components/Storage';
 import Score from '../components/Score';
@@ -24,6 +25,7 @@ export default class ModalInspectReminder extends React.Component {
             img: null,
             textValue: null,
             result: null,
+            overlayVisible: false,
         };
     }
 
@@ -119,7 +121,7 @@ export default class ModalInspectReminder extends React.Component {
                         <TouchableHighlight
                             style={styles.buttonQuit}
                             onPress={() => {
-                                this.deleteItem();
+                                this.setState({overlayVisible:true});
                             }}>
                             <Text style={styles.modalText2}>Give up</Text>
                         </TouchableHighlight>
@@ -133,6 +135,34 @@ export default class ModalInspectReminder extends React.Component {
                             <Text style={styles.modalText2}>Go back</Text>
                         </TouchableHighlight>
                     </View>
+                    <Overlay
+                        isVisible={this.state.overlayVisible}
+                        windowBackgroundColor="rgba(255, 255, 255, .8)"
+                        height="auto"
+                    >
+                        <View>
+                            <Text style={styles.modalText}>By proceeding you will lose 1000 points, continue?</Text>
+                            <View style={styles.inputChooses}>
+                                <TouchableHighlight
+                                    style={styles.buttonSave}
+                                    onPress={() => {
+                                        this.setState({ overlayVisible: false });
+                                        this.updateScore(true);
+                                    }}>
+                                    <Text style={styles.modalText2}>Continue</Text>
+                                </TouchableHighlight>
+                            </View>
+                            <View style={styles.inputChooses}>
+                                <TouchableHighlight
+                                    style={styles.buttonQuit}
+                                    onPress={() => {
+                                        this.setState({ overlayVisible: false });
+                                    }}>
+                                    <Text style={styles.modalText2}>Take me back</Text>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </Overlay>
                 </ScrollView>
             </Modal>
         );

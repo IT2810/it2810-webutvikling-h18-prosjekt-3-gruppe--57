@@ -18,9 +18,9 @@ class Score {
             if(reminder.imgHint) result += imgHintPenalty;
             if(reminder.textHint) result += imgTextPenalty; 
             if(reminder.locked) result += lockPenalty;
-            if (failed) result += fail;
-            else result += success;
             result += (reminder.attempts*attemptPenalty); 
+            if (failed) result = fail;
+            else result += success;
             reminder.attempts += 1;
             const user = await Storage.getItem(Expo.Constants.installationId);
             user.score += result; 

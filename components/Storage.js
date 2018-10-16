@@ -89,7 +89,10 @@ class Storage {
       const user = await this.getItem(Expo.Constants.installationId);
       const reminder = await this.getReminder(ID); 
       if(!failed) user.successful.push(reminder);
-      else user.failed.push(reminder);
+      else {
+        reminder.locked = true; //used to differentiate between failed/successful in completedScreen
+        user.failed.push(reminder);
+      }
       user.reminders = user.reminders.filter(function(el) { return el.id != ID;}); 
       return await this.setItem(Expo.Constants.installationId, user);
     } catch (error) {

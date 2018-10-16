@@ -6,11 +6,11 @@ import {
     TouchableHighlight,
 } from 'react-native';
 import {LinearGradient, Permissions, Font} from 'expo';
-import ModalNewReminder from '../components/ModalNewReminder.js'
-import ModalInspectReminder from '../components/ModalInspectReminder.js'
-import {Icon, Overlay} from 'react-native-elements'
+import ModalNewReminder from '../components/ModalNewReminder.js';
+import ModalInspectReminder from '../components/ModalInspectReminder.js';
+import {Icon, Overlay} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
-import createStyles from '../styles/ReminderStyle.js'
+import createStyles from '../styles/ReminderStyle.js';
 import Storage from '../components/Storage.js';
 import Icons from "react-native-vector-icons/Ionicons";
 
