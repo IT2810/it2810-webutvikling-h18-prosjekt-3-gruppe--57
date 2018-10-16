@@ -43,7 +43,7 @@ export default class Reminders extends React.Component {
 
     async componentWillMount() {
         this.props.navigation.addListener("willFocus", this.getItems); //refresh list when component is focused, necessary when exiting modal
-        const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+        const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL, Permissions.NOTIFICATIONS);
         this.setState({hasPermission: status === 'granted'});
     }
 

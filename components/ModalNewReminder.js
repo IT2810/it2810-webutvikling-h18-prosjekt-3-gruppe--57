@@ -11,7 +11,7 @@ import Cam from '../components/Cam.js'
 import {Kaede} from 'react-native-textinput-effects';
 import createStyles from '../styles/ModalNewReminderStyle.js'
 import Storage from './Storage.js';
-import { ImageManipulator, MediaLibrary } from 'expo';
+import { ImageManipulator, MediaLibrary, Notifications} from 'expo';
 import DateTimePicker from "react-native-modal-datetime-picker";
 
 
@@ -77,6 +77,11 @@ export default class ModalNewReminder extends React.Component {
     }
 
     async createReminder(reminder,date,time,img){
+        const localNotification = { title: "Hello", body: "You have scheduled a reminder for "+date, ios: { sound: true }, android: { sound: true, //icon (optional) (string) — URL of icon to display in notification drawer.
+            //color (optional) (string) — color of the notification icon in notification drawer.
+            priority: "high", sticky: false, vibrate: true } };
+        const when = time - 7200000;
+        let notificationID = await Notifications.scheduleLocalNotificationAsync(localNotification, { time: when, repeat:'hour' }); //schedules a notification two hours before reminder
         let bourne_identity = await Storage.generateID();
         let obj = {
             id: bourne_identity,
@@ -87,7 +92,8 @@ export default class ModalNewReminder extends React.Component {
             img: img,
             imgHint: false,
             textHint: false,
-            attempts: 0
+            attempts: 0,
+            notification: notificationID,
         }
         let rtr = await Storage.setReminder(obj);
     }

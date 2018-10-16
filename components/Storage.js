@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import {Notifications} from 'expo';
 class Storage {
   async getItem(ID) {
     try {
@@ -93,6 +94,7 @@ class Storage {
         reminder.locked = true; //used to differentiate between failed/successful in completedScreen
         user.failed.push(reminder);
       }
+      await Expo.Notifications.dismissNotificationAsync(reminder.notification); 
       user.reminders = user.reminders.filter(function(el) { return el.id != ID;}); 
       return await this.setItem(Expo.Constants.installationId, user);
     } catch (error) {
