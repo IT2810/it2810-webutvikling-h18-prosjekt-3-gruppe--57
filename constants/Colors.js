@@ -21,7 +21,8 @@ export default {
     colorPallet:[['#17cf94', '#14bf69', '#17cf94'],
         ['#21ca59', '#00EA9E'],
         ['#0CDF84', '#19CA63', '#0CDF84'],
-        ['#17cf94', '#14bf69', '#17cf94']],
+        ['#17cf94', '#14bf69', '#17cf94'],
+        ['#CD3F31', '#F2686B']],
     backgroundGradientFrom:"#00EA9E",
     backgroundGradientTo:"#1FBF53",
 };

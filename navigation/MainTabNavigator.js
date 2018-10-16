@@ -17,8 +17,8 @@ HomeStack.navigationOptions = {
             focused={focused}
             name={
                 Platform.OS === 'ios'
-                    ? `ios-information-circle${focused ? '' : '-outline'}`
-                    : 'md-information-circle'
+                    ? `ios-home${focused ? '' : '-outline'}`
+                    : 'md-home'
             }
         />
     ),
@@ -30,13 +30,13 @@ const RemindersStack = createStackNavigator({
 });
 
 RemindersStack.navigationOptions = {
-    tabBarLabel: 'Active',
+    tabBarLabel: 'Reminders',
     tabBarIcon: ({focused}) => (
         <TabBarIcon
             focused={focused}
             name={Platform.OS === 'ios'
-                ? `ios-options${focused ? '' : '-outline'}`
-                : 'md-options'}
+                ? `ios-list${focused ? '' : '-outline'}`
+                : 'md-list'}
         />
     ),
 };
@@ -51,8 +51,8 @@ CompletedStack.navigationOptions = {
         <TabBarIcon
             focused={focused}
             name={Platform.OS === 'ios'
-                ? `ios-options${focused ? '' : '-outline'}`
-                : 'md-options'}
+                ? `ios-checkmark-circle-outline${focused ? '' : '-outline'}`
+                : 'md-checkmark-circle-outline'}
         />
     ),
 };

@@ -82,11 +82,23 @@ const styles = {
     color: color.dataColor,
     textAlign: "center",
   },
-  dateText: {
+  reminderText_locked: {
     margin: 5,
-    fontSize: 20,
-    color: color.text,
+    fontSize: 27,
+    color: "#000",
     textAlign: "center",
+  },
+  dateText: {
+        margin: 5,
+        fontSize: 20,
+        color: color.dataColor,
+        textAlign: 'center',
+  },
+  dateText_locked: {
+        margin: 5,
+        fontSize: 20,
+        color: "#000",
+        textAlign: 'center',
   },
   modalText: {
     margin: 10,

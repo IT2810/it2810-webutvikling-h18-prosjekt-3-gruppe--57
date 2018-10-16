@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import color from '../constants/Colors'
 
 const styles = {
     inputChooses: {
@@ -78,7 +79,14 @@ const styles = {
     dateText: {
         margin: 10,
         fontSize: 27,
-        color: '#ffffff',
+        color: color.dataColor,
+        textAlign: 'center',
+        paddingVertical: 15,
+    },
+    dateText_locked: {
+        margin: 10,
+        fontSize: 27,
+        color: "#000",
         textAlign: 'center',
         paddingVertical: 15,
     },

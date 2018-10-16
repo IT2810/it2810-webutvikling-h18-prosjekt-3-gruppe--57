@@ -12,12 +12,10 @@ import {Icon, Overlay} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import createStyles from '../styles/ReminderStyle.js';
 import Storage from '../components/Storage.js';
+import color from "../constants/Colors";
 import Icons from "react-native-vector-icons/Ionicons";
 
 const styles = createStyles();
-
-const colorUnlocked = ['#14bf69', '#17cf94'];
-const colorLocked = ['#CD3F31', '#F2686B'];
 
 export default class Reminders extends React.Component {
     constructor(props) {
@@ -114,19 +112,16 @@ export default class Reminders extends React.Component {
                                                 this.safetySwitch(l);
                                             }}>
                                             <LinearGradient
-                                                start={{x: 0, y: 1}}
-                                                end={{x: 1, y: 1}}
-                                                colors={l.locked ? colorLocked : colorUnlocked}
+                                                colors={l.locked ? color.colorPallet[4] : color.colorPallet[1]}
                                                 style={styles.gradient}>
                                                 <View style={styles.lock}>
-                                                    <Icon name={l.locked ? "lock" : "lock-open"}/>
+                                                    <Icon name={l.locked ? "lock" : "lock-open"} />
                                                 </View>
                                                 <View style={styles.info1}>
-                                                    <Text style={styles.dateText}>
+                                                    <Text style={l.locked ? styles.dateText_locked : styles.dateText}>
                                                         {l.date}
                                                     </Text>
                                                 </View>
-                                                {/*<Image style={styles.img} source={l.img} blurRadius={50}/>*/}
                                             </LinearGradient>
                                         </TouchableHighlight>
                                     </View>
@@ -142,10 +137,6 @@ export default class Reminders extends React.Component {
                             <Icons name="md-trash" style={styles.actionButtonIcon} />
                         </ActionButton.Item>
                     </ActionButton>
-                    {/* <ActionButton>
-                        <ActionButton.Item buttonColor="red" onPress={() => { this.deleteItems }} />
-                        <ActionButton.Item buttonColor="#000" onPress={() => { this.setState({ modalVisible: true }) }} />
-                    </ActionButton> */}
                     <Overlay 
                         isVisible={this.state.overlayVisible} 
                         windowBackgroundColor="rgba(255, 255, 255, .8)" 

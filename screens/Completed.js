@@ -11,11 +11,9 @@ import { Icon, Overlay } from 'react-native-elements'
 import Storage from "../components/Storage.js";
 import Icons from "react-native-vector-icons/Ionicons";
 import createStyles from "../styles/CompletedStyle.js";
+import color from "../constants/Colors";
 
 const styles = createStyles();
-
-const colorUnlocked = ["#14bf69", "#17cf94"];
-const colorLocked = ["#CD3F31", "#F2686B"];
 
 export default class Completed extends React.Component{
     constructor(props){
@@ -58,15 +56,13 @@ export default class Completed extends React.Component{
                                         alert("hei");
                                     }}>
                                     <LinearGradient
-                                        start={{ x: 0, y: 1 }}
-                                        end={{ x: 1, y: 1 }}
-                                        colors={l.locked ? colorLocked : colorUnlocked}
+                                        colors={l.locked ? color.colorPallet[4] : color.colorPallet[1]}
                                         style={styles.gradient}>
                                         <View style={styles.info1}>
-                                            <Text style={styles.reminderText}>
+                                            <Text style={l.locked ? styles.reminderText_locked : styles.reminderText}>
                                                 {l.reminder}
                                             </Text>
-                                            <Text style={styles.dateText}>
+                                            <Text style={l.locked ? styles.dateText_locked : styles.dateText}>
                                                 {l.date}
                                             </Text>
                                         </View>
