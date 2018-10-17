@@ -4,6 +4,7 @@ import {
     Text,
     View,
     TouchableHighlight,
+    Image,
 } from 'react-native';
 import {LinearGradient, Permissions, Font} from 'expo';
 import ModalNewReminder from '../components/ModalNewReminder.js';
@@ -128,6 +129,7 @@ export default class Reminders extends React.Component {
                                 </View>
                             )) :
                             <View>
+                                <Image source={{ uri: 'https://thumbs.gfycat.com/AffectionateDimIberianlynx-small.gif' }} style={{height:200, width:200}}/>
                                 <Text>You don't seem to have any reminders</Text>
                             </View>
                         }
