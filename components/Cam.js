@@ -28,13 +28,7 @@ export default class Cam extends React.Component {
 
     render() {
         const hasPermission = this.state.hasPermission;
-        if (hasPermission === null) {
-            return <Text> Awaiting permissions...</Text>
-        }
-        else if (hasPermission === false) {
-            return <Text> No access to camera or camera roll</Text>
-        }
-        else {
+        if (hasPermission) {
             return (
                 <View style={{ flex: 1 }}>
                     <Camera style={styles.container} type={this.state.type} ref={ref => this.camera = ref} whiteBalance={this.state.mode}>
@@ -72,8 +66,15 @@ export default class Cam extends React.Component {
                 </View>
             )
         }
+        else if (hasPermission === false) {
+            return <Text> No access to camera or camera roll</Text>
+        }
+        else { 
+            return <Text> Awaiting permissions...</Text>;
+        }
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {
