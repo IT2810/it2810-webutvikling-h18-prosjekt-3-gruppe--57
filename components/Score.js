@@ -7,7 +7,7 @@ class Score {
         const attemptPenalty = -100;
         const imgHintPenalty = -100;
         const imgTextPenalty = -100;
-        const lockPenalty = -100;
+        const lockPenalty = -500;
         const success = 1000;
         const fail = -1000;
         let result = 0; 

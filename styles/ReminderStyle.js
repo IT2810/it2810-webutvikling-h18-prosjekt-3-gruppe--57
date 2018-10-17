@@ -1,16 +1,19 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import color from '../constants/Colors'
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const styles = {
     inputChooses: {
-        paddingVertical:10,
+        paddingVertical: 10,
     },
     button: {
         alignItems: 'center',
         backgroundColor: '#DDDDDD',
         padding: 10
     },
-    buttonSave:{
+    buttonSave: {
         alignItems: 'center',
         backgroundColor: '#17cf94',
         padding: 10
@@ -26,7 +29,7 @@ const styles = {
         color: 'white',
     },
     camera: {
-        aspectRatio: 4/5,
+        aspectRatio: 4 / 5,
     },
     lock: {
         paddingHorizontal: 20,
@@ -101,6 +104,19 @@ const styles = {
         fontSize: 17,
         color: '#000',
         textAlign: 'center',
+    },
+    emptyText: {
+        fontSize: 17,
+        color: color.subtleText,
+        textAlign: 'center',
+    },
+    emptyTextView: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 0,
+        alignItems: 'center',
+        height: screenHeight - 50,
     }
 };
 

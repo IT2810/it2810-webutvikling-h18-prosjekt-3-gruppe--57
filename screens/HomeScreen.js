@@ -26,8 +26,6 @@ const screenHeight = Dimensions.get('window').height;
 const chartWidth = 0.9 * screenWidth;
 const chartHeight = 0.2 * screenHeight;
 const rightBoxWidth = chartWidth * 0.55;
-const start=[1, 0];
-const end=[0, 1];
 
 const chartConfig = {
     backgroundGradientFrom: color.backgroundGradientFrom,
@@ -79,19 +77,7 @@ export default class HomeScreen extends React.Component {
                     dates: 400,
                 },
             ],
-            commitsData: [
-                {date: '2017-01-02', count: 1},
-                {date: '2017-01-03', count: 2},
-                {date: '2017-01-04', count: 3},
-                {date: '2017-01-05', count: 4},
-                {date: '2017-01-06', count: 5},
-                {date: '2017-01-30', count: 2},
-                {date: '2017-01-31', count: 3},
-                {date: '2017-03-01', count: 2},
-                {date: '2017-04-02', count: 4},
-                {date: '2017-03-05', count: 2},
-                {date: '2017-02-30', count: 4}
-            ],
+            allReminderDates: [],
             keys: ['apples', 'bananas', 'cherries', 'dates'],
             svgs: [
                 {onPress: () => console.log('apples')},
@@ -116,7 +102,7 @@ export default class HomeScreen extends React.Component {
     getItems() {
         Storage.getItem(Expo.Constants.installationId).then((user) => {
             var percentage = 0;
-            /*var allReminderDates = this.formatDatesForChart(user);*/
+            var allReminderDates = this.formatDatesForChart(user);
             if (!isNaN(user.successful.length / (user.successful.length + user.failed.length))) {
                 percentage = user.successful.length / (user.successful.length + user.failed.length)
             }
@@ -124,23 +110,39 @@ export default class HomeScreen extends React.Component {
                 points: user.score,
                 activeReminders: user.reminders.length,
                 percentage: percentage - 0.00001,
+                allReminderDates: allReminderDates,
             });
         });
     }
 
     formatDatesForChart(user) {
-        var allReminderDates = {};
+        var allReminderDates = [];
+        var stringArray = [];
+        var uniqueArray = [];
+        var uniqueDateArray = [];
         user.reminders.forEach(element => {
-            allReminderDates.push(element.date);
+            allReminderDates.push(new Date(element.dateMilliseconds));
         });
         user.failed.forEach(element => {
-            allReminderDates.push(element.date);
+            allReminderDates.push(new Date(element.dateMilliseconds));
         });
         user.successful.forEach(element => {
-            allReminderDates.push(element.date);
+            allReminderDates.push(new Date(element.dateMilliseconds));
         });
-        console.log(JSON.stringify(allReminderDates));
-        return allReminderDates;
+        allReminderDates.forEach(element => {
+            stringArray.push(JSON.stringify(element).split("T")[0].replace('"',''));
+        });
+        stringArray.forEach(element => {
+            if (!uniqueArray.includes(element)){
+                uniqueArray.push(element);
+                uniqueDateArray.push({date: element,count:1})
+            }else{
+                var counter = uniqueDateArray[uniqueArray.indexOf(element)].count+1;
+                uniqueDateArray[uniqueArray.indexOf(element)] = {date: element,count:counter}
+            }
+        });
+        console.log(uniqueDateArray);
+        return uniqueDateArray;
     }
 
     render() {
@@ -240,8 +242,8 @@ export default class HomeScreen extends React.Component {
                                     <Text style={styles.getStartedText}>Activity last 30 days</Text>
                                 </View>
                                 <ContributionGraph
-                                    values={this.state.commitsData}
-                                    endDate={new Date('2018-10-18')}
+                                    values={this.state.allReminderDates}
+                                    endDate={new Date()}
                                     numDays={30}
                                     width={rightBoxWidth}
                                     height={220}

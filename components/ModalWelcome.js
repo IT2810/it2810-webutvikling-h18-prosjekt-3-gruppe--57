@@ -51,14 +51,6 @@ export default class ModalWelcome extends React.Component {
                                         transform="translate(-66.26 -45.84)"
                                         fill={"black"}/>
                                 </Svg.G>
-                                {/*<Svg.G id="d17fd6fb-3636-41ad-a3d2-1977cdfe3bd3" data-name="Text">
-                                <Svg.Text transform="translate(140.74 345.72)"
-                                      style="font-size:300px,fill:#231f20,font-family:NiagaraSolid-Reg, Niagara Solid">R
-                                    <Svg.TSpan x="93.02" y="0" style="font-size:236px">e</Svg.TSpan>
-                                    <Svg.TSpan x="158.13" y="0">M</Svg.TSpan>
-                                    <Svg.TSpan x="269.45" y="0" style="font-size:230px">ind</Svg.TSpan>
-                                </Svg.Text>
-                            </Svg.G>*/}
                             </Svg>
                         </View>
                         <Text style={styles.textT}>Our mission is NOT to be your ordinary todo app.
@@ -68,14 +60,14 @@ export default class ModalWelcome extends React.Component {
                         <Text style={styles.titleT}>1.</Text>
                         <Text style={styles.textT}>A reminder can be added in the Reminders tab. In the process you will be able to
                             add a visual clue. The Image will become a hint on revisiting a reminder.</Text>
-                        <View style={{alignItems:'center',width:screenWidth-40,height:((screenWidth-40)/5*1.8)}}>
+                        {/*<View style={{alignItems:'center',width:screenWidth-40,height:((screenWidth-40)/5*1.8)}}>
                             <View style={styles.imgView}>
                                 <Image
                                     style={styles.img}
                                     source={require('../assets/images/ReminderTab.jpg')}
                                 />
                             </View>
-                        </View>
+                        </View>*/}
                         <Text style={styles.titleT}>2.</Text>
                         <Text style={styles.textT}>For challenging your mind we give you a score incentive to avoid opening
                             the reminder before the do-date. As the date arrives you will be able to open the reminder and
@@ -86,7 +78,7 @@ export default class ModalWelcome extends React.Component {
                                 onPress={() => {
                                     this.props.setClose(false);
                                 }}>
-                                <Text style={styles.modalText2}>Enter</Text>
+                                <Text style={styles.modalText2}>Get Started</Text>
                             </TouchableHighlight>
                         </View>
                     </View>
