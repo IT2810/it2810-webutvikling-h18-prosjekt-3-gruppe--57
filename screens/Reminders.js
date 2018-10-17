@@ -129,7 +129,7 @@ export default class Reminders extends React.Component {
                             ))
                         }
                     </ScrollView>
-                    <ActionButton buttonColor='#17cf94' title="New Reminder" onPress={() => this.setState({ modalVisible: true })}>
+                    <ActionButton buttonColor={color.plussButton} title="New Reminder" onPress={() => this.setState({ modalVisible: true })}>
                         <Icons name="md-create" style={styles.actionButtonIcon} />
                     </ActionButton>
                     <Overlay 

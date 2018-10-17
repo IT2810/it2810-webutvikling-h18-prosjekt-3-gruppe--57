@@ -5,6 +5,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import RemindersScreen from '../screens/Reminders';
 import CompletedScreen from '../screens/Completed';
+import color from '../constants/Colors'
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
@@ -62,4 +63,8 @@ export default createBottomTabNavigator({
     HomeStack,
     RemindersStack,
     CompletedStack
-});
+    },{
+        tabBarOptions: {
+            activeTintColor: color.tintColor,
+        },
+    });

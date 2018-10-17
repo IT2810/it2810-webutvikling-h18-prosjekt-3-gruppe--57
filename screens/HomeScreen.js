@@ -162,7 +162,7 @@ export default class HomeScreen extends React.Component {
                                         start={[1, 0]}
                                         end={[0, 1]}
                                         colors={color.colorPalletGreen}
-                                        style={styles.gradient}>
+                                        style={styles.dataGradient}>
                                         <Text style={styles.scorePointText}>
                                             {this.state.points}
                                             {/*{<AnimateNumber value={this.state.points}
@@ -212,7 +212,7 @@ export default class HomeScreen extends React.Component {
                                 <View style={{width: rightBoxWidth}}>
                                     <LinearGradient
                                         colors={color.colorPalletGreen}
-                                        style={styles.gradient}
+                                        style={styles.dataGradient}
                                         start={[1, 0]}
                                         end={[0, 1]}>
                                         <Text style={styles.scorePointText}>

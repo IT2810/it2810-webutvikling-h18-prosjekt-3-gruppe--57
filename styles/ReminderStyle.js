@@ -74,7 +74,7 @@ const styles = {
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        borderRadius: 10,
+        borderRadius: 0,
     },
     dateText: {
         margin: 10,

@@ -18,7 +18,6 @@ const styles = {
         alignItems: 'center',
         marginBottom: 30,
         width: screenWidth-20,
-        borderColor:'red',
         marginHorizontal:10,
         backgroundColor:color.background
     },
@@ -55,6 +54,10 @@ const styles = {
         alignItems: 'center',
         flex:1,
         flexDirection:'row',
+    },
+    dataGradient: {
+        borderRadius: 10,
+        alignItems: 'center',
     },
     container: {
         flex: 1,
