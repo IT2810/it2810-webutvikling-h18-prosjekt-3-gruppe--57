@@ -72,11 +72,9 @@ export default class Completed extends React.Component {
                                 </View>
                             )) :
                             <View style={styles.emptyTextView}>
-                                <Image source={{ uri: 'https://i.kym-cdn.com/photos/images/original/001/043/243/419.gif'}}
-                                       style={{
-                                           height: 300,
-                                           width: 300
-                                       }}/>
+                                <Image
+                                    source={{uri: 'https://thumbs.gfycat.com/AffectionateDimIberianlynx-small.gif'}}
+                                    style={{height: 200, width: 200}}/>
                                 <Text style={styles.emptyText}>There's nothing here</Text>
                             </View>
                     }

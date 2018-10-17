@@ -126,7 +126,7 @@ const styles = {
         backgroundColor: '#fff',
         borderRadius: 0,
         alignItems: 'center',
-        height: screenHeight - 50,
+        height: screenHeight - 150,
     }
 };
 

@@ -25,11 +25,9 @@ export default class ModalWelcome extends React.Component {
             modalVisible: false,
         };
     }
-
     componentWillReceiveProps(props) {
         this.setState({modalVisible: props.modalVisible})
     }
-
     render() {
         return (
             <Modal

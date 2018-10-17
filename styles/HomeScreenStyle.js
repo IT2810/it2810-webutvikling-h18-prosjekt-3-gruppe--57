@@ -3,8 +3,6 @@ import color from '../constants/Colors'
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-const chartWidth = 0.9*screenWidth;
-const chartHeight = 0.2*screenHeight;
 
 
 const styles = {
