@@ -104,7 +104,7 @@ export default class Reminders extends React.Component {
                                               refresh={this.getItems}
                                               id={this.state.chosenItemId}/>
                         {
-                            this.state.reminders.map((l, i) => (
+                            this.state.reminders.length > 0 ? this.state.reminders.map((l, i) => (
                                 <View style={styles.item} key={i}>
                                     <View style={styles.shadow}>
                                         <TouchableHighlight underlayColor={"#f1f1f1"} style={{borderRadius: 10}}
@@ -126,7 +126,10 @@ export default class Reminders extends React.Component {
                                         </TouchableHighlight>
                                     </View>
                                 </View>
-                            ))
+                            )) :
+                            <View>
+                                <Text>You don't seem to have any reminders</Text>
+                            </View>
                         }
                     </ScrollView>
                     <ActionButton buttonColor={color.plussButton} title="New Reminder" onPress={() => this.setState({ modalVisible: true })}>
