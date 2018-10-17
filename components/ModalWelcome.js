@@ -8,6 +8,7 @@ import {
     Dimensions,
     TouchableHighlight,
 } from 'react-native';
+import {Constants, Svg} from 'expo';
 import {Kaede} from 'react-native-textinput-effects';
 import createStyles from '../styles/ModalWelcomeStyle.js';
 import Storage from "../components/Storage.js";
@@ -16,14 +17,14 @@ const styles = createStyles();
 let openModal = false;
 
 export default class ModalWelcome extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             modalVisible: false,
         };
     }
 
-    componentWillReceiveProps(props){
+    componentWillReceiveProps(props) {
         this.setState({modalVisible: props.modalVisible})
     }
 
@@ -39,11 +40,31 @@ export default class ModalWelcome extends React.Component {
                 <ScrollView>
                     <Text style={styles.titleT}>Welcome to</Text>
                     <Text style={styles.titleB}>ReMind</Text>
+                    <Svg height={100} width={100} style={{borderColor:'red'}}>
+                        <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 772.74 525.25">
+                            <Svg.G id="10b55ef5-f461-420d-8f90-6248f2df40a1" data-name="Layer 3">
+                                <Svg.Path
+                                    d="M703.89,256.32c-1.95-28.38-24.07-.79-38.16,15.22s10,54.56,19.61,65.28S702.18,312,719.83,303s21,19.55,1.92,42.59-63.73,2.9-73.93.33-32.12-27.18-37.34-44.1,15.64-24.78,26.64-29.94,10.1-38.85,7.19-58.67,21.92,24.6,28.57-2-9.82-25.53-15.74-39-36.72,1.79-43.73,15-1.36,23.79,4.66,40.89-23,23.15-33.29,48.9,2.71,50,9.36,83.32,23.16,26.6,31.26,9.74,37.87-3.64,54.7,9.11,13.32,7.57,27.86,1.3,34.31-25.68,26.07,8.65S722.79,415,705.67,429.28s-24.8-28.58-38.36-37.57S627.38,414.9,612.8,420,586.45,393,567.64,380.54s-79,4.93-96.49,4.17,45.35-14,74.9-23.91,16.45-46.73,11.88-61.64,10.68-32.16,21-48.07-13.31-44.73-29.29-70.3,19.59-3.16,31.06,17.05,13.51-22.9,17.69-37.43,35.86-4.4,33.69-19.16S601.33,120.94,593.57,113s-7.69,17.67-22.07,37.54-39.62-9.92-59.93-11.41,27.83,45.36,39.12,66.39-7.22,57.86-22.13,65.16-10.62,34.39,0,58.48-73.15,37.67-87.12,42.92,12.2,10.23,2.68,26.32,51.51,1.08,68.81,1.43,70.77,22.91,88.37,49.66,26.33-26.69,57-23,21.41,20.15,10.16,23.29-29.43,7.07-35.33,31.8-31.76,1.65-50.29-13.29-46.44-29-60.5-42.27-64-6.23-102.76,7.59,1.66-27.46-14.57-39.82,22.2-32.47,49.69-45.18,27.14-63.87,22.44-83.44,23.81-1.64,33.87-12.27-5.79-61.17-29.2-112.13,15.72-29.46,28-21.86,77.36,1.41,60.48-28-45.25-27.64-36.83-10-34.29-3.56-53.05-6.72S448,138.6,437,145.59s29.33,34.35,25.07,76.5S448,268.56,424,316.91s-43.07,9.87-51.7,29.39,7.65,48.74,0,76.76,30,37,54.52,32.27,35-22.85,99.53,5.49,22.84,37,6.86,49-25.88-23.88-37.74-29S432,460.88,405.62,492.44s-30.9-26-60.72-56.47,5.05-64.5,10.44-116.43,43.86,27.68,45.79-27.2,8-19.51,15-49.95,33.7-33.58,1.22-89.18,0,0-48.69-22.47S322.5,89,380.25,104s54.56-56.68,54.56-56.68-24-1.13-46.83,16-41.48-13.43-59.48-7.3.71,56.86,4.41,77.34,59.42,21.83,58.89,76.72-15.88,56.49-50,79.27S303,344.8,303,344.8s-12.84,67.31,2.79,105.63,19.86,34.58,18.3,64.88c0,0-39.53,20.34-39.55-3s19.37-49-2.09-79.15-18.18-86.23-8.82-93.17,22.3-96.24,43.54-97.41,42.1,21.23,44.75-6.46-2.58-45-41.13-67.14-23.09-39-29.58-51.21,15.36-58.28-19.76-40.9-32.4,29.89-15,49.94,6.64,48.36,27.29,54.92,60.88,24.79,44.58,32.13-47.54,6.13-54.1,28.64-11.49,61.83-17.24,69.9-32.51,33.35-24.36,55.88S269.25,446.7,251.08,436s-61.65-24.16-58.22-37,34.79,7.81,24.22-16.07-7.72-44.07,9-65.63S244,241.66,261.49,228.2,293,210.51,277.92,203s-37.72-28.44-40.84-41.16-21.12-54.67-29.16-50.4-39.72,8.56-25.17,25S197,172,223.51,189.81s30.32,19.3,5.44,55.5-23.87,51.77-35.4,59.3,1.74,72.36-8,71.81-27.28,21.23-31.79,15.87-42.94-15.12-41.7-28.55S165.1,379,162.29,355.1s5.53-68.78,18.55-80.09,43-50.89,35.85-57.4S194,171.5,174.39,166.33s-21.74-25.41-43.14,7.24-3,29.32,7.81,24.56,15.7-30.06,30-6.88S197.28,220,192,230.85s-42.32,15.94-44.69,39,2.3,57-7.13,61.11S97.4,351.74,96,342.64s-15.56-54.83-3.18-60,15.07,36.16,21,27.07,11.48-62,23.3-66,37.93-23.74,21.15-26.95-47.93-1-48.62,10.21,4.75,36.84-7.34,38.38-37.66,19-34.2,44.73,7.66,49.17,28.13,71.58c11.39,12.47,15.57,17.68,32.14,25.41,13.2,6.17,42.39,4.54,51,8.54,19.51,9,15,7.44,25.39,13.14,4.54,3.56,9.05,5.6,11,10.07s7.66,6.26,9.2,11.7c1.67,5.94-.9,11,2.12,16.2,3.83,6.63,12.62,7.74,16.68,11.86,5.67,5.75,3.47,19.56,5.06,26.89,2.08,9.56,7.37,12.46,12.08,16.42,9.73,6.86,29,10.65,46,12.19,51.59,4.12,85.36-11.6,105.67-17.82,12.81-4.19,34.75-23.66,48-19.54,7.45,3.66,8.5,9.42,17.22,35.84,7.78,9.35,11.47,1.88,18.38,2.61,13.76,1.47,30.2,14.64,36.26,18.13s-6.18,14.58,6,16.09,21.56-3.82,22.61-16.84,57.24-30.15,71.47-33.16,34-21,39.3-32.31c5.39-11.58,9.45-29.8,18.62-32.58,6.15-.37,43.62-11.71,48.08-30.92,2.31-9.94,9.31-21.26,12.89-36.26,3.34-14,2.28-28.28,1.65-30.32-1.31-4.23,3.58-52.34-4.15-66.83C745,282.88,735.78,271,730.84,260s-5.55-21-6.42-24.13C722.66,229.62,703.89,256.32,703.89,256.32Z"
+                                    transform="translate(-66.26 -45.84)"
+                                    style="fill:#231f20;stroke:#231f20;stroke-miterlimit:10;stroke-width:3px;opacity:0.17"/>
+                            </Svg.G>
+                            <Svg.G id="d17fd6fb-3636-41ad-a3d2-1977cdfe3bd3" data-name="Text">
+                                <Svg.Text transform="translate(140.74 345.72)"
+                                      style="font-size:300px;fill:#231f20;font-family:NiagaraSolid-Reg, Niagara Solid">R
+                                    <Svg.TSpan x="93.02" y="0" style="font-size:236px">e</Svg.TSpan>
+                                    <Svg.TSpan x="158.13" y="0">M</Svg.TSpan>
+                                    <Svg.TSpan x="269.45" y="0" style="font-size:230px">ind</Svg.TSpan>
+                                </Svg.Text>
+                            </Svg.G>
+                        </Svg>
+                    </Svg>
                     <Text style={styles.textT}>Our mission is not to be your ordinary TODO app.
-                        By using known methods such as visual clues to bind memories, we are aiming for improving your ability to remember tasks.
+                        By using known methods such as visual clues to bind memories, we are aiming for improving your
+                        ability to remember tasks.
                         We will help you structure you daily tasks and your mind.</Text>
                     <Text style={styles.titleT}>First:</Text>
-                    <Text style={styles.textT}>Add a reminder in the Reminders tab. In the process you will be able to add a visual clue. The Image will become a hint on revisiting a reminder.</Text>
+                    <Text style={styles.textT}>Add a reminder in the Reminders tab. In the process you will be able to
+                        add a visual clue. The Image will become a hint on revisiting a reminder.</Text>
                     <View style={styles.imgView}>
                         <Image
                             style={styles.img}
@@ -51,7 +72,9 @@ export default class ModalWelcome extends React.Component {
                         />
                     </View>
                     <Text style={styles.titleT}>Second:</Text>
-                    <Text style={styles.textT}>For challenging your mind we give you a score incentive to avoid opening the Reminder before the do-date. As the date arrives you will be able to open the reminder and test your memory. You will resive a score depending on your performance.</Text>
+                    <Text style={styles.textT}>For challenging your mind we give you a score incentive to avoid opening
+                        the Reminder before the do-date. As the date arrives you will be able to open the reminder and
+                        test your memory. You will resive a score depending on your performance.</Text>
                     <View style={styles.inputChooses}>
                         <TouchableHighlight
                             style={styles.buttonSave}

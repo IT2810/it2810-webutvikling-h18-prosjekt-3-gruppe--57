@@ -25,8 +25,9 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const chartWidth = 0.9 * screenWidth;
 const chartHeight = 0.2 * screenHeight;
-const rightBoxWidth = chartWidth*0.55;
-
+const rightBoxWidth = chartWidth * 0.55;
+const start=[1, 0];
+const end=[0, 1];
 
 const chartConfig = {
     backgroundGradientFrom: color.backgroundGradientFrom,
@@ -35,8 +36,8 @@ const chartConfig = {
 };
 
 const contributionChartConfig = {
-    backgroundGradientFrom: color.backgroundGradientFrom,
-    backgroundGradientTo: color.backgroundGradientTo,
+    backgroundGradientFrom: color.backgroundGradientFrom2,
+    backgroundGradientTo: color.backgroundGradientTo2,
     color: (opacity = 1) => `rgba(30,41,35, ${opacity})`
 };
 
@@ -127,7 +128,7 @@ export default class HomeScreen extends React.Component {
         });
     }
 
-    /*formatDatesForChart(user){
+    formatDatesForChart(user) {
         var allReminderDates = {};
         user.reminders.forEach(element => {
             allReminderDates.push(element.date);
@@ -140,7 +141,7 @@ export default class HomeScreen extends React.Component {
         });
         console.log(JSON.stringify(allReminderDates));
         return allReminderDates;
-    }*/
+    }
 
     render() {
         return (
@@ -149,13 +150,17 @@ export default class HomeScreen extends React.Component {
                     <View style={styles.shadow}>
                         <LinearGradient
                             colors={color.colorPalletGray}
-                            style={styles.gradient}>
+                            style={styles.gradient}
+                            start={[1, 0]}
+                            end={[0, 1]}>
                             <View style={styles.rightBoxContainer}>
                                 <View style={{flex: 1, alignSelf: 'stretch', alignItems: 'center'}}>
                                     <Text style={styles.getStartedText}>Score Points</Text>
                                 </View>
-                                <View style={{width:rightBoxWidth}}>
+                                <View style={{width: rightBoxWidth}}>
                                     <LinearGradient
+                                        start={[1, 0]}
+                                        end={[0, 1]}
                                         colors={color.colorPalletGreen}
                                         style={styles.gradient}>
                                         <Text style={styles.scorePointText}>
@@ -175,7 +180,9 @@ export default class HomeScreen extends React.Component {
                     <View style={styles.shadow}>
                         <LinearGradient
                             colors={color.colorPalletGray}
-                            style={styles.gradient}>
+                            style={styles.gradient}
+                            start={[1, 0]}
+                            end={[0, 1]}>
                             <View style={styles.rightBoxContainer}>
                                 <View style={{flex: 1, alignSelf: 'stretch', alignItems: 'center'}}>
                                     <Text style={styles.getStartedText}>Success Percentage</Text>
@@ -193,17 +200,21 @@ export default class HomeScreen extends React.Component {
                     <View style={styles.shadow}>
                         <LinearGradient
                             colors={color.colorPalletGray}
-                            style={styles.gradient}>
+                            style={styles.gradient}
+                            start={[1, 0]}
+                            end={[0, 1]}>
                             <View style={styles.rightBoxContainer}>
                                 <View style={{flex: 1, alignSelf: 'stretch', alignItems: 'center'}}>
                                     <Text style={styles.getStartedText}>
                                         Active Reminders
                                     </Text>
                                 </View>
-                                <View style={{width:rightBoxWidth}}>
+                                <View style={{width: rightBoxWidth}}>
                                     <LinearGradient
                                         colors={color.colorPalletGreen}
-                                        style={styles.gradient}>
+                                        style={styles.gradient}
+                                        start={[1, 0]}
+                                        end={[0, 1]}>
                                         <Text style={styles.scorePointText}>
                                             {this.state.activeReminders}
                                             {/*<AnimateNumber value={this.state.points}
@@ -221,7 +232,9 @@ export default class HomeScreen extends React.Component {
                     <View style={styles.shadow}>
                         <LinearGradient
                             colors={color.colorPalletGray}
-                            style={styles.gradient}>
+                            style={styles.gradient}
+                            start={[1, 0]}
+                            end={[0, 1]}>
                             <View style={styles.rightBoxContainer}>
                                 <View style={{flex: 1, alignSelf: 'stretch', alignItems: 'center'}}>
                                     <Text style={styles.getStartedText}>Activity last 30 days</Text>
