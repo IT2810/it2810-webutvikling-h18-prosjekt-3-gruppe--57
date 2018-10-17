@@ -89,12 +89,14 @@ class Storage {
     try {
       const user = await this.getItem(Expo.Constants.installationId);
       const reminder = await this.getReminder(ID); 
-      if(!failed) user.successful.push(reminder);
-      else {
-        reminder.locked = true; //used to differentiate between failed/successful in completedScreen
+      if(failed) {
+        reminder.locked = true;
         user.failed.push(reminder);
+      }else {
+        reminder.locked = false;
+        user.successful.push(reminder);
       }
-      await Expo.Notifications.dismissNotificationAsync(reminder.notification); 
+      if(reminder.notification) await Expo.Notifications.dismissNotificationAsync(reminder.notification); 
       user.reminders = user.reminders.filter(function(el) { return el.id != ID;}); 
       return await this.setItem(Expo.Constants.installationId, user);
     } catch (error) {

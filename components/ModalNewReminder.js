@@ -80,8 +80,11 @@ export default class ModalNewReminder extends React.Component {
         const localNotification = { title: "Hello", body: "You have scheduled a reminder for "+date, ios: { sound: true }, android: { sound: true, //icon (optional) (string) — URL of icon to display in notification drawer.
             //color (optional) (string) — color of the notification icon in notification drawer.
             priority: "high", sticky: false, vibrate: true } };
-        const when = time - 7200000;
-        let notificationID = await Notifications.scheduleLocalNotificationAsync(localNotification, { time: when, repeat:'hour' }); //schedules a notification two hours before reminder
+        let notificationID = null;
+        if(time - new Date().getTime() > 3600000){
+            const when = time - 3600000;
+            notificationID = await Notifications.scheduleLocalNotificationAsync(localNotification, { time: when }); //schedules a notification two hours before reminder
+        }     
         let bourne_identity = await Storage.generateID();
         let obj = {
             id: bourne_identity,
