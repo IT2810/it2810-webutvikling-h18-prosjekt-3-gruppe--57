@@ -18,6 +18,7 @@
     "expo": "^30.0.1",
     "flow-bin": "^0.82.0",
     "link": "^0.1.5",
+    "mock-async-storage": "^2.0.3",
     "native-base": "^2.8.1",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",

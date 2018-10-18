@@ -12,6 +12,7 @@ class Util{
      * @returns {Array}
      */
     formatDatesForChart(user) {
+        console.log(JSON.stringify(user));
         var allReminderDates = [];
         var stringArray = [];
         var uniqueArray = [];
@@ -37,6 +38,7 @@ class Util{
                 uniqueDateArray[uniqueArray.indexOf(element)] = {date: element,count:counter}
             }
         });
+        console.log(uniqueDateArray);
         return uniqueDateArray;
     }
 
