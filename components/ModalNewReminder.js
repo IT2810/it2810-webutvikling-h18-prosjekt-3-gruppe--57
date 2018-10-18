@@ -11,8 +11,9 @@ import Cam from '../components/Cam.js'
 import {Kaede} from 'react-native-textinput-effects';
 import createStyles from '../styles/ModalNewReminderStyle.js'
 import Storage from './Storage.js';
-import { ImageManipulator, MediaLibrary, Notifications} from 'expo';
+import { ImageManipulator, MediaLibrary, Notifications, Location} from "expo";
 import DateTimePicker from "react-native-modal-datetime-picker";
+import util from './Util';
 
 
 const styles = createStyles();
@@ -35,6 +36,7 @@ export default class ModalNewReminder extends React.Component {
 
     componentWillReceiveProps(props) {
         this.setState({modalVisible: props.modalVisible})
+        this.getLocation();
     }
 
     _setNewReminderModalVisible = (visible) => this.setState({modalVisible: visible});
@@ -69,29 +71,12 @@ export default class ModalNewReminder extends React.Component {
         this.setState({img: assetImg.uri, icon: assetIcon.uri});
     }
 
-    async createReminder(reminder,date,time,img){
-        const localNotification = { title: "Hello", body: "You have scheduled a reminder for "+date, ios: { sound: true }, android: { sound: true, //icon (optional) (string) — URL of icon to display in notification drawer.
-            //color (optional) (string) — color of the notification icon in notification drawer.
-            priority: "high", sticky: false, vibrate: true } };
-        let notificationID = null;
-        if(time - new Date().getTime() > 3600000){
-            const when = time - 3600000;
-            notificationID = await Notifications.scheduleLocalNotificationAsync(localNotification, { time: when }); //schedules a notification two hours before reminder
-        }     
-        let bourne_identity = await Storage.generateID();
-        let obj = {
-            id: bourne_identity,
-            reminder: reminder,
-            date: date,
-            dateMilliseconds: time,
-            locked: true,
-            img: img,
-            imgHint: false,
-            textHint: false,
-            attempts: 0,
-            notification: notificationID,
-        }
-        let rtr = await Storage.setReminder(obj);
+    async getLocation(){
+        let location = await Location.getCurrentPositionAsync({enableHighAccuracy:true});
+        const coord = {
+            "latitude": location.coords.latitude, "longitude": location.coords.longitude, "latitudeDelta": 0.04,
+            "longitudeDelta": 0.05 };
+        this.setState({location: coord});
     }
 
     render() {
@@ -146,9 +131,9 @@ export default class ModalNewReminder extends React.Component {
                                     if(!this.state.textValue) alert("Reminder field cannot be empty!");
                                     else if(!this.state.dateValue) alert("Please choose a date");
                                     else{
-                                        this.createReminder(this.state.textValue, this.state.dateValue, this.state.dateValueMilliseconds, this.state.img)
+                                        util.createReminder(this.state.textValue, this.state.dateValue, this.state.dateValueMilliseconds, this.state.img, this.state.location)
                                             .then(() => {
-                                                this.setState({ img: null, icon: null, textValue: null, dateValue: null, dateValueMilliseconds: null });
+                                                this.setState({ img: null, icon: null, textValue: null, dateValue: null, dateValueMilliseconds: null, location: null });
                                                 this.props.refresh();
                                                 this.props.setClose(false);
                                             });
@@ -161,7 +146,7 @@ export default class ModalNewReminder extends React.Component {
                             <TouchableHighlight
                                 style={styles.buttonQuit}
                                 onPress={() => {
-                                    this.setState({img:null, icon:null, textValue: null, dateValue: null, dateValueMilliseconds: null});
+                                    this.setState({img:null, icon:null, textValue: null, dateValue: null, dateValueMilliseconds: null, cameraModalVisible:false, location: null});
                                     this.props.setClose(false);
                                 }}>
                                 <Text style={styles.modalText2}>Go back</Text>

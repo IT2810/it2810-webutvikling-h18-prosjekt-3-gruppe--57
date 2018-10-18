@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 import {Kaede} from 'react-native-textinput-effects';
 import { Overlay } from 'react-native-elements';
+import { MapView } from 'expo';
 import createStyles from '../styles/ModalInspectStyle.js';
 import Storage from '../components/Storage';
 import Score from '../components/Score';
+import layout from '../constants/Layout';
 
 const styles = createStyles();
 
@@ -25,6 +27,9 @@ export default class ModalInspectReminder extends React.Component {
             textValue: null,
             result: null,
             overlayVisible: false,
+            location: null,
+            displayImage: 1,
+            displayMap:'none',
         };
     }
 
@@ -37,11 +42,22 @@ export default class ModalInspectReminder extends React.Component {
         Storage.getReminder(this.state.id).then((reminder) => {
             if(reminder.img != null){
                 Score.updatePenalties(this.state.id, 'imgHint');
-                this.setState({ img: reminder.img });
+                this.setState({ img: reminder.img, displayImage: 200 });
             }else{
                 alert("Sorry, no image was provided to this reminder");
             }
         });
+    }
+
+    setLocation(){
+        Storage.getReminder(this.state.id).then((reminder)=>{
+            if(reminder.location != null){
+                Score.updatePenalties(this.state.id, "mapHint");
+                this.setState({ location: reminder.location, displayMap:'flex'});
+            }else{
+                alert("No location was recorded for this reminder");
+            }
+        })
     }
     
     deleteItem(){
@@ -53,14 +69,10 @@ export default class ModalInspectReminder extends React.Component {
 
     updateScore(failed=false){
         Score.updateScore(this.state.id,failed).then(()=>{
-            this.setState({id:false, img:null, textValue:null, result:null});
+            this.setState({id:false, img:null, textValue:null, result:null, displayImage: 1, displayMap: 'none'});
             this.props.refresh();
             this.props.setClose(false);
         });
-    }
-
-    updateAttempts(){
-        Score.incrementAttempts(this.state.id); 
     }
 
     async compareInput(input){
@@ -93,25 +105,42 @@ export default class ModalInspectReminder extends React.Component {
                             <Text style={styles.modalText2}>View Image Hint</Text>
                         </TouchableHighlight>
                     </View>
-                    <ScrollView style={{ height: 200 }}>
+                    <ScrollView style={{ height: this.state.displayImage }}>
                         <Image
-                            style={styles.image}
+                            style={{flex: 1,aspectRatio: 4 / 5}}
                             source={{ isStatic: true, uri: this.state.img }}
                         />
                     </ScrollView>
                     <View style={styles.inputChooses}>
                         <TouchableHighlight
+                            style={styles.button}
+                            onPress={() => {
+                                this.setLocation()
+                            }}>
+                            <Text style={styles.modalText2}>View location Hint</Text>
+                        </TouchableHighlight>
+                    </View>
+                    <MapView
+                        style={{ flex: 1, width: layout.window.width, height: 200, display:this.state.displayMap }}
+                        initialRegion={this.state.location}
+                    />
+                    <View style={styles.inputChooses}>
+                        <TouchableHighlight
                             style={styles.buttonSave}
                             onPress={() => {
-                                this.compareInput(this.state.textValue).then((res)=>{
-                                    if(res){
-                                        alert("Correct!");
-                                        this.updateScore();
-                                    }else{
-                                        alert("Incorrect!");
-                                        this.updateAttempts();
-                                    }
-                                });
+                                if(!this.state.textValue) alert("Input field is empty");
+                                else{
+                                    this.compareInput(this.state.textValue).then((res) => {
+                                        if (res) {
+                                            alert("Correct!");
+                                            this.setState({ displayMap: 'none' });
+                                            this.updateScore();
+                                        } else {
+                                            alert("Incorrect!");
+                                            Score.incrementAttempts(this.state.id); 
+                                        }
+                                    });
+                                }         
                             }}>
                             <Text style={styles.modalText2}>Check</Text>
                         </TouchableHighlight>
@@ -129,6 +158,7 @@ export default class ModalInspectReminder extends React.Component {
                         <TouchableHighlight
                             style={styles.buttonQuit}
                             onPress={() => {
+                                this.setState({displayMap:'none', img: null, displayImage: 1});
                                 this.props.setClose(false);
                             }}>
                             <Text style={styles.modalText2}>Go back</Text>

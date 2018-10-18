@@ -45,7 +45,7 @@ export default class Reminders extends React.Component {
     async componentDidMount() {
         //refresh list when component is focused, necessary when exiting modal
         this.props.navigation.addListener("willFocus",this.getItems); 
-        const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL, Permissions.NOTIFICATIONS);
+        const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL, Permissions.NOTIFICATIONS,Permissions.LOCATION);
         this.setState({hasPermission: status === 'granted'});
     }
 
@@ -124,8 +124,7 @@ export default class Reminders extends React.Component {
                         windowBackgroundColor="rgba(255, 255, 255, .8)"
                         height="auto">
                         <View>
-                            <Text style={styles.modalText}>This Reminder is locked, by proceeding you will lose 100
-                                points</Text>
+                            <Text style={styles.modalText}>This Reminder is locked, by proceeding you will lose 500 points</Text>
                             <View style={styles.inputChooses}>
                                 <TouchableHighlight
                                     style={styles.buttonSave}

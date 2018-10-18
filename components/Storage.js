@@ -37,6 +37,7 @@ class Storage {
         try {
             const user = await this.getItem(Expo.Constants.installationId);
             const allReminderDates = util.formatDatesForChart(user);
+            let percentage = 0;
             if (!isNaN(user.successful.length / (user.successful.length + user.failed.length))) {
                 percentage = user.successful.length / (user.successful.length + user.failed.length);
             }
@@ -60,6 +61,7 @@ class Storage {
             reminders.forEach(element => {
                 this.checkDate(element.dateMilliseconds) ? element.locked = true : element.locked = false;
             });
+            await this.setItem(Expo.Constants.installationId,user);
             return reminders;
         } catch (error) {
             console.log("Storage/getActiveRemindersSorted returned error: " + error);

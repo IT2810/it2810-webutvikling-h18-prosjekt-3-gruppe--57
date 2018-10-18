@@ -5,8 +5,8 @@ class Score {
     //Updates score based on reminder-object
     async updateScore(ID, failed=false){
         const attemptPenalty = -100;
-        const imgHintPenalty = -100;
-        const imgTextPenalty = -100;
+        const imgHintPenalty = -200;
+        const mapHintPenalty = -200;
         const lockPenalty = -500;
         const success = 1000;
         const fail = -1000;
@@ -16,7 +16,7 @@ class Score {
             const reminder = await Storage.getReminder(ID);
             if(!reminder) return false; 
             if(reminder.imgHint) result += imgHintPenalty;
-            if(reminder.textHint) result += imgTextPenalty; 
+            if(reminder.mapHint) result += mapHintPenalty; 
             if(reminder.locked) result += lockPenalty;
             result += (reminder.attempts*attemptPenalty); 
             if (failed) result = fail;
@@ -35,8 +35,11 @@ class Score {
     async updatePenalties(ID, hint){
         try {
             const reminder = await Storage.getReminder(ID);
-            if(hint === 'imgHint' || hint === 'textHint'){
+            if(hint === 'imgHint'){
                 reminder.imgHint = true; 
+                return await Storage.updateReminder(reminder);
+            }else if(hint === 'mapHint'){
+                reminder.mapHint = true;
                 return await Storage.updateReminder(reminder);
             }
             else return false; 

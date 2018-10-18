@@ -21,10 +21,6 @@ const styles = {
         backgroundColor: color.redButton,
         padding: 10
     },
-    image: {
-        flex: 1,
-        aspectRatio: 4 / 5,
-    },
     shadow: {
         borderWidth: 1,
         borderRadius: 10,
