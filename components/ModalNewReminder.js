@@ -53,18 +53,11 @@ export default class ModalNewReminder extends React.Component {
     async setPicture(uri) {
         const icon = await ImageManipulator.manipulate(uri, [{ resize: { width: 50, height: 50 } }]);
         const img = await ImageManipulator.manipulate(uri, [], { compress: 0.2 });
-        console.log("creating assets");
         const assetIcon = await MediaLibrary.createAssetAsync(icon.uri);
         const assetImg = await MediaLibrary.createAssetAsync(img.uri);
-
-        console.log('Creating album...');
         MediaLibrary.createAlbumAsync('Remindr', assetIcon)
             .then((album) => {
-                console.log('Adding assets...');
                 MediaLibrary.addAssetsToAlbumAsync(assetImg, album.id)
-                    .then(() => {
-                        console.log('Done');
-                    })
                     .catch(error => {
                         console.log('An error occured adding assets: ', error);
                     });

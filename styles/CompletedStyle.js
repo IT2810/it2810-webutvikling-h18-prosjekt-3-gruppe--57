@@ -1,46 +1,8 @@
-import {StyleSheet, Dimensions} from 'react-native';
-import color from '../constants/Colors'
-
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+import {StyleSheet} from 'react-native';
+import color from '../constants/Colors';
+import layout from '../constants/Layout';
 
 const styles = {
-    inputChooses: {
-        paddingVertical: 10
-    },
-    button: {
-        alignItems: "center",
-        backgroundColor: "#DDDDDD",
-        padding: 10
-    },
-    buttonSave: {
-        alignItems: "center",
-        backgroundColor: "#17cf94",
-        padding: 10
-    },
-    buttonQuit: {
-        alignItems: "center",
-        backgroundColor: "#F2686B",
-        padding: 10
-    },
-    actionButtonIcon: {
-        fontSize: 20,
-        height: 22,
-        color: "white"
-    },
-    camera: {
-        aspectRatio: 4 / 5
-    },
-    lock: {
-        paddingHorizontal: 20
-    },
-    img: {
-        width: 70,
-        height: 70,
-        margin: 0,
-        marginHorizontal: 0,
-        borderRadius: 10
-    },
     info1: {
         flex: 1,
         flexDirection: "column"
@@ -50,9 +12,6 @@ const styles = {
         marginBottom: 5,
         marginTop: 15,
         paddingHorizontal: 10
-    },
-    input: {
-        height: 30
     },
     shadow: {
         borderWidth: 1,
@@ -85,7 +44,7 @@ const styles = {
         color: color.dataColor,
         textAlign: "center",
     },
-    reminderText_locked: {
+    reminderTextLocked: {
         margin: 5,
         fontSize: 27,
         color: "#000",
@@ -97,23 +56,11 @@ const styles = {
         color: color.dataColor,
         textAlign: 'center',
     },
-    dateText_locked: {
+    dateTextLocked: {
         margin: 5,
         fontSize: 20,
         color: "#000",
         textAlign: 'center',
-    },
-    modalText: {
-        margin: 10,
-        fontSize: 27,
-        color: "#000",
-        textAlign: "center"
-    },
-    modalText2: {
-        margin: 10,
-        fontSize: 17,
-        color: "#000",
-        textAlign: "center"
     },
     emptyText: {
         fontSize: 17,
@@ -126,7 +73,7 @@ const styles = {
         backgroundColor: '#fff',
         borderRadius: 0,
         alignItems: 'center',
-        height: screenHeight - 150,
+        height: layout.window.height - 150,
     }
 };
 

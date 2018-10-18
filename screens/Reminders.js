@@ -98,7 +98,7 @@ export default class Reminders extends React.Component {
                                                         <Icon name={l.locked ? "lock" : "lock-open"}/>
                                                     </View>
                                                     <View style={styles.info1}>
-                                                        <Text style={l.locked ? styles.dateText_locked : styles.dateText}>
+                                                        <Text style={l.locked ? styles.dateTextLocked : styles.dateText}>
                                                             {l.date}
                                                         </Text>
                                                     </View>
@@ -122,8 +122,7 @@ export default class Reminders extends React.Component {
                     <Overlay
                         isVisible={this.state.overlayVisible}
                         windowBackgroundColor="rgba(255, 255, 255, .8)"
-                        height="auto"
-                    >
+                        height="auto">
                         <View>
                             <Text style={styles.modalText}>This Reminder is locked, by proceeding you will lose 100
                                 points</Text>

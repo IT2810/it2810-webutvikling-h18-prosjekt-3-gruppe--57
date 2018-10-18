@@ -3,20 +3,15 @@ import {
     ScrollView,
     Text,
     View,
-    Image,
     Modal,
     Dimensions,
     TouchableHighlight,
 } from 'react-native';
-import {Constants, Svg} from 'expo';
-import {Kaede} from 'react-native-textinput-effects';
+import {Svg} from 'expo';
 import createStyles from '../styles/ModalWelcomeStyle.js';
-import Storage from "../components/Storage.js";
 const screenWidth = Dimensions.get('window').width;
-import color from '../constants/Colors';
 
 const styles = createStyles();
-let openModal = false;
 
 export default class ModalWelcome extends React.Component {
     constructor(props) {
@@ -58,14 +53,6 @@ export default class ModalWelcome extends React.Component {
                         <Text style={styles.titleT}>1.</Text>
                         <Text style={styles.textT}>A reminder can be added in the Reminders tab. In the process you will be able to
                             add a visual clue. The Image will become a hint on revisiting a reminder.</Text>
-                        {/*<View style={{alignItems:'center',width:screenWidth-40,height:((screenWidth-40)/5*1.8)}}>
-                            <View style={styles.imgView}>
-                                <Image
-                                    style={styles.img}
-                                    source={require('../assets/images/ReminderTab.jpg')}
-                                />
-                            </View>
-                        </View>*/}
                         <Text style={styles.titleT}>2.</Text>
                         <Text style={styles.textT}>For challenging your mind we give you a score incentive to avoid opening
                             the reminder before the do-date. As the date arrives you will be able to open the reminder and

@@ -1,5 +1,6 @@
-import { StyleSheet,Dimensions } from 'react-native';
+import {StyleSheet} from 'react-native';
 import color from '../constants/Colors'
+import layout from '../constants/Layout';
 
 const styles = {
     inputChooses: {
@@ -18,19 +19,6 @@ const styles = {
     },
     svg: {
         alignSelf:'center'
-    },
-    imgView:{
-        alignItems:'center',
-        aspectRatio: 5/1.8,
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderBottomWidth: 0,
-        shadowColor: color.normalText,
-        shadowOffset: {width: 10, height: 30},
-        shadowOpacity: 0.8,
-        shadowRadius: 10,
-        elevation: 3,
-        marginBottom:20,
     },
     container: {
         marginHorizontal:20,

@@ -1,8 +1,6 @@
-import { StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet} from 'react-native';
 import color from '../constants/Colors'
-
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+import layout from '../constants/Layout';
 
 
 const styles = {
@@ -15,7 +13,7 @@ const styles = {
     item: {
         alignItems: 'center',
         marginBottom: 30,
-        width: screenWidth-20,
+        width: layout.window.width-20,
         marginHorizontal:10,
         backgroundColor:color.background
     },

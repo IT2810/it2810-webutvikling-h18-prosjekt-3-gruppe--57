@@ -8,13 +8,12 @@ import {
     TouchableHighlight,
 } from 'react-native';
 import {Kaede} from 'react-native-textinput-effects';
-import { Icon, Overlay } from 'react-native-elements';
+import { Overlay } from 'react-native-elements';
 import createStyles from '../styles/ModalInspectStyle.js';
 import Storage from '../components/Storage';
 import Score from '../components/Score';
 
 const styles = createStyles();
-let openModal = false;
 
 export default class ModalInspectReminder extends React.Component {
     constructor(props){

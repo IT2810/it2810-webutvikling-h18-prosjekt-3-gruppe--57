@@ -13,6 +13,7 @@ export default {
     normalText: '#000',
     plussButton:'#000',
     greenButton:'#17cf94',
+    redButton:'#F2686B',
     text:'#158743',
     subtleText:'#646464',
     warningBackground: '#EAEB5E',

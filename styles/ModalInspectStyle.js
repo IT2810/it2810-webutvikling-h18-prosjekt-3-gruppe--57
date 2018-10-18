@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
+import color from '../constants/Colors'
+import layout from '../constants/Layout';
 
 const styles = {
     inputChooses: {
@@ -11,48 +13,17 @@ const styles = {
     },
     buttonSave:{
         alignItems: 'center',
-        backgroundColor: '#17cf94',
+        backgroundColor: color.greenButton,
         padding: 10
     },
     buttonQuit: {
         alignItems: 'center',
-        backgroundColor: '#F2686B',
+        backgroundColor: color.redButton,
         padding: 10
-    },
-    actionButtonIcon: {
-        fontSize: 20,
-        height: 22,
-        color: 'white',
-    },
-    camera: {
-        aspectRatio: 4/5,
-    },
-    lock: {
-        paddingHorizontal: 20,
-    },
-    img: {
-        width: 70,
-        height: 70,
-        margin: 0,
-        marginHorizontal: 0,
-        borderRadius: 10,
     },
     image: {
         flex: 1,
         aspectRatio: 4 / 5,
-    },
-    info1: {
-        flex: 1,
-        flexDirection: 'column',
-    },
-    item: {
-        alignItems: 'center',
-        marginBottom: 5,
-        marginTop: 15,
-        paddingHorizontal: 10,
-    },
-    input: {
-        height: 30
     },
     shadow: {
         borderWidth: 1,
@@ -68,22 +39,10 @@ const styles = {
         marginRight: 5,
         alignSelf: 'stretch',
     },
-    gradient: {
-        flex: 1,
-        flexDirection: 'row',
-        borderRadius: 10,
-        alignItems: 'center',
-    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
         borderRadius: 10,
-    },
-    dateText: {
-        margin: 10,
-        fontSize: 27,
-        color: '#ffffff',
-        textAlign: 'center',
     },
     modalText: {
         margin: 10,

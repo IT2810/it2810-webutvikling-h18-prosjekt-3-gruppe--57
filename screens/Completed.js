@@ -6,11 +6,8 @@ import {
     TouchableHighlight,
     Image,
 } from 'react-native';
-import {LinearGradient, Permissions, Font} from 'expo';
-import ModalInspectReminder from "../components/ModalInspectReminder.js";
-import {Icon, Overlay} from 'react-native-elements'
+import {LinearGradient} from 'expo';
 import Storage from "../components/Storage.js";
-import Icons from "react-native-vector-icons/Ionicons";
 import createStyles from "../styles/CompletedStyle.js";
 import color from "../constants/Colors";
 
@@ -52,10 +49,10 @@ export default class Completed extends React.Component {
                                                 style={styles.gradient}>
                                                 <View style={styles.info1}>
                                                     <Text
-                                                        style={l.locked ? styles.reminderText_locked : styles.reminderText}>
+                                                        style={l.locked ? styles.reminderTextLocked : styles.reminderText}>
                                                         {l.reminder}
                                                     </Text>
-                                                    <Text style={l.locked ? styles.dateText_locked : styles.dateText}>
+                                                    <Text style={l.locked ? styles.dateTextLocked : styles.dateText}>
                                                         {l.date}
                                                     </Text>
                                                 </View>
