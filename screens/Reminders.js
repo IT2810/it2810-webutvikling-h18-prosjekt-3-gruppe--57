@@ -35,15 +35,16 @@ export default class Reminders extends React.Component {
                 this.setState({modalInspectVisible: visible});
             }
         };
-        this.getItems = this.getItems.bind(this);
+        this.getItems =this.getItems.bind(this);
     }
 
     static navigationOptions = {
         header: null
     };
 
-    async componentWillMount() {
-        this.props.navigation.addListener("willFocus", this.getItems); //refresh list when component is focused, necessary when exiting modal
+    async componentDidMount() {
+        //refresh list when component is focused, necessary when exiting modal
+        this.props.navigation.addListener("willFocus",this.getItems); 
         const {status} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL, Permissions.NOTIFICATIONS);
         this.setState({hasPermission: status === 'granted'});
     }
@@ -56,32 +57,10 @@ export default class Reminders extends React.Component {
         }
     }
 
-    //Retrieve all reminders from storage
-    getItems() {
-        Storage.getItem(Expo.Constants.installationId).then((res) => {
-            res.reminders.sort(function (a, b) {
-                return a.dateMilliseconds - b.dateMilliseconds;
-            });
-            res.reminders.forEach(element => {
-                if (this.checkDate(element.dateMilliseconds)) element.locked = true;
-                else element.locked = false;
-            });
-            Storage.setItem(Expo.Constants.installationId, res);
-            this.setState({reminders: res.reminders});
+    getItems(){
+        Storage.getActiveRemindersSorted().then((res) => {
+            this.setState({ reminders: res });
         });
-    }
-
-    //Remove all reminders
-    deleteItems() {
-        Storage.deleteAllReminders().then(() => {
-            this.getItems();
-        });
-    }
-
-    //Compare dates, used for locking/unlocking reminders
-    checkDate(date) {
-        const limit = 7200000; //two hours
-        return (date - new Date().getTime()) > limit ? true : false;
     }
 
     render() {

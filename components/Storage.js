@@ -31,6 +31,45 @@ class Storage {
     }
   }
 
+  async getStatisticsForUser(){
+    try {
+      const user = await this.getItem(Expo.Constants.installationId);
+      const allReminderDates = [] //this.formatDatesForChart(user);
+      if(!isNaN(user.successful.length / (user.successful.length + user.failed.length))){
+        percentage = user.successful.length / (user.successful.length + user.failed.length);
+      }
+      return {"score": user.score, "activeReminders": user.reminders.length, "percentage": (percentage - 0.00001), "allReminderDates:":allReminderDates};
+    } catch (error) {
+      console.log("Storage/getStatisticsForUser returned error:"+error);
+    }
+  }
+
+  async getActiveRemindersSorted(){
+    try {
+      const user = await this.getItem(Expo.Constants.installationId);
+      const reminders = user.reminders.sort((a,b)=>{
+        return a.dateMilliseconds - b.dateMilliseconds;
+      });
+      reminders.forEach(element => {
+        this.checkDate(element.dateMilliseconds) ? element.locked = true : element.locked = false;
+      });
+      return reminders;
+    } catch (error) {
+      console.log("Storage/getActiveRemindersSorted returned error: "+error);
+    }
+  }
+
+  async getCompletedRemindersSorted(){
+    try {
+      const user = await this.getItem(Expo.Constants.installationId);
+      return user.successful.concat(user.failed).sort((a,b)=>{
+        return a.dateMilliseconds - b.dateMilliseconds;
+      });
+    } catch (error) {
+      console.log("Storage/getCompletedRemindersSorted returned error: "+error);
+    }
+  }
+
   //Pushes an item to reminders[] in user object
   //CAUTION: this function will not check existing reminders, if you want to update a reminder use updateReminder()
   //This function should only be used when creating a new reminder
@@ -118,6 +157,11 @@ class Storage {
       d = Math.floor(d / 16);
       return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
     });
+  }
+
+  checkDate(date) {
+    const limit = 7200000; //two hours
+    return (date - new Date().getTime()) > limit ? true : false;
   }
 }
 

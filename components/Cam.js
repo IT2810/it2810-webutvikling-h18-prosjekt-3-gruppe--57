@@ -1,6 +1,5 @@
 import React from 'react';
 import {Text,View,TouchableOpacity,StyleSheet} from 'react-native';
-import{Container,Content,Header,Item,Icon,Input,Button} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Camera, Permissions } from 'expo';
 

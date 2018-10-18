@@ -22,25 +22,18 @@ export default class Completed extends React.Component {
         this.state = {
             reminders: [],
         };
-        this.getItems = this.getItems.bind(this);
     }
 
     static navigationOptions = {
         header: null,
     };
 
-    async componentWillMount() {
-        this.props.navigation.addListener("willFocus", this.getItems); //refresh list when component is focused, necessary when exiting modal
-    }
-
-    //Retrieve all reminders from storage
-    getItems() {
-        Storage.getItem(Expo.Constants.installationId).then((user) => {
-            const completed = user.successful.concat(user.failed);
-            completed.sort(function (a, b) {
-                return a.dateMilliseconds - b.dateMilliseconds;
+    async componentDidMount() {
+        //refresh list when component is focused, necessary when exiting modal
+        this.props.navigation.addListener("willFocus", ()=>{
+            Storage.getCompletedRemindersSorted().then((res)=>{
+                this.setState({reminders:res});
             });
-            this.setState({reminders: completed});
         });
     }
 

@@ -96,7 +96,17 @@ export default class HomeScreen extends React.Component {
     };
 
     async componentWillMount() {
-        this.props.navigation.addListener("willFocus", this.getItems);
+        this.props.navigation.addListener("willFocus", () => {
+            Storage.getStatisticsForUser().then((res)=>{
+                console.log("HFFJOANRQG:"+res.score);
+                this.setState({
+                    points: res.score,
+                    activeReminders: res.activeReminders,
+                    percentage: res.percentage,
+                    allReminderDates: res.allReminderDates,
+                });
+            });
+        });
     }
 
     getItems() {
