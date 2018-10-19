@@ -1,8 +1,39 @@
 ## Introduction 
 
-## How to 
+## Usage 
+The homescreen keeps you up to date on how well you're doing. 
+It shows you a cummulative score, number of active reminders, success percentage, as well as monthly activity.
 
-## Setup 
+The reminder-tab displays all active reminders sorted by date. Unlocked reminders are green, locked reminders are red. 
+Activating a locked reminder will result in a penalty. Pressing the button will open a modal for creating a new reminder.
+
+The completed-tab shows all completed reminders, successful reminders are green, failed reminders are red. 
+By pressing the button you will be able to see every reminder plotted on a map. 
+
+<br>
+<img src="examples/homescreen.jpg" alt="homescreen" widht="300" height="600">
+<img src="examples/reminders.jpg" alt="reminders" widht="300" height="600">
+<img src="examples/completed.jpg" alt="completed" width="300" height="600">
+
+To create a reminder go to reminders-tab and press the black button. 
+Then press the reminder-field and type what you want to remember. 
+Press pick date, select a date from the calendar and time from the clock. 
+(Optional) If you want a image hint, press 'Add image hint' and press the circle to take a picture. 
+You can change reminder, date, and image as much as you want, when pressing save the latest values will be saved.
+<br>
+<img src="examples/createNewReminder.gif" alt="alt text" width="300" height="600">
+
+To check if you remember you reminder go to reminders-tab and press the reminder you want. 
+If the reminder is locked an overlay will pop up, by continuing you will lose 500 points. 
+Once inside, press the reminder-field and type in your guess. 
+If you need help you can view a image-hint and/or a location-hint, both of these will affect your score. 
+Check your guess by pressing 'check', incorrect attempts will affect your score. 
+<br>
+<img src="examples/checkReminder.gif" alt="alt text" width="300" height="600">
+
+
+
+## Setup
 
 ## Storage
 
@@ -74,5 +105,5 @@ Each reminder contains the following:
 * react-native-modal-datetime-picker
 * react-native-vector-icons/MaterialCommunityIcons
 
-
-
+## Known issues 
+On some devices the camera will only display a black screen, a workaround is to go back and then open the camera again. 

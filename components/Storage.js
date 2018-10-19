@@ -55,7 +55,6 @@ class Storage {
     async getActiveRemindersSorted() {
         try {
             const user = await this.getItem(Expo.Constants.installationId);
-            console.log(user);
             const reminders = user.reminders.sort((a, b) => {
                 return a.dateMilliseconds - b.dateMilliseconds;
             });
