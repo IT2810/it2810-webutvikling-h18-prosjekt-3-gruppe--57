@@ -1,6 +1,6 @@
 import React from 'react';
 import Storage from './Storage';
-import {Notifications} from 'expo';
+import { Notifications, ImageManipulator, MediaLibrary} from 'expo';
 
 
 class Util{
@@ -12,7 +12,6 @@ class Util{
      * @returns {Array}
      */
     formatDatesForChart(user) {
-        console.log(JSON.stringify(user));
         var allReminderDates = [];
         var stringArray = [];
         var uniqueArray = [];
@@ -38,7 +37,6 @@ class Util{
                 uniqueDateArray[uniqueArray.indexOf(element)] = {date: element,count:counter}
             }
         });
-        console.log(uniqueDateArray);
         return uniqueDateArray;
     }
 
@@ -73,22 +71,9 @@ class Util{
     }
 
     async setPicture(uri) {
-        const icon = await ImageManipulator.manipulate(uri, [{ resize: { width: 50, height: 50 } }]);
         const img = await ImageManipulator.manipulate(uri, [], { compress: 0.2 });
-        const assetIcon = await MediaLibrary.createAssetAsync(icon.uri);
         const assetImg = await MediaLibrary.createAssetAsync(img.uri);
-        MediaLibrary.createAlbumAsync('Remindr', assetIcon)
-            .then((album) => {
-                MediaLibrary.addAssetsToAlbumAsync(assetImg, album.id)
-                    .catch(error => {
-                        console.log('An error occured adding assets: ', error);
-                    });
-            })
-            .catch(error => {
-                console.log('An error occured creating album: ', error);
-            });
-
-        return {img: assetImg.uri, icon: assetIcon.uri};
+        return assetImg.uri;
     }
 }
 

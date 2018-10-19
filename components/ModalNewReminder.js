@@ -11,7 +11,7 @@ import Cam from '../components/Cam.js'
 import {Kaede} from 'react-native-textinput-effects';
 import createStyles from '../styles/ModalNewReminderStyle.js'
 import Storage from './Storage.js';
-import { ImageManipulator, MediaLibrary, Notifications, Location} from "expo";
+import {Notifications, Location} from "expo";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import util from './Util';
 
@@ -23,7 +23,6 @@ export default class ModalNewReminder extends React.Component {
         super(props);
         this.state = {
             img: null,
-            icon: null,
             textValue:null,
             dateValue:null,
             dateValueMilliseconds: null,
@@ -33,7 +32,7 @@ export default class ModalNewReminder extends React.Component {
             hasLocationPermission: null,
             hasNotificationPermission: null,
         };
-        this.setPicture = this.setPicture.bind(this);
+        this._handlePictureTaken = this._handlePictureTaken.bind(this);
     }
 
     componentWillReceiveProps(props) {
@@ -54,29 +53,12 @@ export default class ModalNewReminder extends React.Component {
 
     _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
+    _handlePictureTaken = async (uri) => this.setState({img: await util.setPicture(uri)});
+
     _handleDatePicked = (date) => {
         this.setState({dateValue: date.toString().split('GMT')[0].replace(/([0-9]{4})/g, ''), dateValueMilliseconds:date.getTime()});
         this._hideDateTimePicker();
     };
-
-    async setPicture(uri) {
-        const icon = await ImageManipulator.manipulate(uri, [{ resize: { width: 50, height: 50 } }]);
-        const img = await ImageManipulator.manipulate(uri, [], { compress: 0.2 });
-        const assetIcon = await MediaLibrary.createAssetAsync(icon.uri);
-        const assetImg = await MediaLibrary.createAssetAsync(img.uri);
-        MediaLibrary.createAlbumAsync('Remindr', assetIcon)
-            .then((album) => {
-                MediaLibrary.addAssetsToAlbumAsync(assetImg, album.id)
-                    .catch(error => {
-                        console.log('An error occured adding assets: ', error);
-                    });
-            })
-            .catch(error => {
-                console.log('An error occured creating album: ', error);
-            });
-
-        this.setState({img: assetImg.uri, icon: assetIcon.uri});
-    }
 
     async getLocation(){
         if(this.state.hasLocationPermission){
@@ -178,7 +160,7 @@ export default class ModalNewReminder extends React.Component {
                     <View style={{flex: 1, alignItems: "center"}}>
                         <View style={styles.camera}>
                             <Cam hasPermission={this.state.hasCameraPermission}
-                                 setPicture={this.setPicture}
+                                 setPicture={this._handlePictureTaken}
                                  hide={() => {
                                      this._setCameraModalVisible(!this.state.cameraModalVisible);
                                  }}/>
