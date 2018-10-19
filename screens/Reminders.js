@@ -47,10 +47,10 @@ export default class Reminders extends React.Component {
     async componentDidMount() {
         //refresh list when component is focused, necessary when exiting modal
         this.props.navigation.addListener("willFocus",this.getItems); 
-        const {statusCamera} = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
-        const { statusNotifications } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-        const { statusLocation } = await Permissions.askAsync(Permissions.LOCATION);
-        this.setState({hasCameraPermission: statusCamera === 'granted', hasLocationPermission: statusLocation === 'granted', hasNotificationPermission: statusNotifications === 'granted'});
+        const statusCamera  = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+        const statusNotifications = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        const statusLocation = await Permissions.askAsync(Permissions.LOCATION);
+        this.setState({hasCameraPermission: statusCamera.status === 'granted', hasLocationPermission: statusLocation.status === 'granted', hasNotificationPermission: statusNotifications.status === 'granted'});
     }
 
     safetySwitch(item) {

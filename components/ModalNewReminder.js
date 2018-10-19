@@ -29,13 +29,20 @@ export default class ModalNewReminder extends React.Component {
             dateValueMilliseconds: null,
             modalVisible: false,
             cameraModalVisible: false,
-            hasPermission: props.hasPermission,
+            hasCameraPermission: null,
+            hasLocationPermission: null,
+            hasNotificationPermission: null,
         };
         this.setPicture = this.setPicture.bind(this);
     }
 
     componentWillReceiveProps(props) {
-        this.setState({modalVisible: props.modalVisible})
+        this.setState({
+            modalVisible: props.modalVisible, 
+            hasCameraPermission: props.hasCameraPermission, 
+            hasLocationPermission:props.hasLocationPermission, 
+            hasNotificationPermission: props.hasNotificationPermission
+        });
         this.getLocation();
     }
 
@@ -72,7 +79,7 @@ export default class ModalNewReminder extends React.Component {
     }
 
     async getLocation(){
-        if(this.props.hasLocationPermission){
+        if(this.state.hasLocationPermission){
             let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
             const coord = {
                 "latitude": location.coords.latitude, "longitude": location.coords.longitude, "latitudeDelta": 0.04,
@@ -119,8 +126,8 @@ export default class ModalNewReminder extends React.Component {
                             <TouchableHighlight
                                 style={styles.button}
                                 onPress={() => {
-                                    if(!this.props.hasCameraPermission) alert("You haven't given us permission to use the camera :(");
-                                    else this._setCameraModalVisible(true);
+                                    if (this.state.hasCameraPermission) this._setCameraModalVisible(true);
+                                    else alert("You haven't given us permission to use the camera :(");
                                 }}>
                                 <Text style={styles.modalText2}>Add image hint</Text>
                             </TouchableHighlight>
@@ -170,7 +177,7 @@ export default class ModalNewReminder extends React.Component {
                     }}>
                     <View style={{flex: 1, alignItems: "center"}}>
                         <View style={styles.camera}>
-                            <Cam hasPermission={this.state.hasPermission}
+                            <Cam hasPermission={this.state.hasCameraPermission}
                                  setPicture={this.setPicture}
                                  hide={() => {
                                      this._setCameraModalVisible(!this.state.cameraModalVisible);

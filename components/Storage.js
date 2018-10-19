@@ -55,6 +55,7 @@ class Storage {
     async getActiveRemindersSorted() {
         try {
             const user = await this.getItem(Expo.Constants.installationId);
+            console.log(user);
             const reminders = user.reminders.sort((a, b) => {
                 return a.dateMilliseconds - b.dateMilliseconds;
             });
@@ -102,7 +103,6 @@ class Storage {
                 ...reminder,
                 ...item
             };
-            console.log(result);
             const index = user.reminders.findIndex(x => x.id === item.id);
             user.reminders.splice(index, 1, result);
             return await this.setItem(Expo.Constants.installationId, user);
