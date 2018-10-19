@@ -72,11 +72,17 @@ export default class ModalNewReminder extends React.Component {
     }
 
     async getLocation(){
-        let location = await Location.getCurrentPositionAsync({enableHighAccuracy:true});
-        const coord = {
-            "latitude": location.coords.latitude, "longitude": location.coords.longitude, "latitudeDelta": 0.04,
-            "longitudeDelta": 0.05 };
-        this.setState({location: coord});
+        if(this.props.hasLocationPermission){
+            let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+            const coord = {
+                "latitude": location.coords.latitude, "longitude": location.coords.longitude, "latitudeDelta": 0.04,
+                "longitudeDelta": 0.05
+            };
+            this.setState({ location: coord });
+        }else{
+            this.setState({location:null});
+        }
+        
     }
 
     render() {
@@ -113,7 +119,8 @@ export default class ModalNewReminder extends React.Component {
                             <TouchableHighlight
                                 style={styles.button}
                                 onPress={() => {
-                                    this._setCameraModalVisible(true);
+                                    if(!this.props.hasCameraPermission) alert("You haven't given us permission to use the camera :(");
+                                    else this._setCameraModalVisible(true);
                                 }}>
                                 <Text style={styles.modalText2}>Add image hint</Text>
                             </TouchableHighlight>

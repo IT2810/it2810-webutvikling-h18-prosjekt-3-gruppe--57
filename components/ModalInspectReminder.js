@@ -14,6 +14,7 @@ import createStyles from '../styles/ModalInspectStyle.js';
 import Storage from '../components/Storage';
 import Score from '../components/Score';
 import layout from '../constants/Layout';
+import { Marker } from 'react-native-maps';
 
 const styles = createStyles();
 
@@ -55,7 +56,7 @@ export default class ModalInspectReminder extends React.Component {
                 Score.updatePenalties(this.state.id, "mapHint");
                 this.setState({ location: reminder.location, displayMap:'flex'});
             }else{
-                alert("No location was recorded for this reminder");
+                alert("No location was recorded for this reminder, you probably haven't given us permission to use the gps");
             }
         })
     }
@@ -122,8 +123,15 @@ export default class ModalInspectReminder extends React.Component {
                     </View>
                     <MapView
                         style={{ flex: 1, width: layout.window.width, height: 200, display:this.state.displayMap }}
-                        initialRegion={this.state.location}
-                    />
+                        region={this.state.location}
+                    >
+                        {this.state.location === null ? <View /> : <Marker
+                            key={this.state.id}
+                            title={"Hello"}
+                            description={"Recorded location"}
+                            coordinate={this.state.location}
+                        /> }
+                    </MapView>
                     <View style={styles.inputChooses}>
                         <TouchableHighlight
                             style={styles.buttonSave}

@@ -84,7 +84,7 @@ export default class HomeScreen extends React.Component {
         header: null,
     };
 
-    async componentWillMount() {
+    async componentDidMount() {
         this.props.navigation.addListener("willFocus", () => {
             Storage.getStatisticsForUser().then((res)=>{
                 this.setState({

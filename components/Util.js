@@ -42,7 +42,7 @@ class Util{
         return uniqueDateArray;
     }
 
-    async createReminder(reminder, date, time, img, coordinates) {
+    async createReminder(reminder, date, time, img, coordinates, notificationsStatus) {
         const localNotification = {
             title: "Hello", body: "You have scheduled a reminder for " + date, ios: { sound: true }, android: {
                 sound: true, //icon (optional) (string) — URL of icon to display in notification drawer.
@@ -51,7 +51,7 @@ class Util{
             }
         };
         let notificationID = null;
-        if (time - new Date().getTime() > 3600000) {
+        if (time - new Date().getTime() > 3600000 && notificationsStatus) {
             const when = time - 3600000;
             notificationID = await Notifications.scheduleLocalNotificationAsync(localNotification, { time: when }); //schedules a notification two hours before reminder
         }

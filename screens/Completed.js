@@ -5,10 +5,14 @@ import {
     View,
     TouchableHighlight,
     Image,
+    Modal,
+    Button,
 } from 'react-native';
-import {LinearGradient} from 'expo';
+import {LinearGradient, MapView} from 'expo';
+import { Marker } from "react-native-maps";
 import Storage from "../components/Storage.js";
 import createStyles from "../styles/CompletedStyle.js";
+import ActionButton from "react-native-action-button";
 import color from "../constants/Colors";
 
 const styles = createStyles();
@@ -18,6 +22,10 @@ export default class Completed extends React.Component {
         super(props);
         this.state = {
             reminders: [],
+            modalVisible: false,
+            toggleMap: function () {
+                this.setState({ modalVisible: false });
+            },
         };
     }
 
@@ -37,6 +45,30 @@ export default class Completed extends React.Component {
     render() {
         return (
             <View style={{flex: 1, backgroundColor: '#f3f3f3', borderRadius: 0}}>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                    onRequestClose={this.state.toggleMap.bind(this)}
+                    >
+                    <MapView
+                        style={{ flex: 1, width: 400, height: 600 }}
+                        region={this.state.reminders.length > 0 ? this.state.reminders[0].location : { latitude: 63.413, longitude: 10.406, latitudeDelta: 0, longitudeDelta: 0.4}}
+                    >
+                        {
+                            this.state.reminders.map(reminder => (
+                                reminder.location ? 
+                                <Marker
+                                    key={reminder.id}
+                                    title={reminder.reminder}
+                                    description={reminder.date}
+                                    coordinate={reminder.location}
+                                /> : <View key={reminder.id}/>
+                            ))
+                        }
+                        {/*<Button onClick={this.setState({modalVisible: false})}>Exit</Button> */}
+                    </MapView>
+                </Modal>
                 <ScrollView style={styles.container}>
                     {
                         this.state.reminders.length > 0 ? this.state.reminders.map((l, i) => (
@@ -69,6 +101,9 @@ export default class Completed extends React.Component {
                             </View>
                     }
                 </ScrollView>
+                <ActionButton buttonColor="#000" title="New Reminder"
+                    onPress={() => this.setState({modalVisible:true})}>
+                </ActionButton>
             </View>
         );
     }
