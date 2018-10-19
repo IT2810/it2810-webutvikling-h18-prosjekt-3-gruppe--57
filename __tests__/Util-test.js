@@ -112,20 +112,20 @@ describe('Test of the Util functions', () => {
             }]
         };
         const res = util.formatDatesForChart(user);
-        expect(res).toEqual([
-                {
-                    "count": 1,
-                    "date": "2018-10-26",
-                },
-                {
-                    "count": 6,
-                    "date": "2018-10-18",
-                },
-                {
-                    "count": 2,
-                    "date": "2018-10-17",
-                },
-            ]
-        );
+        const correct = [
+            {
+                "count": 1,
+                "date": "2018-10-26",
+            },
+            {
+                "count": 6,
+                "date": "2018-10-18",
+            },
+            {
+                "count": 2,
+                "date": "2018-10-17",
+            },
+        ];
+        expect(res).toEqual(correct)
     })
 });
