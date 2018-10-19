@@ -1,4 +1,21 @@
-## Introduction 
+## Introduction
+Many people struggle with their memory as technology take over for their short term responsibilities. Our mission is to improve your memory by making a TODO-app that hides your reminders. Don't forget important reminders, let your app forget for you. By using incentives and known methods for improving ones memory, we aim to combine the effects of mind training apps with the practicality of TODO-apps. 
+
+## Setup
+
+1. Download the Expo app - https://play.google.com/store/apps/details?id=host.exp.exponent, https://itunes.apple.com/us/app/expo-client/id982107779?mt=8
+2. Clone the project
+3. Run npm install 
+4. Run expo start 
+5. Scan QR code with the Expo app
+
+## Permissions 
+We require permissions for the following:
+
+* Camera - For acceess to camera 
+* Files - For saving images to device
+* Notifications - For giving you notifications when reminder is unlocked 
+* Location - For displaying location hint, and mapping completed reminders
 
 ## Usage 
 The homescreen keeps you up to date on how well you're doing. 
@@ -32,13 +49,25 @@ Check your guess by pressing 'check', incorrect attempts will affect your score.
 <img src="examples/checkReminder.gif" alt="alt text" width="300" height="600">
 
 
+## Structure 
+The application is split into three screens located in screens directory. These represent the main tabs. 
+These screens make calls to components in components directory. 
+Storage.js handles all communication with asyncStorage, if a component wants to fetch, set, or change items it has to do so through Storage.
+Score.js includes logic related to user score. 
+This includes incrementing attempts, keeping track of hints used and updating the actual score. 
+Util.js is a general component for functionality that can be used in many different components like date formatting, object creation, and image manipulation.
 
-## Setup
+
 
 ## Storage
 
 When the user starts the app for the first time a user-object is created, this is used to keep track
-of all information, including reminders. 
+of all information, including reminders. The object is stored with asyncStorage with 
+Expo.constants.InstallationId as key. This means that user data will remain until 
+the user deletes the app or flushes the app's storage. 
+Every time a user creates a reminder an object is created and stored in reminders[], this array 
+keeps track of all reminders that are active. When a user has successfully completed the reminder
+it gets moved to successful[] or if the user gives up it gets moved to failed[]. 
 
 ```JSON
 {
@@ -49,12 +78,19 @@ of all information, including reminders.
     "failed": [ ... ],
 }
 ```
-The object is stored with asyncStorage with 
-Expo.constants.InstallationId as key. This means that user data will remain until 
-the user deletes the app or flushes the app's storage. 
-Every time a user creates a reminder an object is created and stored in reminders[], this array 
-keeps track of all reminders that are active. When a user has successfully completed the reminder
-it gets moved to successful[] or if the user gives up it gets moved to failed[]. 
+
+Each reminder contains the following: 
+* id: UUID 
+* reminder(required): input from the user. 
+* attempts: updated every time a user fails to complete the reminder, and is used to calculate the score. 
+* date(required): stored in text(to display to the user) and milliseconds(for function logic). 
+* img(optional): uri to the picture taken for the image hint. 
+* location(optional): location of the user when creating a reminder, used for displaying a location hint, and to display all         completed reminders. 
+* locked: indicates whether the reminder is locked or unlocked. A reminder is only unlocked two hours before the set date.
+* imgHint: indicates whether the image hint has been used, will affect score.
+* mapHint: indicates whether the map hint has been used, will affect score. 
+* notification(optional): if given permission the application will schedule a notification for when 
+    the reminder is unlocked. 
 
 ```JSON 
 {
@@ -76,18 +112,6 @@ it gets moved to successful[] or if the user gives up it gets moved to failed[].
     "notification": null,
 }
 ```
-Each reminder contains the following: 
-* id: UUID 
-* reminder(required): input from the user. 
-* attempts: updated every time a user fails to complete the reminder, and is used to calculate the score. 
-* date(required): stored in text(to display to the user) and milliseconds(for function logic). 
-* img(optional): uri to the picture taken for the image hint. 
-* location(optional): location of the user when creating a reminder, used for displaying a location hint, and to display all         completed reminders. 
-* locked: indicates whether the reminder is locked or unlocked. A reminder is only unlocked two hours before the set date.
-* imgHint: indicates whether the image hint has been used, will affect score.
-* mapHint: indicates whether the map hint has been used, will affect score. 
-* notification(optional): if given permission the application will schedule a notification for when 
-    the reminder is unlocked. 
 
 ## Third party 
 
@@ -105,5 +129,10 @@ Each reminder contains the following:
 * react-native-modal-datetime-picker
 * react-native-vector-icons/MaterialCommunityIcons
 
+## Testing 
+
+
 ## Known issues 
 On some devices the camera will only display a black screen, a workaround is to go back and then open the camera again. 
+
+## Sources
