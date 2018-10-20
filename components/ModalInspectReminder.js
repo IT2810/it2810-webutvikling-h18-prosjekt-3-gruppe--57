@@ -34,9 +34,11 @@ export default class ModalInspectReminder extends React.Component {
         };
     }
 
-    componentWillReceiveProps(props){
-        this.setState({modalVisible: props.modalVisible,
-                        id:props.id})
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.modalVisible !== prevState.modalVisible || nextProps.id !== prevState.id) {
+            return ({ modalVisible: nextProps.modalVisible,id:nextProps.id})
+        }
+        return (prevState);
     }
 
     setImage(){
