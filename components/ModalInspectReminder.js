@@ -39,6 +39,12 @@ export default class ModalInspectReminder extends React.Component {
                         id:props.id})
     }
 
+    _handleExit = () => {
+        this.setState({ displayMap: 'none', img: null, displayImage: 1, location: null });
+        this.props.refresh();
+        this.props.setClose(false);
+    }
+
     setImage(){
         Storage.getReminder(this.state.id).then((reminder) => {
             if(reminder.img != null){
@@ -61,22 +67,11 @@ export default class ModalInspectReminder extends React.Component {
         })
     }
     
-    deleteItem(){
-        Storage.deleteReminder(this.state.id).then(() => { 
-            this.props.refresh();
-            this.props.setClose(false)
-        });
-    }
+    _updateScore = (failed=false) => Score.updateScore(this.state.id,failed).then(()=> this._handleExit()); 
 
-    updateScore(failed=false){
-        Score.updateScore(this.state.id,failed).then(()=>{
-            this.setState({id:false, img:null, textValue:null, result:null, displayImage: 1, displayMap: 'none', location:null});
-            this.props.refresh();
-            this.props.setClose(false);
-        });
-    } 
-    
-    async compareInput(input){
+    _updateAttempts = () => Score.incrementAttempts(this.state.id); 
+
+    _compareInput = async (input) => {
         const reminder = await Storage.getReminder(this.state.id);
         if(reminder.reminder.toUpperCase() === input.toUpperCase()) return true;
         return false;
@@ -139,18 +134,15 @@ export default class ModalInspectReminder extends React.Component {
                             onPress={() => {
                                 if(!this.state.textValue) alert("Input field is empty");
                                 else{
-                                    this.compareInput(this.state.textValue).then((res) => {
-                                        if (res) {
-                                            alert("Correct!");
-                                            this.setState({ displayMap: 'none' });
-                                            this.updateScore();
-                                        } else {
+                                    this._compareInput(this.state.textValue).then((res) => {
+                                        if(res) this._updateScore();
+                                        else {
                                             alert("Incorrect!");
-                                            Score.incrementAttempts(this.state.id); 
+                                            this._updateAttempts(); 
                                         }
                                     });
                                 }         
-                            }}>
+                        }}>
                             <Text style={styles.modalText2}>Check</Text>
                         </TouchableHighlight>
                     </View>
@@ -166,10 +158,8 @@ export default class ModalInspectReminder extends React.Component {
                     <View style={styles.inputChooses}>
                         <TouchableHighlight
                             style={styles.buttonQuit}
-                            onPress={() => {
-                                this.setState({displayMap:'none', img: null, displayImage: 1, location:null});
-                                this.props.setClose(false);
-                            }}>
+                            onPress={() => this._handleExit()}
+                            >
                             <Text style={styles.modalText2}>Go back</Text>
                         </TouchableHighlight>
                     </View>
@@ -185,7 +175,7 @@ export default class ModalInspectReminder extends React.Component {
                                     style={styles.buttonSave}
                                     onPress={() => {
                                         this.setState({ overlayVisible: false });
-                                        this.updateScore(true);
+                                        this._updateScore(true);
                                     }}>
                                     <Text style={styles.modalText2}>Continue</Text>
                                 </TouchableHighlight>

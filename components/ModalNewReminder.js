@@ -34,8 +34,6 @@ export default class ModalNewReminder extends React.Component {
             hasLocationPermission: null,
             hasNotificationPermission: null,
         };
-        this._handlePictureTaken = this._handlePictureTaken.bind(this);
-        this._handleLocation = this._handleLocation.bind(this);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -63,6 +61,14 @@ export default class ModalNewReminder extends React.Component {
     _handlePictureTaken = async (uri) => this.setState({img: await util.setPicture(uri)});
 
     _handleLocation = async () => this.state.hasLocationPermission ? this.setState({location: await util.getLocation()}) : this.setState({location: null});
+
+    _createReminder = () => util.createReminder(this.state.textValue,this.state.dateValue,this.state.dateValueMilliseconds,this.state.img,this.state.location,this.state.hasNotificationPermission).then(() => this._handleExit());
+
+    _handleExit = () => { 
+        this.setState({ img: null, icon: null, textValue: null, dateValue: null, dateValueMilliseconds: null, location: null });
+        this.props.refresh();
+        this.props.setClose(false);
+    }
 
     _handleDatePicked = (date) => {
         this.setState({dateValue: date.toString().split('GMT')[0].replace(/([0-9]{4})/g, ''), dateValueMilliseconds:date.getTime()});
@@ -121,14 +127,7 @@ export default class ModalNewReminder extends React.Component {
                                 onPress={() => {
                                     if(!this.state.textValue) alert("Reminder field cannot be empty!");
                                     else if(!this.state.dateValue) alert("Please choose a date");
-                                    else{
-                                        util.createReminder(this.state.textValue,this.state.dateValue,this.state.dateValueMilliseconds,this.state.img,this.state.location,this.state.hasNotificationPermission)
-                                            .then(() => {
-                                                this.setState({ img: null, icon: null, textValue: null, dateValue: null, dateValueMilliseconds: null, location: null });
-                                                this.props.refresh();
-                                                this.props.setClose(false);
-                                            });
-                                    }
+                                    else this._createReminder();
                                 }}>
                                 <Text style={styles.modalText2}>Save</Text>
                             </TouchableHighlight>
@@ -136,10 +135,8 @@ export default class ModalNewReminder extends React.Component {
                         <View style={styles.inputChooses}>
                             <TouchableHighlight
                                 style={styles.buttonQuit}
-                                onPress={() => {
-                                    this.setState({img:null, icon:null, textValue: null, dateValue: null, dateValueMilliseconds: null, cameraModalVisible:false, location: null});
-                                    this.props.setClose(false);
-                                }}>
+                                onPress={() => this._handleExit()}
+                            >
                                 <Text style={styles.modalText2}>Go back</Text>
                             </TouchableHighlight>
                         </View>
