@@ -70,16 +70,14 @@ export default class ModalInspectReminder extends React.Component {
 
     updateScore(failed=false){
         Score.updateScore(this.state.id,failed).then(()=>{
-            this.setState({id:false, img:null, textValue:null, result:null, displayImage: 1, displayMap: 'none'});
+            this.setState({id:false, img:null, textValue:null, result:null, displayImage: 1, displayMap: 'none', location:null});
             this.props.refresh();
             this.props.setClose(false);
         });
-    }
-
+    } 
+    
     async compareInput(input){
         const reminder = await Storage.getReminder(this.state.id);
-        //Apparently localeCompare does not work properly in react native, reverted to simple uppercase comparison
-        //reminder.reminder.localeCompare(input, 'en', { sensitivity: 'base', caseFirst: false});
         if(reminder.reminder.toUpperCase() === input.toUpperCase()) return true;
         return false;
     }
@@ -124,6 +122,9 @@ export default class ModalInspectReminder extends React.Component {
                     <MapView
                         style={{ flex: 1, width: layout.window.width, height: 200, display:this.state.displayMap }}
                         region={this.state.location}
+                        zoomEnabled={false}
+                        scrollEnabled={false}
+                        minZoomLevel={14}
                     >
                         {this.state.location === null ? <View /> : <Marker
                             key={this.state.id}
@@ -166,7 +167,7 @@ export default class ModalInspectReminder extends React.Component {
                         <TouchableHighlight
                             style={styles.buttonQuit}
                             onPress={() => {
-                                this.setState({displayMap:'none', img: null, displayImage: 1});
+                                this.setState({displayMap:'none', img: null, displayImage: 1, location:null});
                                 this.props.setClose(false);
                             }}>
                             <Text style={styles.modalText2}>Go back</Text>

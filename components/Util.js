@@ -1,6 +1,6 @@
 import React from 'react';
 import Storage from './Storage';
-import { Notifications, ImageManipulator, MediaLibrary} from 'expo';
+import { Notifications, ImageManipulator, MediaLibrary, Location} from 'expo';
 
 
 class Util{
@@ -74,6 +74,16 @@ class Util{
         const img = await ImageManipulator.manipulate(uri, [], { compress: 0.2 });
         const assetImg = await MediaLibrary.createAssetAsync(img.uri);
         return assetImg.uri;
+    }
+
+    async getLocation() {
+        const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+        return {
+                "latitude": location.coords.latitude, 
+                "longitude": location.coords.longitude, 
+                "latitudeDelta": 0.04,
+                "longitudeDelta": 0.05            
+        };
     }
 }
 

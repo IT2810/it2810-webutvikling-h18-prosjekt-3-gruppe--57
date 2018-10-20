@@ -10,8 +10,6 @@ import {
 import Cam from '../components/Cam.js'
 import {Kaede} from 'react-native-textinput-effects';
 import createStyles from '../styles/ModalNewReminderStyle.js'
-import Storage from './Storage.js';
-import {Notifications, Location} from "expo";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import util from './Util';
 
@@ -26,6 +24,7 @@ export default class ModalNewReminder extends React.Component {
             textValue:null,
             dateValue:null,
             dateValueMilliseconds: null,
+            location:null,
             modalVisible: false,
             cameraModalVisible: false,
             hasCameraPermission: null,
@@ -33,6 +32,7 @@ export default class ModalNewReminder extends React.Component {
             hasNotificationPermission: null,
         };
         this._handlePictureTaken = this._handlePictureTaken.bind(this);
+        this._handleLocation = this._handleLocation.bind(this);
     }
 
     componentWillReceiveProps(props) {
@@ -42,7 +42,7 @@ export default class ModalNewReminder extends React.Component {
             hasLocationPermission:props.hasLocationPermission, 
             hasNotificationPermission: props.hasNotificationPermission
         });
-        this.getLocation();
+        this._handleLocation();
     }
 
     _setNewReminderModalVisible = (visible) => this.setState({modalVisible: visible});
@@ -55,24 +55,12 @@ export default class ModalNewReminder extends React.Component {
 
     _handlePictureTaken = async (uri) => this.setState({img: await util.setPicture(uri)});
 
+    _handleLocation = async () => this.state.hasLocationPermission ? this.setState({location: await util.getLocation()}) : this.setState({location: null});
+    
     _handleDatePicked = (date) => {
         this.setState({dateValue: date.toString().split('GMT')[0].replace(/([0-9]{4})/g, ''), dateValueMilliseconds:date.getTime()});
         this._hideDateTimePicker();
     };
-
-    async getLocation(){
-        if(this.state.hasLocationPermission){
-            let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
-            const coord = {
-                "latitude": location.coords.latitude, "longitude": location.coords.longitude, "latitudeDelta": 0.04,
-                "longitudeDelta": 0.05
-            };
-            this.setState({ location: coord });
-        }else{
-            this.setState({location:null});
-        }
-        
-    }
 
     render() {
         return (
@@ -127,7 +115,7 @@ export default class ModalNewReminder extends React.Component {
                                     if(!this.state.textValue) alert("Reminder field cannot be empty!");
                                     else if(!this.state.dateValue) alert("Please choose a date");
                                     else{
-                                        util.createReminder(this.state.textValue, this.state.dateValue, this.state.dateValueMilliseconds, this.state.img, this.state.location)
+                                        util.createReminder(this.state.textValue,this.state.dateValue,this.state.dateValueMilliseconds,this.state.img,this.state.location,this.state.hasNotificationPermission)
                                             .then(() => {
                                                 this.setState({ img: null, icon: null, textValue: null, dateValue: null, dateValueMilliseconds: null, location: null });
                                                 this.props.refresh();

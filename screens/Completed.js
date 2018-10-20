@@ -13,6 +13,7 @@ import { Marker } from "react-native-maps";
 import Storage from "../components/Storage.js";
 import createStyles from "../styles/CompletedStyle.js";
 import ActionButton from "react-native-action-button";
+import layout from "../constants/Layout";
 import color from "../constants/Colors";
 
 const styles = createStyles();
@@ -66,8 +67,8 @@ export default class Completed extends React.Component {
                                 /> : <View key={reminder.id}/>
                             ))
                         }
-                        {/*<Button onClick={this.setState({modalVisible: false})}>Exit</Button> */}
                     </MapView>
+                    <Button title="Go back" onPress={this.state.toggleMap.bind(this)} />
                 </Modal>
                 <ScrollView style={styles.container}>
                     {
