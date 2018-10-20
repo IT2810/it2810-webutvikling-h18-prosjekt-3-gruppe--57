@@ -59,7 +59,7 @@ class Storage {
                 return a.dateMilliseconds - b.dateMilliseconds;
             });
             reminders.forEach(element => {
-                this.checkDate(element.dateMilliseconds) ? element.locked = true : element.locked = false;
+                util.checkDate(element.dateMilliseconds) ? element.locked = true : element.locked = false;
             });
             await this.setItem(Expo.Constants.installationId,user);
             return reminders;
@@ -153,27 +153,6 @@ class Storage {
         } catch (error) {
             console.log("Storage/onComplete returned error:" + error);
         }
-    }
-
-    //https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-    generateID() {
-        var d = new Date().getTime();
-        if (
-            typeof performance !== "undefined" &&
-            typeof performance.now === "function"
-        ) {
-            d += performance.now(); //use high-precision timer if available
-        }
-        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-            var r = (d + Math.random() * 16) % 16 | 0;
-            d = Math.floor(d / 16);
-            return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-        });
-    }
-
-    checkDate(date) {
-        const limit = 7200000; //two hours
-        return (date - new Date().getTime()) > limit ? true : false;
     }
 }
 

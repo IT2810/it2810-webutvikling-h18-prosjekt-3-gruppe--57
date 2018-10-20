@@ -15,6 +15,7 @@ import createStyles from '../styles/ReminderStyle.js';
 import Storage from '../components/Storage.js';
 import color from "../constants/Colors";
 import Icons from "react-native-vector-icons/Ionicons";
+import util from "../components/Util";
 
 const styles = createStyles();
 
@@ -30,6 +31,7 @@ export default class Reminders extends React.Component {
             reminders: [],
             overlayVisible: false,
             modalInspectVisible: false,
+            location: null,
             setClose: function (visible) {
                 this.setState({modalVisible: visible});
             },
@@ -37,7 +39,6 @@ export default class Reminders extends React.Component {
                 this.setState({modalInspectVisible: visible});
             }
         };
-        this.getItems =this.getItems.bind(this);
     }
 
     static navigationOptions = {
@@ -46,26 +47,19 @@ export default class Reminders extends React.Component {
 
     async componentDidMount() {
         //refresh list when component is focused, necessary when exiting modal
-        this.props.navigation.addListener("willFocus",this.getItems); 
+        this.props.navigation.addListener("willFocus",this._getItems);
         const statusCamera  = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
         const statusNotifications = await Permissions.askAsync(Permissions.NOTIFICATIONS);
         const statusLocation = await Permissions.askAsync(Permissions.LOCATION);
         this.setState({hasCameraPermission: statusCamera.status === 'granted', hasLocationPermission: statusLocation.status === 'granted', hasNotificationPermission: statusNotifications.status === 'granted'});
+        this._handleLocation();
     }
 
-    safetySwitch(item) {
-        if (!item.locked) {
-            this.setState({modalInspectVisible: true, chosenItemId: item.id});
-        } else {
-            this.setState({overlayVisible: true, chosenItemId: item.id});
-        }
-    }
+    _safetySwitch = (item) => !item.locked ? this.setState({ modalInspectVisible: true, chosenItemId: item.id }) : this.setState({ overlayVisible: true, chosenItemId: item.id })
 
-    getItems(){
-        Storage.getActiveRemindersSorted().then((res) => {
-            this.setState({ reminders: res });
-        });
-    }
+    _handleLocation = async () => this.state.hasLocationPermission ? this.setState({ location: await util.getLocation() }) : this.setState({ location: null });
+
+    _getItems = () => Storage.getActiveRemindersSorted().then((res) => this.setState({reminders: res}));
 
     render() {
         return (
@@ -73,13 +67,13 @@ export default class Reminders extends React.Component {
                 <ScrollView style={styles.container}>
                     <ModalNewReminder hasCameraPermission={this.state.hasCameraPermission}
                                         hasNotificationPermission={this.state.hasNotificationPermission}
-                                        hasLocationPermission={this.state.hasLocationPermission}
+                                        location={this.state.location}
                                         modalVisible={this.state.modalVisible}
                                         setClose={this.state.setClose.bind(this)}
-                                        refresh={this.getItems}/>
+                                        refresh={this._getItems}/>
                     <ModalInspectReminder modalVisible={this.state.modalInspectVisible}
                                             setClose={this.state.setInspectClose.bind(this)}
-                                            refresh={this.getItems}
+                                            refresh={this._getItems}
                                             id={this.state.chosenItemId}/>
                     {
                         this.state.reminders.length > 0 ? this.state.reminders.map((l, i) => (
@@ -87,7 +81,7 @@ export default class Reminders extends React.Component {
                                     <View style={styles.shadow}>
                                         <TouchableHighlight underlayColor={"#f1f1f1"} style={{borderRadius: 10}}
                                                             onPress={() => {
-                                                                this.safetySwitch(l);
+                                                                this._safetySwitch(l);
                                                             }}>
                                             <LinearGradient
                                                 colors={l.locked ? color.colorPalletError : color.colorPalletGreen}

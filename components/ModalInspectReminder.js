@@ -15,6 +15,7 @@ import Storage from '../components/Storage';
 import Score from '../components/Score';
 import layout from '../constants/Layout';
 import { Marker } from 'react-native-maps';
+import util from './Util';
 
 const styles = createStyles();
 
@@ -47,27 +48,9 @@ export default class ModalInspectReminder extends React.Component {
         this.props.setClose(false);
     }
 
-    setImage(){
-        Storage.getReminder(this.state.id).then((reminder) => {
-            if(reminder.img != null){
-                Score.updatePenalties(this.state.id, 'imgHint');
-                this.setState({ img: reminder.img, displayImage: 200 });
-            }else{
-                alert("Sorry, no image was provided to this reminder");
-            }
-        });
-    }
+    _setImage = () => util.setImage(this.state.id).then((res) => res ? this.setState({img: res, displayImage:200}) : alert("No image was provided for this reminder")); 
 
-    setLocation(){
-        Storage.getReminder(this.state.id).then((reminder)=>{
-            if(reminder.location != null){
-                Score.updatePenalties(this.state.id, "mapHint");
-                this.setState({ location: reminder.location, displayMap:'flex'});
-            }else{
-                alert("No location was recorded for this reminder, you probably haven't given us permission to use the gps");
-            }
-        })
-    }
+    _setLocation = () => util.setLocation(this.state.id).then((res) => res ? this.setState({location: res, displayMap:'flex'}) : alert("No location was recorded for this reminder")); 
     
     _updateScore = (failed=false) => Score.updateScore(this.state.id,failed).then(()=> this._handleExit()); 
 
@@ -96,7 +79,7 @@ export default class ModalInspectReminder extends React.Component {
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => {
-                                this.setImage()
+                                this._setImage()
                             }}>
                             <Text style={styles.modalText2}>View Image Hint</Text>
                         </TouchableHighlight>
@@ -111,7 +94,7 @@ export default class ModalInspectReminder extends React.Component {
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => {
-                                this.setLocation()
+                                this._setLocation()
                             }}>
                             <Text style={styles.modalText2}>View location Hint</Text>
                         </TouchableHighlight>
