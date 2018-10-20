@@ -1,0 +1,368 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot of shallowRender. 1`] = `
+<Component
+  animationType="slide"
+  hardwareAccelerated={false}
+  onRequestClose={[Function]}
+  transparent={false}
+  visible={true}
+>
+  <ScrollViewMock
+    style={
+      Object {
+        "marginTop": 22,
+      }
+    }
+  >
+    <Component
+      style={
+        Object {
+          "paddingVertical": 10,
+        }
+      }
+    >
+      <Kaede
+        easing={[Function]}
+        height={60}
+        label="Remember your reminder?"
+        onChangeText={[Function]}
+      />
+    </Component>
+    <Component
+      style={
+        Object {
+          "paddingVertical": 10,
+        }
+      }
+    >
+      <TouchableHighlight
+        activeOpacity={0.85}
+        delayPressOut={100}
+        onPress={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#DDDDDD",
+            "padding": 10,
+          }
+        }
+        underlayColor="black"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#000",
+              "fontSize": 17,
+              "margin": 10,
+              "textAlign": "center",
+            }
+          }
+        >
+          View Image Hint
+        </Text>
+      </TouchableHighlight>
+    </Component>
+    <ScrollViewMock
+      style={
+        Object {
+          "height": 1,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "isStatic": true,
+            "uri": null,
+          }
+        }
+        style={
+          Object {
+            "aspectRatio": 0.8,
+            "flex": 1,
+          }
+        }
+      />
+    </ScrollViewMock>
+    <Component
+      style={
+        Object {
+          "paddingVertical": 10,
+        }
+      }
+    >
+      <TouchableHighlight
+        activeOpacity={0.85}
+        delayPressOut={100}
+        onPress={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#DDDDDD",
+            "padding": 10,
+          }
+        }
+        underlayColor="black"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#000",
+              "fontSize": 17,
+              "margin": 10,
+              "textAlign": "center",
+            }
+          }
+        >
+          View location Hint
+        </Text>
+      </TouchableHighlight>
+    </Component>
+    <MapView
+      minZoomLevel={14}
+      region={null}
+      scrollEnabled={false}
+      style={
+        Object {
+          "display": "none",
+          "flex": 1,
+          "height": 200,
+          "width": 750,
+        }
+      }
+      zoomEnabled={false}
+    >
+      <Component />
+    </MapView>
+    <Component
+      style={
+        Object {
+          "paddingVertical": 10,
+        }
+      }
+    >
+      <TouchableHighlight
+        activeOpacity={0.85}
+        delayPressOut={100}
+        onPress={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#17cf94",
+            "padding": 10,
+          }
+        }
+        underlayColor="black"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#000",
+              "fontSize": 17,
+              "margin": 10,
+              "textAlign": "center",
+            }
+          }
+        >
+          Check
+        </Text>
+      </TouchableHighlight>
+    </Component>
+    <Component
+      style={
+        Object {
+          "paddingVertical": 10,
+        }
+      }
+    >
+      <TouchableHighlight
+        activeOpacity={0.85}
+        delayPressOut={100}
+        onPress={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F2686B",
+            "padding": 10,
+          }
+        }
+        underlayColor="black"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#000",
+              "fontSize": 17,
+              "margin": 10,
+              "textAlign": "center",
+            }
+          }
+        >
+          Give up
+        </Text>
+      </TouchableHighlight>
+    </Component>
+    <Component
+      style={
+        Object {
+          "paddingVertical": 10,
+        }
+      }
+    >
+      <TouchableHighlight
+        activeOpacity={0.85}
+        delayPressOut={100}
+        onPress={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F2686B",
+            "padding": 10,
+          }
+        }
+        underlayColor="black"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#000",
+              "fontSize": 17,
+              "margin": 10,
+              "textAlign": "center",
+            }
+          }
+        >
+          Go back
+        </Text>
+      </TouchableHighlight>
+    </Component>
+    <Overlay
+      borderRadius={3}
+      fullScreen={false}
+      height="auto"
+      isVisible={false}
+      overlayBackgroundColor="white"
+      width={670}
+      windowBackgroundColor="rgba(255, 255, 255, .8)"
+    >
+      <Component>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#000",
+              "fontSize": 27,
+              "margin": 10,
+              "textAlign": "center",
+            }
+          }
+        >
+          By proceeding you will lose 1000 points, continue?
+        </Text>
+        <Component
+          style={
+            Object {
+              "paddingVertical": 10,
+            }
+          }
+        >
+          <TouchableHighlight
+            activeOpacity={0.85}
+            delayPressOut={100}
+            onPress={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#17cf94",
+                "padding": 10,
+              }
+            }
+            underlayColor="black"
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 17,
+                  "margin": 10,
+                  "textAlign": "center",
+                }
+              }
+            >
+              Continue
+            </Text>
+          </TouchableHighlight>
+        </Component>
+        <Component
+          style={
+            Object {
+              "paddingVertical": 10,
+            }
+          }
+        >
+          <TouchableHighlight
+            activeOpacity={0.85}
+            delayPressOut={100}
+            onPress={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F2686B",
+                "padding": 10,
+              }
+            }
+            underlayColor="black"
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 17,
+                  "margin": 10,
+                  "textAlign": "center",
+                }
+              }
+            >
+              Take me back
+            </Text>
+          </TouchableHighlight>
+        </Component>
+      </Component>
+    </Overlay>
+  </ScrollViewMock>
+</Component>
+`;
+
+exports[`renders correctly 1`] = `
+<Modal
+  animationType="slide"
+  hardwareAccelerated={false}
+  onRequestClose={[Function]}
+  transparent={false}
+  visible={true}
+/>
+`;

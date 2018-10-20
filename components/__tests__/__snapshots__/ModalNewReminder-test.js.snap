@@ -6,7 +6,7 @@ exports[`renders correctly 1`] = `
   hardwareAccelerated={false}
   onRequestClose={[Function]}
   transparent={false}
-  visible={false}
+  visible={true}
 >
   <View
     style={

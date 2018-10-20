@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import storage from '../components/Storage'
+import storage from '../Storage'
 import MockAsyncStorage from 'mock-async-storage';
 import {AsyncStorage} from 'react-native'
 import {Notifications} from "expo";
@@ -564,23 +564,5 @@ describe('Test of the Storage functions', () => {
         await storage.onComplete("00df66cc-0dc4-4c3b-be84-aaab2d3cfbb9", false);
         const resAfter = await AsyncStorage.getItem(id);
         expect(resBefore).toBe(resAfter);
-    });
-
-
-    it('generateID', async () => {
-        const res = storage.generateID();
-
-        expect(res.length).toEqual(36);
-        expect(res[14]).toEqual("4");
-    });
-
-    it('checkDate', async () => {
-        const now = (new Date).getTime();
-        const moreThenTwoHourAgo = now - 8200000;
-        const lessThenTwoHourAgo = now;
-        const moreThenTwoHouresinTheFuture = now + 8200000;
-        expect(storage.checkDate(moreThenTwoHourAgo)).toEqual(false);
-        expect(storage.checkDate(lessThenTwoHourAgo)).toEqual(false);
-        expect(storage.checkDate(moreThenTwoHouresinTheFuture)).toEqual(true);
     });
 });

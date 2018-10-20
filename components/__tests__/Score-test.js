@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import score from '../components/Score'
+import score from '../Score'
 import MockAsyncStorage from 'mock-async-storage';
 import {AsyncStorage} from 'react-native'
 
@@ -9,7 +9,6 @@ describe('Test of the Score functions', () => {
         const mock = () => {
             const mockImpl = new MockAsyncStorage();
             jest.mock('AsyncStorage', () => mockImpl);
-            /*jest.mock('Expo.Constants.installationId', ()=> "8af308a3-6e27-455e-81fd-cb45861104d7");*/
         };
         mock();
     });
