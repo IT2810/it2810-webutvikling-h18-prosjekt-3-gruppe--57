@@ -563,7 +563,6 @@ describe('Test of the Storage functions', () => {
         const resBefore = await AsyncStorage.getItem(id);
         await storage.onComplete("00df66cc-0dc4-4c3b-be84-aaab2d3cfbb9", false);
         const resAfter = await AsyncStorage.getItem(id);
-        const correct = "ikke";
         expect(resBefore).toBe(resAfter);
     });
 

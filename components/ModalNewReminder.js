@@ -10,6 +10,8 @@ import {
 import Cam from '../components/Cam.js'
 import {Kaede} from 'react-native-textinput-effects';
 import createStyles from '../styles/ModalNewReminderStyle.js'
+import Storage from './Storage.js';
+import { ImageManipulator, MediaLibrary, Notifications, Location} from "expo";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import util from './Util';
 
@@ -21,6 +23,7 @@ export default class ModalNewReminder extends React.Component {
         super(props);
         this.state = {
             img: null,
+            icon: null,
             textValue:null,
             dateValue:null,
             dateValueMilliseconds: null,
@@ -35,14 +38,18 @@ export default class ModalNewReminder extends React.Component {
         this._handleLocation = this._handleLocation.bind(this);
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({
-            modalVisible: props.modalVisible, 
-            hasCameraPermission: props.hasCameraPermission, 
-            hasLocationPermission:props.hasLocationPermission, 
-            hasNotificationPermission: props.hasNotificationPermission
-        });
-        this._handleLocation();
+    static getDerivedStateFromProps(nextProps, prevState) {
+        /*this._handleLocation();*/  //<--  Not allowed anymore
+        if (nextProps.modalVisible !== prevState.modalVisible
+            || nextProps.hasCameraPermission !== prevState.hasCameraPermission
+            || nextProps.hasLocationPermission !== prevState.hasLocationPermission
+            || nextProps.hasNotificationPermission !== prevState.hasNotificationPermission) {
+            return ({ modalVisible: nextProps.modalVisible,
+                hasCameraPermission: nextProps.hasCameraPermission,
+                hasLocationPermission: nextProps.hasLocationPermission,
+                hasNotificationPermission: nextProps.hasNotificationPermission})
+        }
+        return (prevState);
     }
 
     _setNewReminderModalVisible = (visible) => this.setState({modalVisible: visible});
@@ -56,7 +63,7 @@ export default class ModalNewReminder extends React.Component {
     _handlePictureTaken = async (uri) => this.setState({img: await util.setPicture(uri)});
 
     _handleLocation = async () => this.state.hasLocationPermission ? this.setState({location: await util.getLocation()}) : this.setState({location: null});
-    
+
     _handleDatePicked = (date) => {
         this.setState({dateValue: date.toString().split('GMT')[0].replace(/([0-9]{4})/g, ''), dateValueMilliseconds:date.getTime()});
         this._hideDateTimePicker();
