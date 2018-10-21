@@ -133,7 +133,7 @@ This includes incrementing attempts, keeping track of hints used and updating th
 Util.js is a general component for functionality that can be used in many different components like date formatting, object creation, and image manipulation.
 
 ## Testing 
-
+Our test where written in Jest as the task  stated. We didn't start testing early enough so we ended up testing the most critical parts. We did not do enough snapshot testing but almost the entire logical base is unit tested. This involves all Storage and Score functions. As some of the function in the logical base where depending on location and the camera solution these function were excluded. This could also have been tested by inserting mock-functions, but mocking the entire logic in the test just to gain coverage makes no sense. We endet at a 60% coverage. If we had abit more time we would have snapshot-tested the screens and state insert shallowrender-tested the components for detecting visual bugs.
 ## Known issues 
 On some devices the camera will only display a black screen, a workaround is to go back and then open the camera again. 
 
