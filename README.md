@@ -10,7 +10,7 @@ Many people struggle with their memory as technology take over their day to day 
   * https://play.google.com/store/apps/details?id=host.exp.exponent          
   * https://itunes.apple.com/us/app/expo-client/id982107779?mt=8
 
-
+### Android
 
 To get started scan the QR-code with your Expo app 
 
@@ -19,8 +19,10 @@ To get started scan the QR-code with your Expo app
 
 Or go to the following link: https://expo.io/@skugge/it2810-webutvikling-h18-prosjekt-3-gruppe--57 
 
+### iOS
 
-Alternatively: 
+Loading directly from Expo only works on Android devices, to get it running on iOS do the following:
+
 1. Install expo-cli
 ```console
 foo@bar:~$ npm install -g expo-cli
@@ -66,7 +68,7 @@ By pressing the button you will be able to see every reminder plotted on a map.
 
 To create a reminder go to reminders-tab and press the black button. 
 Then press the reminder-field and type what you want to remember. 
-Press pick date, select a date from the calendar and time from the clock. 
+Press 'pick date', select a date from the calendar and time from the clock. 
 (Optional) If you want a image hint, press 'Add image hint' and press the circle to take a picture. 
 You can change reminder, date, and image as much as you want, when pressing save the latest values will be saved.
 
