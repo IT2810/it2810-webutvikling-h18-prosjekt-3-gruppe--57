@@ -27,26 +27,26 @@ Activating a locked reminder will result in a penalty. Pressing the button will 
 The completed-tab shows all completed reminders, successful reminders are green, failed reminders are red. 
 By pressing the button you will be able to see every reminder plotted on a map. 
 
-<br>
-<img src="examples/homescreen.jpg" alt="homescreen" widht="300" height="600">
-<img src="examples/reminders.jpg" alt="reminders" widht="300" height="600">
-<img src="examples/completed.jpg" alt="completed" width="300" height="600">
+<p float="left">
+  <img src="examples/homescreen.jpg" alt="homescreen" widht="250" height="500">
+  <img src="examples/reminders.jpg" alt="reminders" widht="250" height="500">
+  <img src="examples/completed.jpg" alt="completed" width="250" height="500">
+</p>
 
 To create a reminder go to reminders-tab and press the black button. 
 Then press the reminder-field and type what you want to remember. 
 Press pick date, select a date from the calendar and time from the clock. 
 (Optional) If you want a image hint, press 'Add image hint' and press the circle to take a picture. 
 You can change reminder, date, and image as much as you want, when pressing save the latest values will be saved.
-<br>
-<img src="examples/createNewReminder.gif" alt="alt text" width="300" height="600">
-
+<img src="examples/createNewReminder.gif" alt="alt text" width="300" height="600" float="right">
+ 
 To check if you remember you reminder go to reminders-tab and press the reminder you want. 
 If the reminder is locked an overlay will pop up, by continuing you will lose 500 points. 
 Once inside, press the reminder-field and type in your guess. 
 If you need help you can view a image-hint and/or a location-hint, both of these will affect your score. 
 Check your guess by pressing 'check', incorrect attempts will affect your score. 
-<br>
-<img src="examples/checkReminder.gif" alt="alt text" width="300" height="600">
+<img src="examples/checkReminder.gif" alt="alt text" width="300" height="600" float="right">
+   
 
 
 ## Structure 
