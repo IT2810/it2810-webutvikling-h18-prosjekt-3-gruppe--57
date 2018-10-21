@@ -287,15 +287,15 @@ intended on these devices.
 
 ## Sources
  
-* camera
-* location
-* mapview
-* notifications
-* imagemanipulator
-* react-native-svg-charts
-* react-native-elements
-* react-native-maps
-* react-native-action-button
-* react-native-textinput-effects
-* react-native-modal-datetime-picker
-* react-native-vector-icons/MaterialCommunityIcons
+* [camera](https://docs.expo.io/versions/latest/sdk/camera)
+* [location](https://docs.expo.io/versions/latest/sdk/location)
+* [mapview](https://docs.expo.io/versions/latest/sdk/map-view)
+* [notifications](https://docs.expo.io/versions/latest/sdk/notifications)
+* [imagemanipulator](https://docs.expo.io/versions/latest/sdk/imagemanipulator)
+* [react-native-svg-charts](https://www.npmjs.com/package/react-native-svg-charts)
+* [react-native-elements](https://github.com/react-native-training/react-native-elements)
+* [react-native-maps](https://github.com/react-community/react-native-maps)
+* [react-native-action-button](https://github.com/mastermoo/react-native-action-button)
+* [react-native-textinput-effects](https://github.com/halilb/react-native-textinput-effects)
+* [react-native-modal-datetime-picker](https://github.com/mmazzarolo/react-native-modal-datetime-picker)
+* [react-native-vector-icons/MaterialCommunityIcons](https://github.com/oblador/react-native-vector-icons)
