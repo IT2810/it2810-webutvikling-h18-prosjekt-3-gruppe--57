@@ -34,6 +34,12 @@ describe('Test of the Util functions', () => {
                     "imgHint": true,
                     "textHint": false,
                     "attempts": 1,
+                    "location": {
+                        "latitude": 63.4154111,
+                        "latitudeDelta": 0.04,
+                        "longitude": 10.4047472,
+                        "longitudeDelta": 0.05,
+                    },
                     "notification": 1667132076
                 }, {
                     "id": "872286bd-348d-41ee-a30f-04185ea90dab",
@@ -273,22 +279,25 @@ describe('Test of the Util functions', () => {
 
         const correct = "not yet implemented";
         expect(res).toEqual(correct)
-    });
+    });*/
 
-    it('getLocation', async ()=> {
+    /*it('getLocation', async ()=> {
         const res = await util.getLocation();
 
         const correct = "not yet implemented";
         expect(res).toEqual(correct)
     });*/
 
-    /*it('setLocation', async ()=> {
+    it('setLocation', async ()=> {
         const id = Expo.Constants.installationId;
         const before = JSON.parse(await AsyncStorage.getItem(id));
         const res = await util.setLocation("00df66cc-0dc4-4c3b-be84-aaab2d3cfbb9");
         const after = JSON.parse(await AsyncStorage.getItem(id));
-        expect(res).toBe(false);
-    });*/
+        const correct = {"latitude": 63.4154111, "latitudeDelta": 0.04, "longitude": 10.4047472, "longitudeDelta": 0.05};
+        /*expect(before).not.toEqual(after);*/
+        expect(res).toEqual(correct);
+    });
+
 
     it('generateID', async () => {
         const res = util.generateID();
