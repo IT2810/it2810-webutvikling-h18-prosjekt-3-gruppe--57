@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for screens/Reminders.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">screens</a> Reminders.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">23.81% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>5/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.43% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">25% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>5/20</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+import {
+    ScrollView,
+    Text,
+    View,
+    TouchableHighlight,
+    Image,
+} from 'react-native';
+import {LinearGradient, Permissions, Font} from 'expo';
+import ModalNewReminder from '../components/ModalNewReminder.js';
+import ModalInspectReminder from '../components/ModalInspectReminder.js';
+import {Icon, Overlay} from 'react-native-elements';
+import ActionButton from 'react-native-action-button';
+import createStyles from '../styles/ReminderStyle.js';
+import Storage from '../components/Storage.js';
+import color from "../constants/Colors";
+import Icons from "react-native-vector-icons/Ionicons";
+import util from "../components/Util";
+&nbsp;
+const styles = createStyles();
+&nbsp;
+export default class Reminders extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hasCameraPermission: null,
+            hasNotificationPermission: null,
+            hasLocationPermission: null,
+            chosenItemId: null,
+            modalVisible: false,
+            reminders: [],
+            overlayVisible: false,
+            modalInspectVisible: false,
+            location: null,
+            setClose: <span class="fstat-no" title="function not covered" >fu</span>nction (visible) {
+<span class="cstat-no" title="statement not covered" >                this.setState({modalVisible: visible});</span>
+            },
+            setInspectClose: <span class="fstat-no" title="function not covered" >fu</span>nction (visible) {
+<span class="cstat-no" title="statement not covered" >                this.setState({modalInspectVisible: visible});</span>
+            }
+        };
+    }
+&nbsp;
+    static navigationOptions = {
+        header: null
+    };
+&nbsp;
+    async componentDidMount() {
+        //refresh list when component is focused, necessary when exiting modal
+        this.props.navigation.addListener("willFocus",this._getItems);
+        const statusCamera  = <span class="cstat-no" title="statement not covered" >await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);</span>
+        const statusNotifications = <span class="cstat-no" title="statement not covered" >await Permissions.askAsync(Permissions.NOTIFICATIONS);</span>
+        const statusLocation = <span class="cstat-no" title="statement not covered" >await Permissions.askAsync(Permissions.LOCATION);</span>
+<span class="cstat-no" title="statement not covered" >        this.setState({hasCameraPermission: statusCamera.status === 'granted', hasLocationPermission: statusLocation.status === 'granted', hasNotificationPermission: statusNotifications.status === 'granted'});</span>
+<span class="cstat-no" title="statement not covered" >        this._handleLocation();</span>
+    }
+&nbsp;
+    _safetySwitch = <span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >!item.locked ? this.setState({ modalInspectVisible: true, chosenItemId: item.id }) : this.setState({ overlayVisible: true, chosenItemId: item.id })</span>
+&nbsp;
+    _handleLocation = <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; <span class="cstat-no" title="statement not covered" >this.state.hasLocationPermission ? this.setState({ location: await util.getLocation() }) : this.setState({ location: null });</span>
+&nbsp;
+    _getItems = <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >Storage.getActiveRemindersSorted().then(<span class="fstat-no" title="function not covered" >(r</span>es) =&gt; <span class="cstat-no" title="statement not covered" >this.setState({reminders: res}))</span>;</span>
+&nbsp;
+    render() {
+        return (
+            &lt;View style={{flex: 1, backgroundColor: '#f3f3f3', borderRadius: 0}}&gt;
+                &lt;ScrollView style={styles.container}&gt;
+                    &lt;ModalNewReminder hasCameraPermission={this.state.hasCameraPermission}
+                                        hasNotificationPermission={this.state.hasNotificationPermission}
+                                        location={this.state.location}
+                                        modalVisible={this.state.modalVisible}
+                                        setClose={this.state.setClose.bind(this)}
+                                        refresh={this._getItems}/&gt;
+                    &lt;ModalInspectReminder modalVisible={this.state.modalInspectVisible}
+                                            setClose={this.state.setInspectClose.bind(this)}
+                                            refresh={this._getItems}
+                                            id={this.state.chosenItemId}/&gt;
+                    {
+                        this.state.reminders.length &gt; 0 ? <span class="branch-0 cbranch-no" title="branch not covered" >this.state.reminders.map(<span class="fstat-no" title="function not covered" >(l</span>, i) =&gt; (</span>
+<span class="cstat-no" title="statement not covered" >                                &lt;View style={styles.item} key={i}&gt;</span>
+                                    &lt;View style={styles.shadow}&gt;
+                                        &lt;TouchableHighlight underlayColor={"#f1f1f1"} style={{borderRadius: 10}}
+                                                            onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >                                                                this._safetySwitch(l);</span>
+                                                            }}&gt;
+                                            &lt;LinearGradient
+                                                colors={l.locked ? color.colorPalletError : color.colorPalletGreen}
+                                                style={styles.gradient}&gt;
+                                                &lt;View style={styles.lock}&gt;
+                                                    &lt;Icon name={l.locked ? "lock" : "lock-open"}/&gt;
+                                                &lt;/View&gt;
+                                                &lt;View style={styles.info1}&gt;
+                                                    &lt;Text style={l.locked ? styles.dateTextLocked : styles.dateText}&gt;
+                                                        {l.date}
+                                                    &lt;/Text&gt;
+                                                &lt;/View&gt;
+                                            &lt;/LinearGradient&gt;
+                                        &lt;/TouchableHighlight&gt;
+                                    &lt;/View&gt;
+                                &lt;/View&gt;
+                            )) :
+                            &lt;View style={styles.emptyTextView}&gt;
+                                &lt;Image
+                                    source={{uri: 'https://thumbs.gfycat.com/AffectionateDimIberianlynx-small.gif'}}
+                                    style={{height: 200, width: 200}}/&gt;
+                                &lt;Text style={styles.emptyText}&gt;You don't seem to have any reminders&lt;/Text&gt;
+                            &lt;/View&gt;
+                    }
+                &lt;/ScrollView&gt;
+                &lt;ActionButton buttonColor={color.plussButton} title="New Reminder"
+                                onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >this.setState({modalVisible: true})}</span>&gt;
+                    &lt;Icons name="md-create" style={styles.actionButtonIcon}/&gt;
+                &lt;/ActionButton&gt;
+                &lt;Overlay
+                    isVisible={this.state.overlayVisible}
+                    windowBackgroundColor="rgba(255, 255, 255, .8)"
+                    height="auto"&gt;
+                    &lt;View&gt;
+                        &lt;Text style={styles.modalText}&gt;This Reminder is locked, by proceeding you will lose 500 points&lt;/Text&gt;
+                        &lt;View style={styles.inputChooses}&gt;
+                            &lt;TouchableHighlight
+                                style={styles.buttonSave}
+                                onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >                                    this.setState({modalInspectVisible: true, overlayVisible: false});</span>
+                                }}&gt;
+                                &lt;Text style={styles.modalText2}&gt;Continue&lt;/Text&gt;
+                            &lt;/TouchableHighlight&gt;
+                        &lt;/View&gt;
+                        &lt;View style={styles.inputChooses}&gt;
+                            &lt;TouchableHighlight
+                                style={styles.buttonQuit}
+                                onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >                                    this.setState({overlayVisible: false});</span>
+                                }}&gt;
+                                &lt;Text style={styles.modalText2}&gt;Take me back&lt;/Text&gt;
+                            &lt;/TouchableHighlight&gt;
+                        &lt;/View&gt;
+                    &lt;/View&gt;
+                &lt;/Overlay&gt;
+            &lt;/View&gt;
+        );
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Oct 21 2018 17:59:25 GMT+0200 (Central European Summer Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

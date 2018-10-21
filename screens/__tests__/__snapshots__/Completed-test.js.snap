@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot of shallowRender. 1`] = `
+<Component
+  style={
+    Object {
+      "backgroundColor": "#f3f3f3",
+      "borderRadius": 0,
+      "flex": 1,
+    }
+  }
+>
+  <Component
+    animationType="slide"
+    hardwareAccelerated={false}
+    onRequestClose={[Function]}
+    transparent={false}
+    visible={false}
+  >
+    <MapView
+      region={
+        Object {
+          "latitude": 63.413,
+          "latitudeDelta": 0,
+          "longitude": 10.406,
+          "longitudeDelta": 0.4,
+        }
+      }
+      style={
+        Object {
+          "flex": 1,
+          "height": 600,
+          "width": 400,
+        }
+      }
+    />
+    <Button
+      onPress={[Function]}
+      title="Go back"
+    />
+  </Component>
+  <ScrollViewMock
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "borderRadius": 0,
+        "flex": 1,
+      }
+    }
+  >
+    <Component
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#fff",
+          "borderRadius": 0,
+          "flex": 1,
+          "height": 1184,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "uri": "https://thumbs.gfycat.com/AffectionateDimIberianlynx-small.gif",
+          }
+        }
+        style={
+          Object {
+            "height": 200,
+            "width": 200,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#646464",
+            "fontSize": 17,
+            "textAlign": "center",
+          }
+        }
+      >
+        There's nothing here
+      </Text>
+    </Component>
+  </ScrollViewMock>
+  <ActionButton
+    active={false}
+    activeOpacity={0.85}
+    autoInactive={true}
+    backdrop={false}
+    backgroundTappable={false}
+    bgColor="transparent"
+    bgOpacity={1}
+    buttonColor="#000"
+    buttonText="+"
+    buttonTextStyle={Object {}}
+    degrees={45}
+    fixNativeFeedbackRadius={false}
+    nativeFeedbackRippleColor="rgba(255,255,255,0.75)"
+    offsetX={30}
+    offsetY={30}
+    onPress={[Function]}
+    onPressIn={[Function]}
+    onPressOn={[Function]}
+    outRangeScale={1}
+    position="right"
+    resetToken={null}
+    size={56}
+    spacing={20}
+    title="New Reminder"
+    useNativeFeedback={true}
+    verticalOrientation="up"
+  />
+</Component>
+`;
