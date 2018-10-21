@@ -110,29 +110,6 @@ class Storage {
         }
     }
 
-    async deleteReminder(ID) {
-        try {
-            let user = await this.getItem(Expo.Constants.installationId);
-            user.reminders = user.reminders.filter(function (el) {
-                return el.id != ID;
-            });
-            return await this.setItem(Expo.Constants.installationId, user);
-        } catch (error) {
-            console.log("Storage/deleteItem returned error: " + error);
-        }
-    }
-
-    //Clears the reminders array in user object
-    //Bear in mind this does not affect arrays with failed and successful reminders
-    async deleteAllReminders() {
-        try {
-            let user = await this.getItem(Expo.Constants.installationId);
-            user.reminders.length = 0;
-            return await this.setItem(Expo.Constants.installationId, user);
-        } catch (error) {
-            console.log("Storage/deleteAll returned error:" + error);
-        }
-    }
 
     async onComplete(ID, failed) {
         try {

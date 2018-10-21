@@ -53,7 +53,7 @@ export default class Completed extends React.Component {
                     onRequestClose={this.state.toggleMap.bind(this)}
                     >
                     <MapView
-                        style={{ flex: 1, width: 400, height: 600 }}
+                        style={{ flex: 1, width: layout.window.width, height: layout.window.height-10 }}
                         region={this.state.reminders.length > 0 ? this.state.reminders[0].location : { latitude: 63.413, longitude: 10.406, latitudeDelta: 0, longitudeDelta: 0.4}}
                     >
                         {
@@ -68,7 +68,7 @@ export default class Completed extends React.Component {
                             ))
                         }
                     </MapView>
-                    <Button title="Go back" onPress={this.state.toggleMap.bind(this)} />
+                    <Button title="Go back" onPress={this.state.toggleMap.bind(this)} style={{height:20}} />
                 </Modal>
                 <ScrollView style={styles.container}>
                     {

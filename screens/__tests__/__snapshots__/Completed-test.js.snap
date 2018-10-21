@@ -29,13 +29,18 @@ exports[`Snapshot of shallowRender. 1`] = `
       style={
         Object {
           "flex": 1,
-          "height": 600,
-          "width": 400,
+          "height": 1324,
+          "width": 750,
         }
       }
     />
     <Button
       onPress={[Function]}
+      style={
+        Object {
+          "height": 20,
+        }
+      }
       title="Go back"
     />
   </Component>
