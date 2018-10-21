@@ -6,15 +6,21 @@ Many people struggle with their memory as technology take over their day to day 
 
 ## Setup
 ### Prerequisites
-* You will need the Expo app to run this project: 
+* You will need the Expo to run this project: 
   * https://play.google.com/store/apps/details?id=host.exp.exponent          
   * https://itunes.apple.com/us/app/expo-client/id982107779?mt=8
 
-Go to the following link: https://expo.io/@skugge/it2810-webutvikling-h18-prosjekt-3-gruppe--57 
-and scan the QR-code with the Expo app
+
+
+To get started scan the QR-code with your Expo app 
+
+<img src="examples/qr.png" alt="qr" widht="200" height="200">
+
+
+Or go to the following link: https://expo.io/@skugge/it2810-webutvikling-h18-prosjekt-3-gruppe--57 
+
 
 Alternatively: 
-
 1. Install expo-cli
 ```console
 foo@bar:~$ npm install -g expo-cli
@@ -73,6 +79,24 @@ If you need help you can view a image-hint and/or a location-hint, both of these
 Check your guess by pressing 'check', incorrect attempts will affect your score. 
 
 <img src="examples/checkReminder.gif" alt="alt text" width="300" height="600" align="center">
+
+## Structure 
+The project is split into following directories
+* ```components```
+  Contains utility classes like ```Utility.js```, ```Score.js```, ```Cam.js```, and ```Storage.js```  
+  as well as modals. 
+* ```screens```
+  Has all the main screens 
+* ```assets```
+  Fonts and images
+* ```navigation```
+  Contains navigation files
+* ```constants```
+  For constants such as window dimensions and main colors.
+* ```styles```
+  Contains styles for all components.
+* ```__tests__```
+  Contains all of the tests.
 
 ## Technology 
 * AsyncStorage
@@ -232,25 +256,7 @@ Check your guess by pressing 'check', incorrect attempts will affect your score.
         };
     notificationID = await Notifications.scheduleLocalNotificationAsync(localNotification, { time: when }); 
     ```
-For a list of all technologies used see sources
-
-## Structure 
-The project is split into following directories
-* ```components```
-  Contains utility classes like ```Utility.js```, ```Score.js```, ```Cam.js```, and ```Storage.js```  
-  as well as modals. 
-* ```screens```
-  Has all the main screens 
-* ```assets```
-  Fonts and images
-* ```navigation```
-  Contains navigation files
-* ```constants```
-  For constants such as window dimensions and main colors.
-* ```styles```
-  Contains styles for all components.
-* ```__tests__```
-  Contains all of the tests.
+For a complete list of all technologies used see sources
 
 ## Testing 
 Our test where written in Jest as the task stated. We didn't start testing early enough so we ended up testing the most critical parts. We focused on testing the logical base which includes most of the Storage and Score functions, and not snapshots as we did not consider them as useful as the app was extensively tested manually in development. As some of the function in the logical base where depending on location and the camera solution these function were excluded. This could also have been tested by inserting mock-functions, but mocking the entire logic in the test just to gain coverage wouldn't make for good testing and as such would have been a waste of time. We endet at a 60% coverage. If we had abit more time we would have snapshot-tested the screens and state insert shallowrender-tested the components for detecting visual bugs.
@@ -259,6 +265,21 @@ To run the tests simply run the following command:
 ```console
 foo@it2810-webutvikling-h18-prosjekt-3-gruppe--57:~$ npm test
 ```
+
+## Git 
+
+We used Github as our main platform during development. We decided early to decompose the project into issues and use 
+these to define the workflow. As such we limited the total amount of issues as they were used more for guiding than 
+anything else. We further decomposed the issues into smaller tasks that we added as we went in Trello. 
+This made it easy to tell what was currently locked and what we could and should work on. 
+We used two seperate branches early in development as the group members worked on separate parts of the project. 
+As the project went on and the work converged we decieded to merge the two branch into the master branch as we by
+that time practically worked side by side. 
+
+
+<img src="examples/trello.png" alt="qr" widht="500" height="400">
+
+
 ## Known issues 
 On some devices the camera will only display a black screen, a workaround is to go back and then open the camera again. 
 We have not been able to test on Apple devices during development and can therefore not guarantee that it will work as
